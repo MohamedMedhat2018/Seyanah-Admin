@@ -1,0 +1,856 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="0dp"
+    android:background="@color/white"
+
+    >
+
+    <ImageView
+        android:id="@+id/ivLogoStart"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:padding="0dp"
+        android:src="@drawable/seyana_logo"
+
+
+        />
+
+    <!--    <com.github.abdularis.civ.CircleImageView-->
+    <!--        android:layout_width="200dp"-->
+    <!--        android:layout_height="200dp"-->
+    <!--        android:src="@drawable/seyana_logo"-->
+    <!--        app:strokeColor="@color/colorAccent"/>-->
+
+
+    <ViewSwitcher
+        android:id="@+id/viewSwitcher"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ivLogoStart"
+        android:layout_alignParentBottom="false"
+        android:layout_centerInParent="true"
+        android:layout_margin="0dp"
+
+
+        >
+
+
+        <LinearLayout
+            android:id="@+id/subViewLogin"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:padding="0dp"
+            android:visibility="visible">
+
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!--            <androidx.cardview.widget.CardView-->
+                    <!--                android:layout_width="match_parent"-->
+                    <!--                android:layout_height="wrap_content"-->
+                    <!--                android:layout_margin="10dp"-->
+                    <!--                android:clickable="true"-->
+                    <!--                android:focusable="true"-->
+                    <!--                android:foreground="?android:attr/selectableItemBackground"-->
+                    <!--                app:cardBackgroundColor="@color/white"-->
+                    <!--                app:cardCornerRadius="10dp"-->
+                    <!--                app:cardElevation="2dp"-->
+                    <!--                app:contentPadding="10dp">-->
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="10dp">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="20dp"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:orientation="horizontal"
+                                    android:paddingStart="7dp"
+                                    android:paddingLeft="7dp">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:paddingEnd="4dp"
+                                        android:paddingRight="4dp"
+                                        android:src="@drawable/username"
+
+
+                                        />
+
+                                    <EditText
+                                        android:id="@+id/etEnterUsername_sub1"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center_vertical"
+                                        android:layout_marginTop="0dp"
+                                        android:background="@null"
+                                        android:gravity="center_vertical"
+                                        android:hint="@string/username"
+                                        android:inputType="textPersonName"
+                                        android:paddingBottom="10dp"
+                                        android:textColor="@color/black"
+                                        android:textColorHint="@color/gray3"
+                                        android:textSize="17sp">
+
+                                        <requestFocus />
+                                    </EditText>
+
+
+                                </LinearLayout>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="0.44dp"
+                                    android:layout_marginStart="8dp"
+                                    android:layout_marginEnd="8dp"
+                                    android:layout_marginBottom="10dp"
+                                    android:background="@color/gray3" />
+
+
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="0dp"
+                                android:orientation="horizontal"
+                                android:paddingStart="7dp"
+                                android:paddingLeft="7dp"
+                                android:paddingEnd="10dp"
+                                android:paddingRight="10dp"
+                                android:visibility="visible">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingEnd="4dp"
+                                    android:paddingRight="4dp"
+                                    android:src="@drawable/password" />
+
+                                <EditText
+                                    android:id="@+id/etEnterPass_sub1"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:layout_weight="1"
+                                    android:background="@null"
+                                    android:gravity="center_vertical"
+                                    android:hint="@string/password"
+                                    android:inputType="textPassword"
+                                    android:paddingBottom="10dp"
+                                    android:text=""
+                                    android:textColor="@color/black"
+                                    android:textColorHint="@color/gray3"
+                                    android:textSize="17sp"
+                                    android:visibility="visible"
+
+                                    />
+
+
+                                <ImageView
+                                    android:id="@+id/ivShowPassword_sub1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_margin="0dp"
+                                    android:contentDescription="TODO"
+                                    android:padding="0dp"
+                                    android:scaleType="centerCrop"
+                                    android:visibility="gone"
+                                    app:srcCompat="@drawable/visibile" />
+
+
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0.44dp"
+                                android:layout_marginStart="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:layout_marginBottom="20dp"
+
+                                android:background="@color/gray3" />
+
+                            <TextView
+                                android:id="@+id/tvForgetPass"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="0dp"
+                                android:background="@color/transparent"
+                                android:gravity="end"
+                                android:paddingStart="7dp"
+                                android:paddingLeft="7dp"
+                                android:paddingTop="15dp"
+                                android:paddingEnd="5dp"
+                                android:paddingRight="5dp"
+                                android:paddingBottom="15dp"
+                                android:text="@string/forgot_password"
+                                android:textAllCaps="false"
+                                android:textColor="@color/grey_205"
+                                android:textSize="15sp"
+                                android:textStyle="normal"
+                                android:visibility="gone" />
+
+                            <Button
+                                android:id="@+id/btn_login_sub1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="20dp"
+                                android:background="@drawable/rounded_btn_login"
+                                android:padding="15dp"
+                                android:text="@string/sign_in"
+                                android:textAllCaps="false"
+                                android:textColor="@color/white"
+                                android:textSize="18sp" />
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:padding="8dp"
+                                android:weightSum="10">
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="0.44dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:background="@color/gray2" />
+
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="2"
+                                    android:gravity="center"
+                                    android:text="Or"
+                                    android:textColor="@color/grey_205"
+                                    android:textSize="16sp" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="0.44dp"
+                                    android:layout_gravity="center"
+                                    android:layout_weight="4"
+                                    android:background="@color/gray2" />
+
+                            </LinearLayout>
+
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="0dp"
+                                android:gravity="center"
+                                android:orientation="vertical"
+
+
+                                >
+
+                                <!--                <TextView-->
+                                <!--                    android:layout_width="wrap_content"-->
+                                <!--                    android:layout_height="wrap_content"-->
+                                <!--                    android:layout_gravity="center"-->
+                                <!--                    android:layout_marginTop="0dp"-->
+
+                                <!--                    android:gravity="center"-->
+                                <!--                    android:padding="0dp"-->
+                                <!--                    android:text=""-->
+                                <!--                    android:textColor="@color/gray3"-->
+                                <!--                    android:textSize="20sp" />-->
+
+                                <!--                <TextView-->
+                                <!--                    android:id="@+id/tvRegister"-->
+                                <!--                    android:layout_width="wrap_content"-->
+                                <!--                    android:layout_height="wrap_content"-->
+                                <!--                    android:layout_gravity="center"-->
+                                <!--                    android:layout_marginTop="0dp"-->
+                                <!--                    android:background="@color/transparent"-->
+                                <!--                    android:padding="0dp"-->
+                                <!--                    android:text="Sign up"-->
+                                <!--                    android:textAllCaps="false"-->
+                                <!--                    android:textColor="@color/orange_dark"-->
+                                <!--                    android:textSize="18sp"-->
+                                <!--                    android:textStyle="normal" />-->
+
+                                <androidx.cardview.widget.CardView
+                                    android:id="@+id/btn_register_sub1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentBottom="true"
+                                    android:layout_margin="10dp"
+                                    android:clickable="true"
+                                    android:focusable="true"
+                                    android:foreground="?android:attr/selectableItemBackground"
+                                    app:cardBackgroundColor="@color/white"
+                                    app:cardCornerRadius="10dp"
+                                    app:cardElevation="4dp"
+                                    app:contentPadding="15dp">
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="0dp"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+
+                                        >
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/sign_up"
+                                            android:textColor="@color/grey_205"
+                                            android:textSize="18sp" />
+                                    </LinearLayout>
+
+                                </androidx.cardview.widget.CardView>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </ScrollView>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="370dp">
+
+                <LinearLayout
+                    android:id="@+id/viewSubRegister"
+                    android:layout_width="match_parent"
+                    android:layout_height="335dp"
+                    android:layout_centerInParent="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:visibility="visible">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="10dp"
+                        android:foreground="?android:attr/selectableItemBackground"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="2dp"
+                        app:contentPadding="10dp">
+                        <!--            <androidx.cardview.widget.CardView-->
+                        <!--                android:layout_width="match_parent"-->
+                        <!--                android:layout_height="wrap_content"-->
+                        <!--                android:layout_margin="10dp"-->
+                        <!--                android:clickable="true"-->
+                        <!--                android:focusable="true"-->
+                        <!--                android:foreground="?android:attr/selectableItemBackground"-->
+                        <!--                app:cardBackgroundColor="@color/white"-->
+                        <!--                app:cardCornerRadius="10dp"-->
+                        <!--                app:cardElevation="5dp"-->
+                        <!--                app:contentPadding="10dp">-->
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <ScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent">
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="vertical">
+
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:layout_marginBottom="20dp"
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="7dp"
+                                            android:paddingLeft="7dp">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:paddingEnd="4dp"
+                                                android:paddingRight="4dp"
+                                                android:src="@drawable/username"
+
+
+                                                />
+
+                                            <EditText
+                                                android:id="@+id/etEnterUsername_sub2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginTop="0dp"
+                                                android:background="@null"
+                                                android:gravity="center_vertical"
+                                                android:hint="@string/username"
+                                                android:inputType="textPersonName"
+                                                android:paddingBottom="10dp"
+                                                android:textColor="@color/black"
+                                                android:textColorHint="@color/gray3"
+                                                android:textSize="17sp">
+
+                                                <requestFocus />
+                                            </EditText>
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0.44dp"
+                                            android:layout_marginStart="8dp"
+                                            android:layout_marginEnd="8dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@color/gray3" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="7dp"
+                                            android:paddingLeft="7dp">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:paddingEnd="4dp"
+                                                android:paddingRight="4dp"
+                                                app:srcCompat="@drawable/email_address"
+
+
+                                                />
+
+                                            <EditText
+                                                android:id="@+id/etEnterEmail"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginTop="0dp"
+                                                android:background="@null"
+                                                android:gravity="center_vertical"
+                                                android:hint="@string/enter_email"
+                                                android:inputType="textEmailAddress"
+                                                android:paddingBottom="10dp"
+                                                android:textColor="@color/black"
+                                                android:textColorHint="@color/gray3"
+                                                android:textSize="17sp">
+
+                                            </EditText>
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0.44dp"
+                                            android:layout_marginStart="8dp"
+                                            android:layout_marginEnd="8dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@color/gray3" />
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginTop="20dp"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="7dp"
+                                            android:paddingLeft="7dp">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:paddingEnd="4dp"
+                                                android:paddingRight="4dp"
+                                                app:srcCompat="@drawable/phone_number"
+
+
+                                                />
+
+                                            <EditText
+                                                android:id="@+id/etEnterPhone"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginTop="0dp"
+                                                android:background="@null"
+                                                android:gravity="center_vertical"
+                                                android:hint="@string/enter_phone_number"
+                                                android:inputType="phone"
+                                                android:paddingBottom="10dp"
+                                                android:textColor="@color/black"
+                                                android:textColorHint="@color/gray3"
+                                                android:textSize="17sp">
+
+                                            </EditText>
+
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0.44dp"
+                                            android:layout_marginStart="8dp"
+                                            android:layout_marginEnd="8dp"
+                                            android:layout_marginBottom="10dp"
+                                            android:background="@color/gray3" />
+
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:orientation="horizontal"
+                                        android:paddingStart="7dp"
+                                        android:paddingLeft="7dp"
+
+                                        android:visibility="visible">
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:paddingEnd="4dp"
+                                            android:paddingRight="4dp"
+                                            android:src="@drawable/password" />
+
+                                        <EditText
+                                            android:id="@+id/etEnterPass_sub2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:layout_marginTop="0dp"
+                                            android:layout_weight="1"
+                                            android:background="@null"
+                                            android:gravity="center_vertical"
+                                            android:hint="@string/password"
+                                            android:inputType="textPassword"
+                                            android:paddingBottom="10dp"
+                                            android:textColor="@color/black"
+                                            android:textColorHint="@color/gray3"
+                                            android:textSize="17sp"
+                                            android:visibility="visible"
+
+                                            />
+
+
+                                        <ImageView
+                                            android:id="@+id/ivShowPassword1_reg"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_margin="0dp"
+                                            android:contentDescription="TODO"
+                                            android:padding="0dp"
+                                            android:scaleType="centerCrop"
+                                            android:visibility="gone"
+                                            app:srcCompat="@drawable/visibile" />
+                                    </LinearLayout>
+
+                                    <View
+                                        android:layout_width="match_parent"
+                                        android:layout_height="0.44dp"
+                                        android:layout_marginStart="8dp"
+                                        android:layout_marginEnd="8dp"
+                                        android:layout_marginBottom="30dp"
+                                        android:background="@color/gray3" />
+
+                                    <LinearLayout
+
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+
+                                        android:orientation="vertical">
+
+                                        <LinearLayout
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:orientation="horizontal"
+                                            android:paddingStart="7dp"
+                                            android:paddingLeft="7dp"
+                                            android:visibility="visible">
+
+                                            <ImageView
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:paddingEnd="4dp"
+                                                android:paddingRight="4dp"
+                                                android:src="@drawable/password" />
+
+                                            <EditText
+                                                android:id="@+id/etEnterConfPass_sub2"
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_gravity="center_vertical"
+                                                android:layout_marginTop="0dp"
+                                                android:layout_weight="1"
+                                                android:background="@null"
+                                                android:gravity="center_vertical"
+                                                android:hint="@string/conf_password"
+                                                android:inputType="textPassword"
+                                                android:paddingBottom="10dp"
+                                                android:textColor="@color/black"
+                                                android:textColorHint="@color/gray3"
+                                                android:textSize="17sp"
+                                                android:visibility="visible"
+
+                                                />
+
+                                            <ImageView
+                                                android:id="@+id/ivShowPassword2_reg"
+                                                android:layout_width="wrap_content"
+                                                android:layout_height="wrap_content"
+                                                android:layout_margin="0dp"
+                                                android:contentDescription="TODO"
+                                                android:padding="0dp"
+                                                android:scaleType="centerCrop"
+                                                android:visibility="gone"
+                                                app:srcCompat="@drawable/visibile" />
+
+                                        </LinearLayout>
+
+                                        <View
+                                            android:layout_width="match_parent"
+                                            android:layout_height="0.44dp"
+                                            android:layout_marginStart="8dp"
+                                            android:layout_marginEnd="8dp"
+                                            android:layout_marginBottom="15dp"
+                                            android:background="@color/gray3" />
+
+
+                                    </LinearLayout>
+
+
+                                    <!--                    <TextView-->
+                                    <!--                        android:id="@+id/tvForgetPass"-->
+                                    <!--                        android:layout_width="match_parent"-->
+                                    <!--                        android:layout_height="wrap_content"-->
+                                    <!--                        android:layout_gravity="center"-->
+                                    <!--                        android:layout_marginTop="0dp"-->
+                                    <!--                        android:background="@color/transparent"-->
+                                    <!--                        android:gravity="end"-->
+                                    <!--                        android:paddingStart="7dp"-->
+                                    <!--                        android:paddingLeft="7dp"-->
+                                    <!--                        android:paddingTop="15dp"-->
+                                    <!--                        android:paddingEnd="5dp"-->
+                                    <!--                        android:paddingRight="5dp"-->
+                                    <!--                        android:paddingBottom="15dp"-->
+                                    <!--                        android:text="@string/forgot_password"-->
+                                    <!--                        android:textAllCaps="false"-->
+                                    <!--                        android:textColor="@color/grey_205"-->
+                                    <!--                        android:textSize="15sp"-->
+                                    <!--                        android:textStyle="normal"-->
+                                    <!--                        android:visibility="gone" />-->
+
+                                    <!--                    <Button-->
+                                    <!--                        android:id="@+id/btn_login_sub2"-->
+                                    <!--                        android:layout_width="match_parent"-->
+                                    <!--                        android:layout_height="wrap_content"-->
+                                    <!--                        android:layout_gravity="center"-->
+                                    <!--                        android:layout_marginTop="20dp"-->
+                                    <!--                        android:background="@drawable/rounded_100_btn_login"-->
+                                    <!--                        android:padding="15dp"-->
+                                    <!--                        android:text="@string/sign_in"-->
+                                    <!--                        android:textAllCaps="false"-->
+                                    <!--                        android:textColor="@color/white"-->
+                                    <!--                        android:textSize="18sp"-->
+                                    <!--                        android:visibility="gone" />-->
+
+
+                                    <!--                    <LinearLayout-->
+                                    <!--                        android:layout_width="match_parent"-->
+                                    <!--                        android:layout_height="wrap_content"-->
+                                    <!--                        android:orientation="horizontal"-->
+                                    <!--                        android:padding="8dp"-->
+                                    <!--                        android:visibility="gone"-->
+                                    <!--                        android:weightSum="10">-->
+
+                                    <!--                        <View-->
+                                    <!--                            android:layout_width="0dp"-->
+                                    <!--                            android:layout_height="0.44dp"-->
+                                    <!--                            android:layout_gravity="center"-->
+                                    <!--                            android:layout_weight="4"-->
+                                    <!--                            android:background="@color/gray2" />-->
+
+                                    <!--                        <TextView-->
+                                    <!--                            android:layout_width="0dp"-->
+                                    <!--                            android:layout_height="wrap_content"-->
+                                    <!--                            android:layout_gravity="center"-->
+                                    <!--                            android:layout_weight="2"-->
+                                    <!--                            android:gravity="center"-->
+                                    <!--                            android:text="Or"-->
+                                    <!--                            android:textColor="@color/grey_205"-->
+                                    <!--                            android:textSize="16sp" />-->
+
+                                    <!--                        <View-->
+                                    <!--                            android:layout_width="0dp"-->
+                                    <!--                            android:layout_height="0.44dp"-->
+                                    <!--                            android:layout_gravity="center"-->
+                                    <!--                            android:layout_weight="4"-->
+                                    <!--                            android:background="@color/gray2" />-->
+
+                                    <!--                    </LinearLayout>-->
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="10dp"
+                                        android:gravity="center"
+                                        android:orientation="vertical"
+
+
+                                        >
+
+                                        <!--                <TextView-->
+                                        <!--                    android:layout_width="wrap_content"-->
+                                        <!--                    android:layout_height="wrap_content"-->
+                                        <!--                    android:layout_gravity="center"-->
+                                        <!--                    android:layout_marginTop="0dp"-->
+
+                                        <!--                    android:gravity="center"-->
+                                        <!--                    android:padding="0dp"-->
+                                        <!--                    android:text=""-->
+                                        <!--                    android:textColor="@color/gray3"-->
+                                        <!--                    android:textSize="20sp" />-->
+
+                                        <!--                <TextView-->
+                                        <!--                    android:id="@+id/tvRegister"-->
+                                        <!--                    android:layout_width="wrap_content"-->
+                                        <!--                    android:layout_height="wrap_content"-->
+                                        <!--                    android:layout_gravity="center"-->
+                                        <!--                    android:layout_marginTop="0dp"-->
+                                        <!--                    android:background="@color/transparent"-->
+                                        <!--                    android:padding="0dp"-->
+                                        <!--                    android:text="Sign up"-->
+                                        <!--                    android:textAllCaps="false"-->
+                                        <!--                    android:textColor="@color/orange_dark"-->
+                                        <!--                    android:textSize="18sp"-->
+                                        <!--                    android:textStyle="normal" />-->
+
+                                        <androidx.cardview.widget.CardView
+                                            android:id="@+id/btn_register_sub2"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="wrap_content"
+                                            android:layout_alignParentBottom="true"
+                                            android:layout_margin="10dp"
+                                            android:clickable="true"
+                                            android:focusable="true"
+                                            android:foreground="?android:attr/selectableItemBackground"
+                                            android:visibility="visible"
+                                            app:cardBackgroundColor="@color/white"
+                                            app:cardCornerRadius="10dp"
+                                            app:cardElevation="4dp"
+                                            app:contentPadding="15dp">
+
+                                            <LinearLayout
+                                                android:layout_width="match_parent"
+                                                android:layout_height="wrap_content"
+                                                android:layout_marginTop="0dp"
+                                                android:gravity="center"
+                                                android:orientation="vertical"
+
+                                                >
+
+                                                <TextView
+                                                    android:layout_width="wrap_content"
+                                                    android:layout_height="wrap_content"
+                                                    android:text="@string/sign_up"
+                                                    android:textColor="@color/grey_205"
+                                                    android:textSize="18sp" />
+                                            </LinearLayout>
+
+                                        </androidx.cardview.widget.CardView>
+
+                                    </LinearLayout>
+                                </LinearLayout>
+                            </ScrollView>
+
+
+
+
+                        </LinearLayout>
+
+
+                    </androidx.cardview.widget.CardView>
+
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_100_btn_login"
+                    android:contentDescription="TODO"
+                    android:padding="10dp"
+                    android:text=""
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/back_to_login" />
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ViewSwitcher>
+
+
+</RelativeLayout>

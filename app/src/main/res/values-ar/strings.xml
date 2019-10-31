@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="from_gall">اختر من الجهاز</string>
+    <string name="from_cam">اختر من الكاميرا</string>
+
+
+
+    <string name="rationale_ask_ok">نعم</string>
+    <string name="cam_and_storage_rationale">Allow HServices to read your device photos or from camera</string>
+    <string name="rationale_ask_cancel">الغاء</string>
+
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_notifications">الاشعارات</string>
+    <string name="title_profile">الصفحه الشخصيه</string>
+    <string name="title_logout">Logout</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="for_who">الي </string>
+
+    <string name="app_name_root">Seyanah-Uae Admin</string>
+    <string name="sign_in">دخول</string>
+    <string name="username">إسم المستخدم</string>
+    <string name="password">كلمة المرور</string>
+    <string name="sign_up">تسجيل دخول</string>
+    <string name="forgot_password">نسيت كلمة المرور؟</string>
+    <string name="enter_username">أدخل إسم المستخدم</string>
+    <string name="enter_password">أدخل كلمة المرور</string>
+    <string name="loading">برجاء الانتظار...</string>
+    <string name="admin_created_succes">تم تسجيلك ك أدمن بنجاح</string>
+    <string name="conf_password">تأكيد كلمة المرور</string>
+    <string name="username_exist">اسم المستخدم تم التسجيل به من قبل</string>
+    <string name="username_is_invalid">كلمة المستخدم خاطئه</string>
+    <string name="password_is_invalid">كلمة المرور خاطئه</string>
+    <string name="network_error">خطأ في الاتصال بالانترنت</string>
+    <string name="password_dont_matches">كلمة المرور غير متطابقه</string>
+    <string name="please_wait">برجاء الانتظار</string>
+    <string name="no_notifications_yet">لا توجد اشعارات حتي الان</string>
+    <string name="title_activity_login">تسجيل الدخول</string>
+    <string name="enter_email">أدخل البريد الالكتروني - اختياري</string>
+    <string name="enter_phone_number">أدخل الموبايل - اختياري</string>
+    <string name="enter_email_required">أدخل البريد الالكتروني</string>
+    <string name="enter_phone_number_required">أدخل قم التليفون</string>
+    <string name="enter_valid_email">أدخل بريد صحيح</string>
+    <string name="registering">... تسجيل دخول</string>
+    <string name="edit">تعديل</string>
+    <string name="pass_should_at_least">Password should contain at least 6 characters with one upper and lower character</string>
+
+
+</resources>

@@ -1,0 +1,64 @@
+<resources>
+
+    <!-- Base application theme. -->
+<!--    <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">-->
+<!--        &lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/colorPrimary</item>-->
+<!--        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">@color/colorAccent</item>-->
+<!--    </style>-->
+
+
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/orange_light</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+<!--    <style name="Theme.Transparent" parent="@style/Theme.AppCompat.Light.NoActionBar">-->
+<!--        &lt;!&ndash;<item name="android:windowDrawsSystemBarBackgrounds">true</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;<item name="colorPrimary">@android:color/transparent</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;        <item name="colorPrimary">@color/my_color3</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name="colorPrimary">@color/Orange</item>&ndash;&gt;-->
+<!--        <item name="colorPrimary">@color/orange_light</item>-->
+<!--        <item name="colorPrimaryDark">@android:color/transparent</item>-->
+<!--        &lt;!&ndash;        <item name="android:windowBackground">@color/my_color3</item>&ndash;&gt;-->
+<!--&lt;!&ndash;        <item name="android:windowBackground">@color/Orange</item>&ndash;&gt;-->
+<!--        <item name="android:windowBackground">@color/orange_light</item>-->
+<!--        <item name="android:windowFullscreen">false</item>-->
+<!--        <item name="android:backgroundDimEnabled">false</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+<!--        <item name="actionMenuTextColor">@color/white</item>-->
+<!--        <item name="android:actionMenuTextColor">@color/white</item>-->
+<!--        &lt;!&ndash;<item name="android:windowTranslucentStatus">true</item>&ndash;&gt;-->
+<!--        &lt;!&ndash;<item name="android:windowTranslucentNavigation">true</item>&ndash;&gt;-->
+<!--    </style>-->
+
+
+
+    <style name="Theme.Transparent" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="android:windowDrawsSystemBarBackgrounds">true</item>-->
+        <!--<item name="colorPrimary">@android:color/transparent</item>-->
+        <!--        <item name="colorPrimary">@color/my_color3</item>-->
+        <!--        <item name="colorPrimary">@color/Orange</item>-->
+        <item name="colorPrimary">@color/orange_light</item>
+        <item name="colorPrimaryDark">@android:color/transparent</item>
+        <!--        <item name="android:windowBackground">@color/my_color3</item>-->
+        <!--        <item name="android:windowBackground">@color/Orange</item>-->
+<!--        <item name="android:windowBackground">@color/orange_light</item>-->
+<!--        <item name="android:windowFullscreen">false</item>-->
+<!--        <item name="android:backgroundDimEnabled">false</item>-->
+<!--        <item name="android:windowContentOverlay">@null</item>-->
+<!--        <item name="android:windowIsTranslucent">true</item>-->
+<!--        <item name="actionMenuTextColor">@color/white</item>-->
+<!--        <item name="android:actionMenuTextColor">@color/white</item>-->
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+        <!--<item name="android:windowTranslucentNavigation">true</item>-->
+    </style>
+
+
+</resources>

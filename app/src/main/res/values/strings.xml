@@ -1,0 +1,50 @@
+<resources>
+    <string name="from_cam">Use Camera</string>
+    <string name="from_gall">Choose From Galley</string>
+
+
+    <string name="rationale_ask_ok">Okay</string>
+    <string name="cam_and_storage_rationale">Allow %1$s to read your device photos or from camera</string>
+    <string name="rationale_ask_cancel">Cancel</string>
+
+    <string name="title_activity_main3">Main3Activity</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_logout">Logout</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="for_who">For</string>
+
+    <string name="app_name_root">Seyanah-Uae Admin</string>
+    <string name="sign_in">Sign in</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="sign_up">Sign up</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="enter_username">Enter username</string>
+    <string name="enter_password">Enter password</string>
+    <string name="loading">Please wait...</string>
+    <string name="admin_created_succes">Admin created successfully</string>
+    <string name="conf_password">Confirm password</string>
+    <string name="username_exist">Username already exist</string>
+    <string name="username_is_invalid">Username is invalid</string>
+    <string name="password_is_invalid">Password is invalid</string>
+    <string name="network_error">Network connection error</string>
+    <string name="password_dont_matches">Password doesn\'t matches</string>
+    <string name="please_wait">Please wait</string>
+    <string name="no_notifications_yet">No Notifications Now !!!</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_login">Login</string>
+    <string name="enter_email">Enter email address - Optional</string>
+    <string name="enter_phone_number">Enter phone - Optional</string>
+    <string name="enter_email_required">Enter email address</string>
+    <string name="enter_phone_number_required">Enter phone number</string>
+    <string name="enter_valid_email">Enter valid email</string>
+    <string name="registering">Registering...</string>
+    <string name="edit">Edit</string>
+    <string name="pass_should_at_least">Password should contain at least 6 characters with one upper and lower character</string>
+    <!--    <string name="app_name_root" />-->
+</resources>
