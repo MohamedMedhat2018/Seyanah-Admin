@@ -1,6 +1,8 @@
 package com.example.serviceadmin.fragments
 
 import android.Manifest
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -37,11 +39,15 @@ import com.google.gson.reflect.TypeToken
 import com.pixplicity.easyprefs.library.Prefs
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
+import com.willowtreeapps.spruce.Spruce
+import com.willowtreeapps.spruce.animation.DefaultAnimations
+import com.willowtreeapps.spruce.sort.DefaultSort
 import es.dmoral.toasty.Toasty
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
+import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
@@ -56,7 +62,7 @@ import java.util.*
 class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
-
+    private lateinit var disposable: Disposable
     internal lateinit var easyImage: EasyImage
     //    lateinit var bottomSheetFragment: BottomSheet
     lateinit var bundle: Bundle
@@ -73,11 +79,18 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         Manifest.permission.READ_EXTERNAL_STORAGE
         , Manifest.permission.WRITE_EXTERNAL_STORAGE
     )
+    private var spruceAnimator: Animator? = null
+
 
     companion object {
         const val RC_CAMERA_AND_STORAGE = 121
     }
 
+
+    override fun onResume() {
+        super.onResume()
+        spruceAnimator?.start()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -97,28 +110,27 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         initDialogPickPhotoSource()
     }
 
-    private lateinit var disposable: Disposable
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         disposable = RxBus.listen(RxEvent.EventUserDataUpdated::class.java).subscribe {
             loadProfileData()
         }
-    }
 
+
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        if (!disposable.isDisposed) disposable.dispose()
+//        if (!disposable.isDisposed) disposable.dispose()
     }
 
     override fun onStart() {
         super.onStart()
 
-
     }
+
+
 
     private fun initEasyImage() {
         easyImage = EasyImage.Builder(this.activity!!)

@@ -1,5 +1,7 @@
 package com.example.serviceadmin.fragments
 
+import android.animation.Animator
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.example.serviceadmin.R
 import com.example.serviceadmin.adapters.rv.RecyclerNotificationAdapter
@@ -19,6 +22,9 @@ import com.example.serviceadmin.models.OrderRequest
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.willowtreeapps.spruce.Spruce
+import com.willowtreeapps.spruce.animation.DefaultAnimations
+import com.willowtreeapps.spruce.sort.DefaultSort
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment : Fragment() {
@@ -42,9 +48,14 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         loadNotification()
+//        initSpruce()
+
 //        Log.e(TAG, "test1999")
 
     }
+
+    private var spruceAnimator: Animator? = null
+    var linerLayoutManager: LinearLayoutManager? = null;
 
     private fun setupRecyclerView() {
 
@@ -57,20 +68,71 @@ class NotificationsFragment : Fragment() {
         )
 
 
-        val linerLayoutManager = LinearLayoutManager(activity)
-        linerLayoutManager.orientation = LinearLayoutManager.VERTICAL
-        recycler_notifi.layoutManager = linerLayoutManager
-        recycler_notifi.setHasFixedSize(false)
-        recycler_notifi.itemAnimator = DefaultItemAnimator()
-        recycler_notifi.adapter = adapterNotification//set empty by default
-        adapterNotification.notifyDataSetChanged()
+//         linerLayoutManager = LinearLayoutManager(activity)
+        linerLayoutManager = object : LinearLayoutManager(context) {
+            override fun onLayoutChildren(
+                recycler: RecyclerView.Recycler?,
+                state: RecyclerView.State
+            ) {
+                super.onLayoutChildren(recycler, state)
+                initSpruce()
+            }
+        }
+//        (linerLayoutManager as LinearLayoutManager).orientation = LinearLayoutManager.VERTICAL
+//        recycler_notifi.layoutManager = linerLayoutManager
+        recycler_notifi.setHasFixedSize(true)
+//        recycler_notifi.itemAnimator = DefaultItemAnimator()
+//        recycler_notifi.adapter = adapterNotification//set empty by default
+//        adapterNotification.notifyDataSetChanged()
 
 
     }
 
 
-   lateinit var notification: Notification
+    lateinit var notification: Notification
     lateinit var adapterNotification: RecyclerNotificationAdapter
+
+
+    private fun initSpruce() {
+
+//        ObjectAnimator.ofFloat(
+//            recycler_notifi,
+//            "translationX",
+//            -recycler_notifi.width,
+//            0f
+//        ).setDuration(800)
+
+
+//        var objectAnimator = ObjectAnimator()
+
+
+        spruceAnimator = Spruce.SpruceBuilder(recycler_notifi)
+            .sortWith(DefaultSort(100))
+            .animateWith(
+                DefaultAnimations.shrinkAnimator(recycler_notifi, 800),
+//                ObjectAnimator.ofFloat(recycler_notifi, View.TRANSLATION_Y, if (true) 200f else -200f, 0f)
+
+                ObjectAnimator.ofFloat(
+                    recycler_notifi,
+                    View.TRANSLATION_X,
+                    (-recycler_notifi.width).toFloat(),
+                    0f
+                ).setDuration(800)
+            )
+            .start()
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        spruceAnimator?.start()
+    }
+
 
     private fun loadNotification() {
 
@@ -112,16 +174,22 @@ class NotificationsFragment : Fragment() {
 
 
                                     notification =
-                                        Notification(indexedValue.value.key.toString(), "", "", "", false)
+                                        Notification(
+                                            indexedValue.value.key.toString(),
+                                            "",
+                                            "",
+                                            "",
+                                            false
+                                        )
 
 
                                     //Log.e(TAG, "index " + value.value.toString())
                                     //get child "ex: child at index 0 the the value of it is "5555dfssf" get the child that its name is Message "
                                     childIndexAt.value.child(Constants.TITLE)
                                         .let {
-                                        notification.title = it.value.toString()
-                                        Log.e(TAG, "test777 " + notification.title)
-                                    }
+                                            notification.title = it.value.toString()
+                                            Log.e(TAG, "test777 " + notification.title)
+                                        }
                                     childIndexAt.value.child(Constants.MESSAGE)
                                         .let {
                                             notification.message = it.value.toString()
@@ -129,19 +197,21 @@ class NotificationsFragment : Fragment() {
                                         }
                                     childIndexAt.value.child(Constants.ORDERID)
                                         .let {
-                                        notification.orderId = it.value.toString()
-                                        Log.e(TAG, "test888 " + notification.orderId)
-                                    }
+                                            notification.orderId = it.value.toString()
+                                            Log.e(TAG, "test888 " + notification.orderId)
+                                        }
 
                                     childIndexAt.value.child(Constants.SHOWN_NOTI)
                                         .let {
-                                        notification.shown = it.value.toString().toBoolean()
-                                        Log.e(TAG, "test999 " + notification.shown)
+                                            notification.shown = it.value.toString().toBoolean()
+                                            Log.e(TAG, "test999 " + notification.shown)
 
-                                    }
+                                        }
 
                                     listOfNotification.add(notification)
-
+//                                    listOfNotification.add(notification)
+//                                    listOfNotification.add(notification)
+//                                    listOfNotification.add(notification)
 
 
 //                                    for (i in listOfNotification) {
@@ -162,15 +232,24 @@ class NotificationsFragment : Fragment() {
 //                            }
                         }
 
-                    if (listOfNotification.isNotEmpty()){
+                    if (listOfNotification.isNotEmpty()) {
                         tvNoNotificationsYet.visibility = View.GONE
                         recycler_notifi.visibility = View.VISIBLE
-                    }else{
+                    } else {
                         tvNoNotificationsYet.visibility = View.VISIBLE
                         recycler_notifi.visibility = View.GONE
                     }
 
-                    adapterNotification.notifyDataSetChanged()
+                    recycler_notifi.adapter = RecyclerNotificationAdapter(
+                        activity,
+                        listOfNotification,
+                        listOfOrdersRequest,
+                        listOfCategory
+                    )
+                    recycler_notifi.layoutManager = linerLayoutManager;
+
+
+//                    adapterNotification.notifyDataSetChanged()
                     progress?.dismiss()
 //                    loadOrderRequestAndCategory()
 //                    listOfNotification.forEach {
@@ -189,7 +268,6 @@ class NotificationsFragment : Fragment() {
     }
 
 
-
     private fun loadOrderRequestAndCategory() {
 
         for (i in listOfNotification) {
@@ -197,12 +275,11 @@ class NotificationsFragment : Fragment() {
         }
 
 
-
         //                    lateinit var orderRequest: OrderRequest
 //        Log.e(TAG, "V1" + this.notification?.orderId)
 //        Log.e(TAG, "V1" + notification?.orderId)
 
-        listOfNotification.withIndex().map {(index, notification)->
+        listOfNotification.withIndex().map { (index, notification) ->
             Log.e("111111", notification.orderId)
 //            RefBase.requests(notification.orderId)
             RefBase.requests(notification.orderId)
@@ -267,6 +344,7 @@ class NotificationsFragment : Fragment() {
                                                 )
 
                                                 listOfCategory.add(category)
+
 //                                                adapterNotification.notifyDataSetChanged()
 //                                                val adapter = RecyclerNotificationAdapter(
 //                                                    activity,
@@ -284,7 +362,7 @@ class NotificationsFragment : Fragment() {
 //                                                }
 //                                                Log.e(TAG, "CAT" + listOfCategory.size)
 
-                                                if(index == listOfNotification.size - 1){
+                                                if (index == listOfNotification.size - 1) {
                                                     adapterNotification.notifyDataSetChanged()
                                                     Log.e(TAG, "Final ")
                                                 }

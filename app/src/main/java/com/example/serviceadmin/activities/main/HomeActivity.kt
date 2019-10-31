@@ -39,12 +39,12 @@ class HomeActivity : AppCompatActivity() {
         navView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.navigation_notifications -> {
-                    supportActionBar?.title = getString(R.string.title_notifications)
+//                    supportActionBar?.title = getString(R.string.title_notifications)
                     fragment = NotificationsFragment()
 
                 }
                 R.id.navigation_profile -> {
-                    supportActionBar?.title = getString(R.string.title_profile)
+//                    supportActionBar?.title = getString(R.string.title_profile)
                     fragment = ProfileFragment()
 
 
@@ -72,7 +72,8 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        supportActionBar?.title = getString(R.string.title_notifications)
+//        supportActionBar?.title = getString(R.string.title_notifications)
+        supportActionBar?.title = getString(R.string.app_name_root)
 
     }
 

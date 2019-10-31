@@ -1,5 +1,14 @@
 package com.example.serviceadmin.models;
 
+import android.animation.ObjectAnimator;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.willowtreeapps.spruce.Spruce;
+import com.willowtreeapps.spruce.animation.DefaultAnimations;
+import com.willowtreeapps.spruce.sort.DefaultSort;
+
 import java.io.Serializable;
 
 public class Location implements Serializable {
@@ -27,6 +36,8 @@ public class Location implements Serializable {
     }
 
     public Location() {
+
+
     }
 
 //    public String getArea() {
