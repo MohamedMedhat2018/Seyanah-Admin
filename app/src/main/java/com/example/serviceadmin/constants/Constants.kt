@@ -3,6 +3,7 @@ package com.example.serviceadmin.constants
 class Constants {
     companion object {
 
+        val KEYWORD: String = "keyword"
         val KEY_EMAIL_ADDRESS: String = "email"
         val KEY_PHONE_NUMBER: String = "phoneNumber"
         val KEY_PASSWORD: String = "password"
@@ -44,6 +45,7 @@ class Constants {
         val LANG_ENGLISH = "LANG_ENGLISH"
 
         val USERS = "Users"
+        val FREELANCERS = "Freelancers"
 //    public static final String USERS = "USERS";
 
         val PHONE = "userPhoneNumber"

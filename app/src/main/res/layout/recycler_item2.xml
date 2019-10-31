@@ -51,6 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="IN PROGRESS"
+                    android:visibility="gone"
                     android:textColor="@color/textLightGrey"
                     android:layout_alignParentEnd="true"
                     />
@@ -82,8 +83,10 @@
                 />
 
             <RelativeLayout
+                android:id="@+id/rl_for"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -110,6 +113,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="2m"
+                    android:visibility="gone"
                     android:textColor="@color/textLightGrey"
                     />
 

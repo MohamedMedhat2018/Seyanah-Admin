@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
@@ -161,7 +162,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                         .into(ivUserPhoto, object : Callback {
                             override fun onSuccess() {
                                 Log.e(TAG, "Loaded success")
-                                progressImageLoaded.visibility = View.GONE
+                                view?.findViewById<ProgressBar>(R.id.progressImageLoaded)?.visibility = View.GONE
                             }
 
                             override fun onError(e: Exception?) {

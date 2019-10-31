@@ -13,24 +13,29 @@ class RefBase {
 
         fun customerNotification(): DatabaseReference {
             return root().child(Constants.NOTIFICATION_CUSTOMER)
-    }
+        }
 
         fun freelancerNotification(): DatabaseReference {
             return root().child(Constants.NOTIFICATION_FREELANCER)
         }
 
-        fun requests(id:String): DatabaseReference {
+        fun requests(id: String): DatabaseReference {
             return root().child(Constants.REQUESTS).child(id)
         }
 
-        fun category(id:String): DatabaseReference {
+        fun category(id: String): DatabaseReference {
             return Companion.root().child(Constants.CATEGORY).child(id)
         }
 
 
-        fun refAdmins(id:String): DatabaseReference {
+        fun refAdmins(id: String): DatabaseReference {
             return root().child(Constants.ADMINS).child(id)
         }
 
+
+        fun cpNotification(): DatabaseReference {
+            return root().child(Constants.CP_NOTIFICATIONS)
+
+        }
     }
 }

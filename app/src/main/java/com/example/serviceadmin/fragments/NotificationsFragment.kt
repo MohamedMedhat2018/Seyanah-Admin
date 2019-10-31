@@ -25,12 +25,16 @@ import com.willowtreeapps.spruce.Spruce
 import com.willowtreeapps.spruce.animation.DefaultAnimations
 import com.willowtreeapps.spruce.sort.DefaultSort
 import kotlinx.android.synthetic.main.fragment_notifications.*
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class NotificationsFragment : Fragment() {
 
 
     val TAG = NotificationsFragment::class.java.name
     var listOfNotification: ArrayList<Notification> = ArrayList<Notification>()
+    var listOfCPNotification: ArrayList<Notification> = ArrayList<Notification>()
     var listOfOrdersRequest: ArrayList<OrderRequest> = ArrayList<OrderRequest>()
     var listOfCategory: ArrayList<Category> = ArrayList<Category>()
 
@@ -47,6 +51,7 @@ class NotificationsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
         loadNotification()
+        loadCPNotification()
 //        initSpruce()
 
 //        Log.e(TAG, "test1999")
@@ -67,7 +72,7 @@ class NotificationsFragment : Fragment() {
         )
 
 
-         linerLayoutManager = LinearLayoutManager(activity)
+        linerLayoutManager = LinearLayoutManager(activity)
 //        linerLayoutManager = object : LinearLayoutManager(context) {
 //            override fun onLayoutChildren(
 //                recycler: RecyclerView.Recycler?,
@@ -127,7 +132,7 @@ class NotificationsFragment : Fragment() {
 
 
         val progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
-        progress?.show()
+//        progress?.show()
 
 
         RefBase.customerNotification().addValueEventListener(object : ValueEventListener {
@@ -256,6 +261,101 @@ class NotificationsFragment : Fragment() {
         })
     }
 
+
+     var title = ""
+     var body = ""
+     var notiType = ""
+
+    private fun loadCPNotification() {
+
+
+        val progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
+//        progress?.show()
+
+
+        RefBase.cpNotification().addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                dataSnapshot.ref.removeEventListener(this)
+                if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+
+                    Log.e(TAG, "tYPE TYPE$dataSnapshot")
+
+                    val map: HashMap<String, Object> = dataSnapshot.children.iterator().next().value as HashMap<String, Object>
+                    Log.e(TAG, "tYPE TYPEx$map")
+
+                    var notification: Notification = Notification()
+
+                    var keyword = map.get(Constants.KEYWORD).toString()
+//                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
+                    Log.e(TAG, "tYPE TYPE$keyword")
+                    if (keyword == Constants.REQUESTS) {
+
+//                        val vvvv = "Customer has been send the request successfully "
+
+                    } else if (keyword == Constants.USERS) {
+                        Log.e(TAG, "tEEEEEEEEEEEt")
+                        title = "New User"
+                        body = "A new user has been register successfully "
+
+                        notification.title = title
+                        notification.message = body
+                        notification.notiType = keyword.toString()
+
+                        listOfCPNotification.add(notification)
+
+                        listOfNotification.addAll(listOfCPNotification)
+                        adapterNotification.notifyDataSetChanged()
+
+                    } else if (keyword == Constants.FREELANCERS) {
+
+                        title = "New Freelancer"
+                        body = "A new Freelancer has been register successfully "
+
+                        notification.title = title
+                        notification.message = body
+                        notification.notiType = keyword.toString()
+
+                        listOfCPNotification.add(notification)
+
+                        listOfNotification.addAll(listOfCPNotification)
+                        adapterNotification.notifyDataSetChanged()
+
+                    }
+//                    notification.title = title
+//                    notification.message = body
+//                    notification.notiType = keyword.toString()
+//
+//                    listOfCPNotification.add(notification)
+//
+//                    listOfNotification.addAll(listOfCPNotification)
+//                    adapterNotification.notifyDataSetChanged()
+
+//                    RecyclerNotificationAdapter
+
+
+//                    for (i in listOfNotification) {
+//                        Log.e(TAG, "LISTT3 " + i.orderId)
+//                    }
+//                    listOfNotification.clear()
+//                    listOfOrdersRequest.clear()
+//                    listOfCategory.clear()
+//                    for (i in listOfNotification) {
+//                        Log.e(TAG, "LISTT4 " + i.orderId)
+//                    }
+                    Log.e(
+                        TAG,
+                        "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
+                    )
+
+                }
+            }
+
+            override fun onCancelled(p0: DatabaseError) {
+
+            }
+
+        })
+    }
 
     private fun loadOrderRequestAndCategory() {
 

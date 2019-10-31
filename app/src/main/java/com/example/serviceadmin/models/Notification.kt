@@ -1,6 +1,6 @@
 package com.example.serviceadmin.models
 
-class Notification {
+class Notification() {
 
 //
 //    lateinit var id: String
@@ -9,11 +9,12 @@ class Notification {
 //    lateinit var body: String
 
 
-    var firebaseUserId: String
-    var orderId: String
-    var title: String
-    var message: String
-    var shown: Boolean
+     var firebaseUserId = ""
+     var orderId = ""
+     var notiType = ""
+     var title = ""
+     var message = ""
+    var shown: Boolean = true
 
 
     constructor(
@@ -22,7 +23,7 @@ class Notification {
         title: String,
         message: String,
         shown: Boolean
-    ) {
+    ) : this() {
         this.firebaseUserId = firebaseUserId!!
         this.orderId = orderId
         this.title = title

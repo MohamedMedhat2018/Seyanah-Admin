@@ -1,12 +1,15 @@
 package com.example.serviceadmin.adapters.rv
 
 import android.app.Activity
+import android.opengl.Visibility
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide.init
 import com.example.serviceadmin.R
 import com.example.serviceadmin.adapters.rv.RecyclerNotificationAdapter.CustomView
 import com.example.serviceadmin.constants.Constants
@@ -45,12 +48,25 @@ class RecyclerNotificationAdapter(
 
         val noti = listOfNotification[position]
 
-        holder.title?.text = noti.title
-        Log.e(TAG, "title555" + noti.title)
+        Log.e(TAG, "check type " + noti.notiType)
+        when (noti.notiType) {
 
-        holder.body?.text = noti.message
+            Constants.USERS, Constants.FREELANCERS  -> {
+                holder.title?.text = noti.title
+                Log.e(TAG, "title from user or free " + noti.title)
 
-        Log.e(TAG, "body" + noti.message)
+                holder.body?.text = noti.message
+
+                Log.e(TAG, "body from user or free " + noti.message)
+
+            }
+            else -> {
+                holder.title?.text = noti.title
+                Log.e(TAG, "title555" + noti.title)
+
+                holder.body?.text = noti.message
+
+                Log.e(TAG, "body" + noti.message)
 
 
 //        if (listOfOrderRequest.isNotEmpty() && listOfOrderRequest.size < listOfNotification.size ){
@@ -66,46 +82,53 @@ class RecyclerNotificationAdapter(
 //        }
 //
 
-        RefBase.requests(noti.orderId).addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataSnapshot.ref.removeEventListener(this)
-                if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
-                    Log.e("dsfsf", dataSnapshot.toString())
+                RefBase.requests(noti.orderId).addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.removeEventListener(this)
+                        if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                            Log.e("dsfsf", dataSnapshot.toString())
 //                    var request = dataSnapshot.value as OrderRequest
 //                    Log.e(TAG, "Request" + request.categoryId)
-                    //var orderRequest = dataSnapshot.value
-                    dataSnapshot.child(Constants.CATEGORY_ID).let {
-                        Log.e("rutet", it.value.toString())
-                        RefBase.category(it.value.toString())
-                            .addValueEventListener(object : ValueEventListener {
-                                override fun onDataChange(dataSnapsho: DataSnapshot) {
-                                    dataSnapsho.ref.removeEventListener(this)
-                                  if (  dataSnapsho.exists() && dataSnapsho.childrenCount > 0){
-                                      dataSnapsho.child(Constants.CATEGORY_NAME).let {
-                                          holder.category?.text = it.value.toString()
-                                      }
-                                  }
-                                }
+                            //var orderRequest = dataSnapshot.value
+                            dataSnapshot.child(Constants.CATEGORY_ID).let {
+                                Log.e("rutet", it.value.toString())
+                                RefBase.category(it.value.toString())
+                                    .addValueEventListener(object : ValueEventListener {
+                                        override fun onDataChange(dataSnapsho: DataSnapshot) {
+                                            dataSnapsho.ref.removeEventListener(this)
+                                            if (dataSnapsho.exists() && dataSnapsho.childrenCount > 0) {
+                                                dataSnapsho.child(Constants.CATEGORY_NAME).let {
+                                                    holder.rlCategory?.visibility = View.VISIBLE
+                                                    holder.category?.text = it.value.toString()
+                                                }
+                                            }
+                                        }
 
-                                override fun onCancelled(p0: DatabaseError) {
-                                    Log.e(TAG , p0.message)
-                                }
+                                        override fun onCancelled(p0: DatabaseError) {
+                                            Log.e(TAG, p0.message)
+                                        }
 
-                            })
+                                    })
+
+                            }
+                            dataSnapshot.child(Constants.ORDER_STATE).let {
+                                holder.state?.visibility = View.VISIBLE
+                                holder.state?.text = it.value.toString()
+                            }
+
+                        }
+                    }
+
+                    override fun onCancelled(p0: DatabaseError) {
 
                     }
-                    dataSnapshot.child(Constants.ORDER_STATE).let {
-                        holder.state?.text = it.value.toString()
-                    }
 
-                }
+                })
             }
 
-            override fun onCancelled(p0: DatabaseError) {
+        }
 
-            }
 
-        })
 
 
     }
@@ -116,6 +139,7 @@ class RecyclerNotificationAdapter(
         var body: TextView? = null
         var category: TextView? = null
         var state: TextView? = null
+        var rlCategory: View? = null
 
 
         init {
@@ -123,6 +147,8 @@ class RecyclerNotificationAdapter(
             body = itemView.findViewById<TextView>(R.id.tv_notification_body)
             category = itemView.findViewById<TextView>(R.id.tv_notification_service_name)
             state = itemView.findViewById(R.id.tv_notification_state)
+            rlCategory = itemView.findViewById(R.id.rl_for)
+
 
         }
 
