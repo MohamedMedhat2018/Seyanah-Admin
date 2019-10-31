@@ -2,7 +2,6 @@ package com.example.serviceadmin.fragments
 
 import android.Manifest
 import android.animation.Animator
-import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -39,15 +38,11 @@ import com.google.gson.reflect.TypeToken
 import com.pixplicity.easyprefs.library.Prefs
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
-import com.willowtreeapps.spruce.Spruce
-import com.willowtreeapps.spruce.animation.DefaultAnimations
-import com.willowtreeapps.spruce.sort.DefaultSort
 import es.dmoral.toasty.Toasty
 import id.zelory.compressor.Compressor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_notifications.*
 import kotlinx.android.synthetic.main.fragment_profile.*
 import pl.aprilapps.easyphotopicker.DefaultCallback
 import pl.aprilapps.easyphotopicker.EasyImage
@@ -108,28 +103,11 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         setOnClickListeners()
         loadProfileData()
         initDialogPickPhotoSource()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
         disposable = RxBus.listen(RxEvent.EventUserDataUpdated::class.java).subscribe {
             loadProfileData()
         }
-
-
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        if (!disposable.isDisposed) disposable.dispose()
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-    }
-
 
 
     private fun initEasyImage() {
@@ -183,6 +161,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                         .into(ivUserPhoto, object : Callback {
                             override fun onSuccess() {
                                 Log.e(TAG, "Loaded success")
+                                progressImageLoaded.visibility = View.GONE
                             }
 
                             override fun onError(e: Exception?) {
@@ -220,7 +199,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     private fun setOnClickListeners() {
 
         cv_profile_phone.setOnClickListener {
-            bundle?.clear()
+            bundle.clear()
             bundle.putString(
                 Constants.EDIT_PHONE_NUMBER,
                 view!!.findViewById<TextView>(R.id.tv_Profile_phone).text.toString()
@@ -229,7 +208,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         }
 
         cv_profile_email.setOnClickListener {
-            bundle?.clear()
+            bundle.clear()
             bundle.putString(
                 Constants.EDIT_EMAIL,
                 view!!.findViewById<TextView>(R.id.tv_Profile_email).text.toString()
@@ -238,8 +217,8 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         }
 
         cv_profile_pass.setOnClickListener {
-            bundle?.clear()
-            bundle?.putString(
+            bundle.clear()
+            bundle.putString(
                 Constants.EDIT_PASSWORD,
                 view!!.findViewById<TextView>(R.id.tv_Profile_password).text.toString()
             )
@@ -337,8 +316,8 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
 
                             }
                         })
-                    uploadPhoto(uri)
-//                    uploadPhoto2(uri)
+//                    uploadPhoto(uri)
+                    uploadPhoto2(uri)
 
 
                 }
@@ -354,9 +333,13 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         progressDialog!!.show()
 
 
+        storage = FirebaseStorage.getInstance()
+        storageReference = storage!!.reference
+
+        //ref = storageReference.child("images/" + UUID.randomUUID().toString());
+        ref = storageReference!!.child(UUID.randomUUID().toString())
+
         ref!!.putFile(uri!!)
-//                                            ref = storageReference.child("images/" + UUID.randomUUID().toString());
-//        ref!!.putBytes(inputData[0])
             .addOnSuccessListener { taskSnapshot ->
                 //                                                progressDialog.dismiss();
                 ref!!.downloadUrl.addOnSuccessListener(

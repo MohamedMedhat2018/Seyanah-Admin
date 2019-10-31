@@ -69,17 +69,29 @@
                 <!--                    app:cornerRadius="10dp"-->
                 <!--                    />-->
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <RelativeLayout
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
-                    android:id="@+id/ivUserPhoto"
-
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/profile2"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="3dp" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true">
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/ivUserPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/avatar"
+                        app:civ_border_color="#FFFFFF"
+                        app:civ_border_width="3dp" />
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/progressImageLoaded"
+                        android:visibility="visible"
+                        />
+
+                </RelativeLayout>
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivBack"
@@ -102,7 +114,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:ellipsize="marquee"
-                android:text="Mohamed Ahmed"
+                android:text="............"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="22sp"
@@ -136,7 +148,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="+597 505558591" />
+                        android:text=".........." />
 
                 </LinearLayout>
 
@@ -175,7 +187,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="BeyondTech@Gmail.com" />
+                        android:text=".........." />
 
                 </LinearLayout>
 
@@ -214,7 +226,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:inputType="textPassword"
-                        android:text="123456789" />
+                        android:text=".........." />
 
                 </LinearLayout>
 

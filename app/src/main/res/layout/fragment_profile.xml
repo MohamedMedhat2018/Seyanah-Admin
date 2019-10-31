@@ -23,8 +23,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="100dp"
-                    android:background="@color/Orange"
-                    />
+                    android:background="@color/Orange" />
 
                 <!--                <ImageView-->
                 <!--                    android:layout_width="150dp"-->
@@ -49,32 +48,47 @@
                 <!--                    -->
                 <!--                    />-->
 
-<!--                <com.comix.rounded.RoundedCornerImageView-->
-<!--                    android:layout_width="150dp"-->
-<!--                    android:layout_height="150dp"-->
-<!--                    android:layout_alignParentBottom="true"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:layout_gravity="center_horizontal"-->
-<!--                    android:layout_marginTop="16dp"-->
-<!--                    android:background="@drawable/profile2"-->
-<!--                    app:cornerBottomDisable="false"-->
-<!--                    app:cornerColor="@android:color/white"-->
-<!--                    app:cornerLeftDisable="false"-->
-<!--                    app:cornerRadius="10dp"-->
-<!--                    app:cornerRightDisable="false"-->
-<!--                    app:cornerTopDisable="false" />-->
+                <!--                <com.comix.rounded.RoundedCornerImageView-->
+                <!--                    android:layout_width="150dp"-->
+                <!--                    android:layout_height="150dp"-->
+                <!--                    android:layout_alignParentBottom="true"-->
+                <!--                    android:layout_centerInParent="true"-->
+                <!--                    android:layout_gravity="center_horizontal"-->
+                <!--                    android:layout_marginTop="16dp"-->
+                <!--                    android:background="@drawable/profile2"-->
+                <!--                    app:cornerBottomDisable="false"-->
+                <!--                    app:cornerColor="@android:color/white"-->
+                <!--                    app:cornerLeftDisable="false"-->
+                <!--                    app:cornerRadius="10dp"-->
+                <!--                    app:cornerRightDisable="false"-->
+                <!--                    app:cornerTopDisable="false" />-->
 
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+
+
+                <RelativeLayout
                     android:layout_width="150dp"
                     android:layout_height="150dp"
-                    android:id="@+id/ivUserPhoto"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerInParent="true"
                     android:layout_marginTop="16dp"
-                    android:src="@drawable/profile2"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="3dp" />
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true">
+                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/ivUserPhoto"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/avatar"
+                        app:civ_border_color="#FFFFFF"
+                        app:civ_border_width="3dp" />
+
+                    <ProgressBar
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:id="@+id/progressImageLoaded"
+                        android:visibility="visible"
+                        />
+
+                </RelativeLayout>
 
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -82,8 +96,8 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_margin="10dp"
-                    android:visibility="gone"
                     android:padding="7dp"
+                    android:visibility="gone"
                     app:srcCompat="@drawable/back_to_login" />
 
 
@@ -98,7 +112,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"
                 android:ellipsize="marquee"
-                android:text="Mohamed Ahmed"
+                android:text="............"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="22sp"
@@ -136,7 +150,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="+597 505558591" />
+                        android:text=".........." />
 
                 </LinearLayout>
 
@@ -149,14 +163,14 @@
                 android:layout_height="50dp"
                 android:layout_below="@id/cv_profile_phone"
                 android:layout_centerInParent="true"
+                android:layout_marginStart="30dp"
                 android:layout_marginLeft="30dp"
+                android:layout_marginEnd="30dp"
                 android:layout_marginRight="30dp"
                 app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="5dp"
-                app:cardElevation="5dp"
 
-                android:layout_marginStart="30dp"
-                android:layout_marginEnd="30dp">
+                app:cardCornerRadius="5dp"
+                app:cardElevation="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -167,9 +181,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingEnd="10dp"
                         android:paddingRight="10dp"
-                        app:srcCompat="@drawable/ic_mail_24dp"
-                        android:paddingEnd="10dp" />
+                        app:srcCompat="@drawable/ic_mail_24dp" />
 
                     <TextView
                         android:id="@+id/tv_Profile_email"
@@ -177,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="BeyondTech@Gmail.com" />
+                        android:text=".........." />
 
                 </LinearLayout>
 
@@ -206,9 +220,9 @@
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingEnd="10dp"
                         android:paddingRight="10dp"
-                        android:src="@drawable/password"
-                        android:paddingEnd="10dp" />
+                        android:src="@drawable/password" />
 
                     <TextView
                         android:id="@+id/tv_Profile_password"
@@ -217,7 +231,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:inputType="textPassword"
-                        android:text="123456789" />
+                        android:text=".........." />
 
                 </LinearLayout>
 

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.example.serviceadmin.R
 import com.example.serviceadmin.adapters.rv.RecyclerNotificationAdapter
@@ -55,7 +54,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private var spruceAnimator: Animator? = null
-    var linerLayoutManager: LinearLayoutManager? = null;
+    var linerLayoutManager: LinearLayoutManager? = null
 
     private fun setupRecyclerView() {
 
@@ -68,22 +67,22 @@ class NotificationsFragment : Fragment() {
         )
 
 
-//         linerLayoutManager = LinearLayoutManager(activity)
-        linerLayoutManager = object : LinearLayoutManager(context) {
-            override fun onLayoutChildren(
-                recycler: RecyclerView.Recycler?,
-                state: RecyclerView.State
-            ) {
-                super.onLayoutChildren(recycler, state)
-                initSpruce()
-            }
-        }
-//        (linerLayoutManager as LinearLayoutManager).orientation = LinearLayoutManager.VERTICAL
-//        recycler_notifi.layoutManager = linerLayoutManager
+         linerLayoutManager = LinearLayoutManager(activity)
+//        linerLayoutManager = object : LinearLayoutManager(context) {
+//            override fun onLayoutChildren(
+//                recycler: RecyclerView.Recycler?,
+//                state: RecyclerView.State
+//            ) {
+//                super.onLayoutChildren(recycler, state)
+//                initSpruce()
+//            }
+//        }
+        (linerLayoutManager as LinearLayoutManager).orientation = LinearLayoutManager.VERTICAL
+        recycler_notifi.layoutManager = linerLayoutManager
         recycler_notifi.setHasFixedSize(true)
-//        recycler_notifi.itemAnimator = DefaultItemAnimator()
-//        recycler_notifi.adapter = adapterNotification//set empty by default
-//        adapterNotification.notifyDataSetChanged()
+        recycler_notifi.itemAnimator = DefaultItemAnimator()
+        recycler_notifi.adapter = adapterNotification//set empty by default
+        adapterNotification.notifyDataSetChanged()
 
 
     }
@@ -121,16 +120,6 @@ class NotificationsFragment : Fragment() {
             )
             .start()
 
-    }
-
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        spruceAnimator?.start()
     }
 
 
@@ -246,7 +235,7 @@ class NotificationsFragment : Fragment() {
                         listOfOrdersRequest,
                         listOfCategory
                     )
-                    recycler_notifi.layoutManager = linerLayoutManager;
+                    recycler_notifi.layoutManager = linerLayoutManager
 
 
 //                    adapterNotification.notifyDataSetChanged()
