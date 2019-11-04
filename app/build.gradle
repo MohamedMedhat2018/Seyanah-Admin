@@ -9,18 +9,14 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
-        applicationId "com.example.serviceadmin"
+        applicationId "com.beyond_tech.seyanah_admin"
         minSdkVersion 19
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
-
         multiDexEnabled true
-
-
-
     }
     buildTypes {
         release {
@@ -115,5 +111,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
 
     implementation 'com.willowtreeapps.spruce:spruce-android:1.0.1'
+
+
+    implementation 'com.github.sharish:ShimmerRecyclerView:v1.3'
 
 }

@@ -85,6 +85,51 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:445806630230:android:d06a04628a2c7b4a2672f7",
+        "android_client_info": {
+          "package_name": "com.beyond_tech.seyanah_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445806630230-btkgvd9bd9p33ar15jg7mkcnuvafhdjs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyond_tech.seyanah_admin",
+            "certificate_hash": "4f619a7af19d11a7f7f9cdd3ec34a65e257f4ae0"
+          }
+        },
+        {
+          "client_id": "445806630230-immqikth6hadujr1h6085d60dgb59frj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMJzmYdcoIUb93McPgLMrInvFINsq0d4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445806630230-immqikth6hadujr1h6085d60dgb59frj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445806630230-8f7hmutba5qlinni4e7gvssrlga6ihc1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.peterBassem-BeyondTechnology-Seyanah",
+                "app_store_id": "1481961659"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:445806630230:android:2950e0bbd94d5ec62672f7",
         "android_client_info": {
           "package_name": "com.beyond_tech.seyanahadminapp"
@@ -149,6 +194,51 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.serviceadmin",
+            "certificate_hash": "4f619a7af19d11a7f7f9cdd3ec34a65e257f4ae0"
+          }
+        },
+        {
+          "client_id": "445806630230-immqikth6hadujr1h6085d60dgb59frj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMJzmYdcoIUb93McPgLMrInvFINsq0d4s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "445806630230-immqikth6hadujr1h6085d60dgb59frj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "445806630230-8f7hmutba5qlinni4e7gvssrlga6ihc1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.peterBassem-BeyondTechnology-Seyanah",
+                "app_store_id": "1481961659"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:445806630230:android:a41607804cf0cbe72672f7",
+        "android_client_info": {
+          "package_name": "com.example.seyanah_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "445806630230-9s4sjnn186o9355spes0t8pi6h5f0sog.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.seyanah_admin",
             "certificate_hash": "4f619a7af19d11a7f7f9cdd3ec34a65e257f4ae0"
           }
         },

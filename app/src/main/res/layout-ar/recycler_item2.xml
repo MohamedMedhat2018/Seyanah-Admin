@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="90dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cv_item"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="5dp"
@@ -15,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/rounded_bg"
             android:layout_marginStart="5dp"
@@ -39,20 +41,34 @@
                     android:id="@+id/tv_notification_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Work With Freelancerrrr"
+                    android:text=""
                     android:layout_toEndOf="@id/iv_notification_icon"
                     android:textColor="@color/textLightGrey"
-                    android:paddingStart="10dp"
+                    android:paddingStart="5dp"
+                    android:textSize="12sp"
                     />
 
+
+                <View
+                    android:id="@+id/iv_notification_state_icon"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:visibility="gone"
+                    android:background="@drawable/rounded_noti_state"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"
+
+                    />
 
                 <TextView
                     android:id="@+id/tv_notification_state"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="IN PROGRESS"
-                    android:textColor="@color/textLightGrey"
-                    android:layout_alignParentEnd="true"
+                    android:text=""
+                    android:textColor="@color/textGrey"
+                    android:layout_toStartOf="@id/iv_notification_state_icon"
+                    android:layout_marginEnd="5dp"
+                    android:textSize="12sp"
                     />
 
 <!--                <ImageView-->
@@ -68,6 +84,8 @@
 
 
 
+
+
             </RelativeLayout>
 
 
@@ -77,13 +95,17 @@
                 android:layout_height="wrap_content"
                 android:text="Your Service Request Now is Posted To FreeLnceers You will Recive notification when they making offers"
                 android:layout_marginTop="10dp"
-                android:textSize="12sp"
+                android:maxLines="4"
+                android:ellipsize="end"
+                android:textSize="14sp"
                 android:textColor="@color/black"
                 />
 
             <RelativeLayout
+                android:id="@+id/rl_for"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:layout_marginTop="5dp">
 
                 <TextView
@@ -110,6 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="2m"
+                    android:visibility="gone"
                     android:textColor="@color/textLightGrey"
                     />
 

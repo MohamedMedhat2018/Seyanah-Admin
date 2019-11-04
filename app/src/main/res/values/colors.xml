@@ -11,9 +11,9 @@
 
 
     <color name="grey">#C9C9C9</color>
-    <color name="textLightGrey">#9fa8b3</color>
+    <color name="textLightGrey">#51575F</color>
 
-    <color name="textGrey">#6c737f</color>
+    <color name="textGrey">#51575F</color>
 
 
     <color name="black">#000000</color>
