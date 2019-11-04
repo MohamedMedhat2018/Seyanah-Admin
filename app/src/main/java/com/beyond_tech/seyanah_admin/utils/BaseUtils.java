@@ -1,13 +1,22 @@
 package com.beyond_tech.seyanah_admin.utils;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
+import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.beyond_tech.seyanah_admin.R;
 import com.beyond_tech.seyanah_admin.models.ItemCard;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +29,7 @@ public class BaseUtils {
     public static final int TYPE_SECOND_GRID = 3;
 
     private static List<ItemCard> getListCards(Resources resources) {
+
         ItemCard ndtvCard = createItemCard(resources, R.string.ndtv_titletext, R.string.ndtv_image_url,
                 R.string.ndtv_subtext, R.string.ndtv_summarytext);
 

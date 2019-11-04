@@ -40,7 +40,7 @@
 <!--    <string name="title_activity_login">Login</string>-->
     <string name="enter_email">Enter email address - Optional</string>
     <string name="enter_phone_number">Enter phone - Optional</string>
-    <string name="enter_email_required">Enter email address</string>
+<!--    <string name="enter_email_required">Enter email address</string>-->
     <string name="enter_phone_number_required">Enter phone number</string>
     <string name="enter_valid_email">Enter valid email</string>
     <string name="registering">Registering...</string>
@@ -112,6 +112,8 @@
 
 
 
+    <string name="enter_email_required">your email @seyanah-uae.com</string>
+    <string name="username2">Email address</string>
 
 
 

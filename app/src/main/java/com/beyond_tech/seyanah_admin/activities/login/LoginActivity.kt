@@ -252,7 +252,12 @@ class LoginActivity : AppCompatActivity() {
                                                         )
                                                     )
 
-                                                    startActivity(Intent(applicationContext, HomeActivity::class.java))
+                                                    startActivity(
+                                                        Intent(
+                                                            applicationContext,
+                                                            HomeActivity::class.java
+                                                        )
+                                                    )
 
                                                 }
                                             }
@@ -276,6 +281,9 @@ class LoginActivity : AppCompatActivity() {
 
                                     }
                                 })
+
+
+
 
                         } else {
                             fireToast(getString(R.string.username_is_invalid))

@@ -7,7 +7,7 @@ class UserAdmin {
     var email: String? = null
     var password: String? = null
     var phoneNumber: String? = null
-    var profilePhoto: String? = null
+    var profilePhoto: String? = ""
 
     constructor(username: String, password: String) {
         this.username = username

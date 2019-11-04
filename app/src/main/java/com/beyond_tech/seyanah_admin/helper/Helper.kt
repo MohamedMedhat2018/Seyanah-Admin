@@ -18,6 +18,7 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.beyond_tech.seyanah_admin.constants.Constants
+import com.google.firebase.auth.FirebaseAuth
 import com.pixplicity.easyprefs.library.Prefs
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -131,7 +132,7 @@ class Helper {
 
     fun logOutUser(): Boolean{
         Prefs.remove(Constants.LOGGED_BEFORE).apply {  }
-
+        FirebaseAuth.getInstance().signOut()
 
         Prefs.remove(Constants.LOGGED_BEFORE).apply {
            return true

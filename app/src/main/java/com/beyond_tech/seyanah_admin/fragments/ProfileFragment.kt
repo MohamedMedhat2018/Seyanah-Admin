@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.text.trimmedLength
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import com.beyond_tech.seyanahadminapp.helper.Helper
@@ -162,22 +163,27 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
                             Editable.Factory.getInstance()
                                 .newEditable(userAdmin.username.toString())
 
-                        Picasso.get().load(userAdmin.profilePhoto)
-                            .into(ivUserPhoto, object : Callback {
-                                override fun onSuccess() {
-                                    Log.e(TAG, "Loaded success")
-                                    view?.findViewById<ProgressBar>(R.id.progressImageLoaded)
-                                        ?.visibility = View.GONE
-                                }
 
-                                override fun onError(e: Exception?) {
+                        if (userAdmin.profilePhoto.toString().trimmedLength() != 0) {
+                            Picasso.get().load(userAdmin.profilePhoto)
+                                .into(ivUserPhoto, object : Callback {
+                                    override fun onSuccess() {
+                                        Log.e(TAG, "Loaded success")
+                                        view?.findViewById<ProgressBar>(R.id.progressImageLoaded)
+                                            ?.visibility = View.GONE
+                                    }
+
+                                    override fun onError(e: Exception?) {
 
 
-                                }
-                            })
+                                    }
+                                })
+                        } else {
+                            view?.findViewById<ProgressBar>(R.id.progressImageLoaded)
+                                ?.visibility = View.GONE
+                        }
 
                         progress?.dismiss()
-
 
                     }
                 }
