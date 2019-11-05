@@ -27,14 +27,15 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class LoginActivity : AppCompatActivity() {
+
     var TAG = LoginActivity::class.java.simpleName
     internal var gson = Gson()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         Helper(this).makeFullScreen(savedInstanceState)
 //        makeFullScreen(savedInstanceState)
-
 
         if (checkIfUserLoggedInBefore()) {
             finish()

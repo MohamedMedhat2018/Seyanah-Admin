@@ -250,9 +250,8 @@ class LoginActivity : AppCompatActivity() {
             }
 
 
-
-
-            progress = Helper(this).createProgressDialog(getString(R.string.please_wait))
+//            progress = Helper(this).createProgressDialog(getString(R.string.please_wait))
+            progress = Helper(this).createProgressDialog(getString(R.string.loggin_in))
             progress!!.show()
 
             FirebaseAuth.getInstance().signInWithEmailAndPassword(
@@ -268,26 +267,16 @@ class LoginActivity : AppCompatActivity() {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful) {
                             //Log.w("TAG", "signInWithEmail:failed", task.getException());
-                            Toast.makeText(
-                                applicationContext,
-                                //"Registration failed! Please try again later",
-                                "Email or password is error",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            fireToast(getString(R.string.invalid_email_or_pass))
                             progress!!.dismiss()
-
+                            return@OnCompleteListener
                         } else {
                             if (FirebaseAuth.getInstance().currentUser != null && !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
                                 sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
-                                Toast.makeText(
-                                    applicationContext,
-                                    "Please verify your email address!!!",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                fireToast(getString(R.string.verify_email_address))
                                 progress?.dismiss()
-
+                                return@OnCompleteListener
                             } else {
-
                                 FirebaseDatabase.getInstance()
                                     .reference
                                     .child(Constants.ADMINS)
@@ -306,10 +295,13 @@ class LoginActivity : AppCompatActivity() {
                                                 progress?.dismiss()
                                                 val userAdmin: UserAdmin? =
                                                     dataSnapshot.getValue(UserAdmin::class.java)
+
+                                                //Saving that user have been logged in before
                                                 Prefs.edit()
                                                     .putString(Constants.LOGGED_BEFORE, "")
                                                     .apply()
 
+                                                //saving the fetched user admin as the Profile Fragment
                                                 Prefs.putString(
                                                     Constants.USER_ADMIN,
                                                     gson.toJson(
@@ -326,8 +318,9 @@ class LoginActivity : AppCompatActivity() {
                                                     )
                                                 )
                                             } else {
-
+                                                fireToast(message = getString(R.string.network_error))
                                             }
+
                                         }
 
                                         override fun onChildChanged(p0: DataSnapshot, p1: String?) {
@@ -341,7 +334,6 @@ class LoginActivity : AppCompatActivity() {
                                         }
 
                                         override fun onChildRemoved(p0: DataSnapshot) {
-
 
                                         }
                                     })
@@ -358,67 +350,33 @@ class LoginActivity : AppCompatActivity() {
 
 
     private fun registerNewUser(email: String, password: String) {
-
-//        progress?.show()
-
-//        if (FirebaseAuth.getInstance().currentUser != null && !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
-////            registerUserSub1(progress!!)
-//            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
-//            Toast.makeText(
-//                applicationContext,
-//                "Please verify your email address!!!",
-//                Toast.LENGTH_LONG
-//            ).show()
-//            progress?.dismiss()
-//            return
-//        } else {
-//            registerUserSub1(progress!!)
-//            progress?.dismiss()
-//        }
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
                     sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
-                    Toast.makeText(
-                        applicationContext,
-                        "Please verify your email address!!!",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    fireToast(message = getString(R.string.verify_email_address))
                     progress?.dismiss()
                     registerUserSub1(progress!!)
-//                    viewSwitcher.showPrevious()
+
                 } else {
-//                    Toast.makeText(
-//                        applicationContext,
-//                        "Registration failed! Please try again later",
-//                        Toast.LENGTH_LONG
-//                    ).show()
-
-                    Toast.makeText(
-                        applicationContext,
-                        "The email address is already in use by another account.",
-                        Toast.LENGTH_LONG
-                    ).show()
-
+                    fireToast(message = getString(R.string.email_already_exist))
                     viewSwitcher.showPrevious()
-
                     progress?.dismiss()
                 }
             })
-            .addOnFailureListener(OnFailureListener {
-                Log.e(TAG, it.localizedMessage)
-//                Toast.makeText(
-//                    applicationContext,
-//                    "The email address is already in use by another account.",
-//                    Toast.LENGTH_LONG
-//                ).show()
-            })
+//            .addOnFailureListener(OnFailureListener {
+//                Log.e(TAG, it.localizedMessage)
+////                Toast.makeText(
+////                    applicationContext,
+////                    "The email address is already in use by another account.",
+////                    Toast.LENGTH_LONG
+////                ).show()
+//            })
 
     }
 
 
-    fun fireToast(message: String) {
+    private fun fireToast(message: String) {
         Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
             .show()
     }
@@ -453,8 +411,6 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-
-
         if (etEnterPhone.text.isEmpty()) {
             fireToast(getString(R.string.enter_phone_number_required))
             return
@@ -470,11 +426,8 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-
-//        val progress = Helper(this).createProgressDialog(getString(R.string.please_wait))
         progress = Helper(this).createProgressDialog(getString(R.string.registering))
         progress?.show()
-
 
         registerNewUser(
             etEnterEmail_required.text.toString(),

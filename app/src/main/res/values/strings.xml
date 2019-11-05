@@ -18,8 +18,8 @@
 
     <string name="app_name_root">Seyanah-Uae Admin</string>
     <string name="sign_in">Sign in</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="username">Enter username</string>
+    <string name="password">Enter password</string>
     <string name="sign_up">Sign up</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="enter_username">Enter username</string>
@@ -37,18 +37,16 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<!--    <string name="title_activity_login">Login</string>-->
+    <!--    <string name="title_activity_login">Login</string>-->
     <string name="enter_email">Enter email address - Optional</string>
     <string name="enter_phone_number">Enter phone - Optional</string>
-<!--    <string name="enter_email_required">Enter email address</string>-->
+    <!--    <string name="enter_email_required">Enter email address</string>-->
     <string name="enter_phone_number_required">Enter phone number</string>
     <string name="enter_valid_email">Enter valid email</string>
     <string name="registering">Registering...</string>
     <string name="edit">Edit</string>
     <string name="pass_should_at_least">Password should contain at least 6 characters with one upper and lower character</string>
     <!--    <string name="app_name_root" />-->
-
-
 
 
     <string name="list_demo">List Demo</string>
@@ -111,11 +109,12 @@
     <string name="moto_summarytext">Now &#8377;31990</string>
 
 
-
     <string name="enter_email_required">your email @seyanah-uae.com</string>
-    <string name="username2">Email address</string>
-
-
+    <string name="username2">Enter email address</string>
+    <string name="loggin_in">Logging in..</string>
+    <string name="invalid_email_or_pass">Email or password is invalid</string>
+    <string name="verify_email_address">Please verify your email address!!!</string>
+    <string name="email_already_exist">The email address is already in use by another account.</string>
 
 
 </resources>

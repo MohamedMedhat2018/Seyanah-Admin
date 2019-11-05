@@ -5,7 +5,6 @@
     <string name="from_cam">اختر من الكاميرا</string>
 
 
-
     <string name="rationale_ask_ok">نعم</string>
     <string name="cam_and_storage_rationale">Allow HServices to read your device photos or from camera</string>
     <string name="rationale_ask_cancel">الغاء</string>
@@ -21,8 +20,8 @@
 
     <string name="app_name_root">Seyanah-Uae Admin</string>
     <string name="sign_in">دخول</string>
-    <string name="username">إسم المستخدم</string>
-    <string name="password">كلمة المرور</string>
+    <string name="username">أدخل إسم المستخدم</string>
+    <string name="password">أدخل كلمة المرور</string>
     <string name="sign_up">تسجيل دخول</string>
     <string name="forgot_password">نسيت كلمة المرور؟</string>
     <string name="enter_username">أدخل إسم المستخدم</string>
@@ -40,7 +39,7 @@
     <string name="title_activity_login">تسجيل الدخول</string>
     <string name="enter_email">أدخل البريد الالكتروني - اختياري</string>
     <string name="enter_phone_number">أدخل الموبايل - اختياري</string>
-<!--    <string name="enter_email_required">أدخل البريد الالكتروني</string>-->
+    <!--    <string name="enter_email_required">أدخل البريد الالكتروني</string>-->
     <string name="enter_phone_number_required">أدخل قم التليفون</string>
     <string name="enter_valid_email">أدخل بريد صحيح</string>
     <string name="registering">... تسجيل دخول</string>
@@ -109,10 +108,15 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-<!--    <string name="enter_email_required">أدخل البريد الالكتروني - مطلوب</string>-->
+    <!--    <string name="enter_email_required">أدخل البريد الالكتروني - مطلوب</string>-->
     <string name="enter_email_required">البريد الالكتروني متبوعا ب @seyanah-uae.com</string>
-    <string name="username2">البريد الالكتروني</string>
+    <string name="username2">أدخل البريد الالكتروني</string>
 
+    <string name="loggin_in">دخول...</string>
+
+    <string name="invalid_email_or_pass">البريد الالكتروني أو كلمة المرور خاطئه</string>
+    <string name="verify_email_address">من فضلك قم بتاكيد البريد الالكتروني</string>
+    <string name="email_already_exist">البريد الالكتروني مستخدم من قبل</string>
 
 
 </resources>

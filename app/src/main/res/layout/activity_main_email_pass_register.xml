@@ -157,6 +157,7 @@
                                     android:paddingRight="4dp"
                                     android:src="@drawable/password" />
 
+
                                 <EditText
                                     android:id="@+id/etEnterPass_sub1"
                                     android:layout_width="0dp"
@@ -175,7 +176,6 @@
                                     android:visibility="visible"
 
                                     />
-
 
                                 <ImageView
                                     android:id="@+id/ivShowPassword_sub1"
@@ -784,12 +784,14 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="wrap_content"
                                             android:layout_alignParentBottom="true"
-                                            android:layout_margin="10dp"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:layout_marginBottom="20dp"
                                             android:clickable="true"
                                             android:focusable="true"
                                             android:foreground="?android:attr/selectableItemBackground"
                                             android:visibility="visible"
-                                            app:cardBackgroundColor="@color/white"
+                                            app:cardBackgroundColor="@color/orange_light"
                                             app:cardCornerRadius="10dp"
                                             app:cardElevation="4dp"
                                             app:contentPadding="15dp">
@@ -807,7 +809,7 @@
                                                     android:layout_width="wrap_content"
                                                     android:layout_height="wrap_content"
                                                     android:text="@string/sign_up"
-                                                    android:textColor="@color/grey_205"
+                                                    android:textColor="@color/white"
                                                     android:textSize="18sp" />
                                             </LinearLayout>
 
