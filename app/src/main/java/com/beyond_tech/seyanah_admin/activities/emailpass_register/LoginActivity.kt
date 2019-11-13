@@ -20,7 +20,6 @@ import com.beyond_tech.seyanah_admin.constants.Constants
 import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -31,25 +30,13 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.pixplicity.easyprefs.library.Prefs
-import kotlinx.android.synthetic.main.activity_main.*
-
 import kotlinx.android.synthetic.main.activity_main_email_pass_register.*
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.btn_back
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.btn_login_sub1
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.btn_register_sub1
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.btn_register_sub2
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.etEnterConfPass_sub2
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.etEnterPass_sub1
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.etEnterPass_sub2
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.etEnterPhone
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.etEnterUsername_sub2
-import kotlinx.android.synthetic.main.activity_main_email_pass_register.viewSwitcher
 
 
 class LoginActivity : AppCompatActivity() {
     var TAG = LoginActivity::class.java.simpleName
     internal var gson = Gson()
-    var progress: AlertDialog? = null;
+    var progress: AlertDialog? = null
     val firebaseAuth = FirebaseAuth.getInstance()
 
 
@@ -405,7 +392,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         val txt: String? = etEnterEmail_required.text.toString()
-        val regex = "@seyanah-uae.com"
+//        val regex = "@seyanah-uae.com"
+        val regex = "@btechme.com"
         if (!txt!!.endsWith(regex, true)) {
             fireToast(getString(R.string.enter_email_required))
             return
@@ -428,6 +416,7 @@ class LoginActivity : AppCompatActivity() {
 
         progress = Helper(this).createProgressDialog(getString(R.string.registering))
         progress?.show()
+
 
         registerNewUser(
             etEnterEmail_required.text.toString(),
@@ -486,9 +475,9 @@ class LoginActivity : AppCompatActivity() {
 //                                "Please verify your email address!!!",
 //                                Toast.LENGTH_LONG
 //                            ).show()
-                            dialog?.dismiss()
+                            dialog.dismiss()
                         } else {
-                            dialog?.dismiss()
+                            dialog.dismiss()
 
 
                             finish()
