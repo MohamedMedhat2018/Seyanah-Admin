@@ -109,7 +109,8 @@
     <string name="moto_summarytext">Now &#8377;31990</string>
 
 
-    <string name="enter_email_required">your email @seyanah-uae.com</string>
+<!--    <string name="enter_email_required">your email @seyanah-uae.com</string>-->
+    <string name="enter_email_required">your email @btechme.com</string>
     <string name="username2">Enter email address</string>
     <string name="loggin_in">Logging in..</string>
     <string name="invalid_email_or_pass">Email or password is invalid</string>

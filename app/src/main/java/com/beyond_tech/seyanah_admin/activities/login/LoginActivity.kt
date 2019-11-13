@@ -14,11 +14,11 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.beyond_tech.seyanah_admin.R
 import com.beyond_tech.seyanah_admin.activities.main.HomeActivity
 import com.beyond_tech.seyanah_admin.constants.Constants
 import com.beyond_tech.seyanah_admin.models.UserAdmin
+import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.google.firebase.database.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -58,8 +58,6 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
-
-
 
         if (checkIfUserLoggedInBefore()) {
             return

@@ -394,15 +394,15 @@ class LoginActivity : AppCompatActivity() {
         val txt: String? = etEnterEmail_required.text.toString()
 //        val regex = "@seyanah-uae.com"
         val regex = "@btechme.com"
-        if (!txt!!.endsWith(regex, true)) {
+        if (!txt!!.trim().endsWith(regex, true)) {
             fireToast(getString(R.string.enter_email_required))
             return
         }
 
-        if (etEnterPhone.text.isEmpty()) {
-            fireToast(getString(R.string.enter_phone_number_required))
-            return
-        }
+//        if (etEnterPhone.text.isEmpty()) {
+//            fireToast(getString(R.string.enter_phone_number_required))
+//            return
+//        }
 
         if (etEnterPass_sub2.text.isEmpty()) {
             fireToast(getString(R.string.enter_password))
