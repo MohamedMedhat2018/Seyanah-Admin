@@ -20,6 +20,7 @@ import com.beyond_tech.seyanah_admin.constants.Constants
 import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -29,6 +30,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.irozon.sneaker.Sneaker
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_main_email_pass_register.*
 
@@ -44,8 +46,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         Helper(this).makeFullScreen(savedInstanceState)
 //        makeFullScreen(savedInstanceState)
-
-
         if (checkIfUserLoggedInBefore()) {
             finish()
             startActivity(Intent(applicationContext, HomeActivity::class.java))
@@ -62,8 +62,6 @@ class LoginActivity : AppCompatActivity() {
 //                startActivity(Intent(applicationContext, HomeActivity::class.java))
 //            }
 //        }
-
-
         FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
@@ -75,9 +73,7 @@ class LoginActivity : AppCompatActivity() {
                 // User is signed out
 
             }
-            // ...
         }
-
     }
 
     private fun sendVerificationEmail(firebaseUser: FirebaseUser) {
@@ -241,6 +237,13 @@ class LoginActivity : AppCompatActivity() {
             progress = Helper(this).createProgressDialog(getString(R.string.loggin_in))
             progress!!.show()
 
+            val email = etEnterEmailAddress_sub1.text.toString()
+            val pass = etEnterPass_sub1.text.toString()
+
+            Log.e(TAG, email)
+            Log.e(TAG, pass)
+
+
             FirebaseAuth.getInstance().signInWithEmailAndPassword(
                 etEnterEmailAddress_sub1.text.toString(),
                 etEnterPass_sub1.text.toString()
@@ -351,21 +354,21 @@ class LoginActivity : AppCompatActivity() {
                     progress?.dismiss()
                 }
             })
-//            .addOnFailureListener(OnFailureListener {
-//                Log.e(TAG, it.localizedMessage)
-////                Toast.makeText(
-////                    applicationContext,
-////                    "The email address is already in use by another account.",
-////                    Toast.LENGTH_LONG
-////                ).show()
-//            })
+            .addOnFailureListener(OnFailureListener {
+                Log.e(TAG, it.localizedMessage)
+//                Toast.makeText(
+//                    applicationContext,
+//                    "The email address is already in use by another account.",
+//                    Toast.LENGTH_LONG
+//                ).show()
+            })
 
     }
 
 
     private fun fireToast(message: String) {
-        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT)
-            .show()
+//        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
     }
 
     private fun accessRegisterViewPagerSub1() {
@@ -393,11 +396,13 @@ class LoginActivity : AppCompatActivity() {
 
         val txt: String? = etEnterEmail_required.text.toString()
 //        val regex = "@seyanah-uae.com"
-        val regex = "@btechme.com"
-        if (!txt!!.trim().endsWith(regex, true)) {
-            fireToast(getString(R.string.enter_email_required))
-            return
-        }
+//        val regex = "@btechme.com"
+        val regex = ""
+
+//        if (!txt!!.trim().endsWith(regex, true)) {
+//            fireToast(getString(R.string.enter_email_required))
+//            return
+//        }
 
 //        if (etEnterPhone.text.isEmpty()) {
 //            fireToast(getString(R.string.enter_phone_number_required))
@@ -406,6 +411,11 @@ class LoginActivity : AppCompatActivity() {
 
         if (etEnterPass_sub2.text.isEmpty()) {
             fireToast(getString(R.string.enter_password))
+            return
+        }
+
+        if (etEnterPass_sub2.text.length < 6) {
+            fireToast(getString(R.string.pass_should_at_least))
             return
         }
 
@@ -450,12 +460,20 @@ class LoginActivity : AppCompatActivity() {
                 .child(pushedKey!!)
                 .setValue(userAdmin).addOnCompleteListener {
                     if (it.isSuccessful) {
-                        Toast.makeText(
-                            applicationContext,
-                            getString(R.string.admin_created_succes),
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
+//                        Toast.makeText(
+//                            applicationContext,
+//                            getString(R.string.admin_created_succes),
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+
+                        Sneaker.with(this)
+//                            .setTitle(getString(R.string.done_success))
+                            .setCornerRadius(5, 5)
+                            .setMessage(getString(R.string.admin_created_succes))
+                            .sneakSuccess()
+
+
                         dialog.dismiss()
 
                         viewSwitcher.showPrevious()
@@ -468,7 +486,8 @@ class LoginActivity : AppCompatActivity() {
                         etEnterConfPass_sub2.text.clear()
 
 
-                        if (FirebaseAuth.getInstance().currentUser != null && !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
+                        if (FirebaseAuth.getInstance().currentUser != null &&
+                            !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
 //                            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
 //                            Toast.makeText(
 //                                applicationContext,

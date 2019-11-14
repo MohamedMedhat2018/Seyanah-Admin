@@ -118,6 +118,8 @@
     <string name="invalid_email_or_pass">البريد الالكتروني أو كلمة المرور خاطئه</string>
     <string name="verify_email_address">من فضلك قم بتاكيد البريد الالكتروني</string>
     <string name="email_already_exist">البريد الالكتروني مستخدم من قبل</string>
+    <string name="done_success">تم بنجاح</string>
+    <string name="or">أو</string>
 
 
 </resources>
