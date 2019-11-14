@@ -9,7 +9,9 @@ import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.ScaleAnimation
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -24,10 +26,10 @@ import com.google.android.gms.tasks.OnFailureListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.irozon.sneaker.Sneaker
@@ -74,21 +76,30 @@ class LoginActivity : AppCompatActivity() {
 
             }
         }
+
+
     }
 
     private fun sendVerificationEmail(firebaseUser: FirebaseUser) {
+
+        progress = Helper(this).createProgressDialog(getString(R.string.resending))
+        progress!!.show()
+
         firebaseUser.sendEmailVerification()
             .addOnCompleteListener(OnCompleteListener<Void> { task ->
                 if (task.isSuccessful) {
                     // email sent
                     // after email is sent just logout the user and finish this activity
-//                                    FirebaseAuth.getInstance().signOut()
+//                   FirebaseAuth.getInstance().signOut()
                     Toast.makeText(
                         applicationContext,
-                        "The email sent to your account",
+                        getString(R.string.email_sent_to),
                         Toast.LENGTH_LONG
                     ).show()
+                    btn_resend_ver_email.visibility = View.GONE
+                    progress!!.dismiss()
                 } else {
+                    progress!!.dismiss()
                     // email not sent, so display message and restart the activity or do whatever you wish to do
                     Toast.makeText(
                         applicationContext,
@@ -139,6 +150,10 @@ class LoginActivity : AppCompatActivity() {
             findViewById(R.id.ivShowPassword2_reg)
         )
 
+
+        btn_resend_ver_email.setOnClickListener {
+            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
+        }
 
     }
 
@@ -215,6 +230,82 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    private fun testingScalingAnim() {
+
+        etEnterEmailAddress_sub1.isFocusable = false
+        etEnterPass_sub1.isFocusable = false
+
+        //show resend
+        btn_resend_ver_email.visibility = View.VISIBLE
+        val anim = ScaleAnimation(
+            0.0f,
+            1.0f,
+            1.0f,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.5f
+        )
+        anim.duration = 700
+        btn_resend_ver_email.startAnimation(anim)
+
+//        val anim = ScaleAnimation(
+//            1.0f,
+//            0.0f,
+//            1.0f,
+//            1.0f,
+//            Animation.RELATIVE_TO_SELF,
+//            1.0f,
+//            Animation.RELATIVE_TO_SELF,
+//            0.5f
+//        )
+//        anim.duration = 700
+//        btn_resend_ver_email.startAnimation(anim)
+//        anim.setAnimationListener(object : Animation.AnimationListener {
+//            override fun onAnimationStart(animation: Animation) {
+//
+//            }
+//
+//            override fun onAnimationEnd(animation: Animation) {
+//                btn_resend_ver_email.visibility = View.GONE
+//            }
+//
+//            override fun onAnimationRepeat(animation: Animation) {
+//
+//            }
+//        })
+
+
+        //hide login
+        val anim2 = ScaleAnimation(
+            1.0f,
+            1.0f,
+            1.0f,
+            1.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.0f,
+            Animation.RELATIVE_TO_SELF,
+            0.0f
+        )
+        anim2.duration = 700
+        btn_login_sub1.startAnimation(anim2)
+        anim2.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation) {
+
+            }
+
+            override fun onAnimationEnd(animation: Animation) {
+                //btn_resend_ver_email.visibility = View.VISIBLE
+            }
+
+            override fun onAnimationRepeat(animation: Animation) {
+
+            }
+        })
+
+    }
+
     private fun accessLogiViewPagerSub1() {
 
 
@@ -226,11 +317,13 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-
             if (etEnterPass_sub1.text.isEmpty()) {
                 fireToast(getString(R.string.enter_password))
                 return@setOnClickListener
             }
+
+
+            btn_resend_ver_email.visibility = View.GONE
 
 
 //            progress = Helper(this).createProgressDialog(getString(R.string.please_wait))
@@ -262,7 +355,24 @@ class LoginActivity : AppCompatActivity() {
                             return@OnCompleteListener
                         } else {
                             if (FirebaseAuth.getInstance().currentUser != null && !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
-                                sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
+                                //sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
+
+
+                                btn_resend_ver_email.visibility = View.VISIBLE
+//                                val anim = ScaleAnimation(
+//                                    0.0f,
+//                                    1.0f,
+//                                    1.0f,
+//                                    1.0f,
+//                                    Animation.RELATIVE_TO_SELF,
+//                                    1.0f,
+//                                    Animation.RELATIVE_TO_SELF,
+//                                    0.5f
+//                                )
+//                                anim.duration = 700
+//                                btn_resend_ver_email.startAnimation(anim)
+
+
                                 fireToast(getString(R.string.verify_email_address))
                                 progress?.dismiss()
                                 return@OnCompleteListener
@@ -270,18 +380,24 @@ class LoginActivity : AppCompatActivity() {
                                 FirebaseDatabase.getInstance()
                                     .reference
                                     .child(Constants.ADMINS)
-                                    .orderByChild(Constants.REG_USERNAME)
+                                    .orderByChild(Constants.REG_EMAIL)
+//                                    .orderByChild(Constants.REG_USERNAME)
                                     .equalTo(etEnterEmailAddress_sub1.text.toString().trim())
-                                    .addChildEventListener(object : ChildEventListener {
+                                    .addValueEventListener(object : ValueEventListener {
+
                                         override fun onCancelled(p0: DatabaseError) {
+
+
                                         }
 
-                                        override fun onChildAdded(
-                                            dataSnapshot: DataSnapshot,
-                                            p1: String?
-                                        ) {
+                                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+
                                             dataSnapshot.ref.removeEventListener(this)
+//                                           dataSnapshot.children.forEach { dataSnapshot ->
+//                                           }
                                             if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                                                val dataSnapshot =
+                                                    dataSnapshot.children.elementAt(0)
                                                 progress?.dismiss()
                                                 val userAdmin: UserAdmin? =
                                                     dataSnapshot.getValue(UserAdmin::class.java)
@@ -308,31 +424,79 @@ class LoginActivity : AppCompatActivity() {
                                                     )
                                                 )
                                             } else {
+                                                progress?.dismiss()
                                                 fireToast(message = getString(R.string.network_error))
                                             }
 
                                         }
-
-                                        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
-
-
-                                        }
-
-                                        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
-
-
-                                        }
-
-                                        override fun onChildRemoved(p0: DataSnapshot) {
-
-                                        }
                                     })
+
+
+//                                    .addChildEventListener(object : ChildEventListener {
+//                                        override fun onCancelled(p0: DatabaseError) {
+//                                        }
+//
+//                                        override fun onChildAdded(
+//                                            dataSnapshot: DataSnapshot,
+//                                            p1: String?
+//                                        ) {
+//                                            dataSnapshot.ref.removeEventListener(this)
+//                                            if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+//                                                progress?.dismiss()
+//                                                val userAdmin: UserAdmin? =
+//                                                    dataSnapshot.getValue(UserAdmin::class.java)
+//
+//                                                //Saving that user have been logged in before
+//                                                Prefs.edit()
+//                                                    .putString(Constants.LOGGED_BEFORE, "")
+//                                                    .apply()
+//
+//                                                //saving the fetched user admin as the Profile Fragment
+//                                                Prefs.putString(
+//                                                    Constants.USER_ADMIN,
+//                                                    gson.toJson(
+//                                                        userAdmin,
+//                                                        object : TypeToken<UserAdmin>() {
+//                                                        }.type
+//                                                    )
+//                                                )
+//
+//                                                startActivity(
+//                                                    Intent(
+//                                                        applicationContext,
+//                                                        HomeActivity::class.java
+//                                                    )
+//                                                )
+//                                            } else {
+//                                                progress?.dismiss()
+//                                                fireToast(message = getString(R.string.network_error))
+//                                            }
+//
+//                                        }
+//
+//                                        override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+//
+//
+//                                        }
+//
+//                                        override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+//
+//
+//                                        }
+//
+//                                        override fun onChildRemoved(p0: DataSnapshot) {
+//
+//                                        }
+//                                    })
 
 
                             }
                         }
                         // ...
                     })
+                .addOnFailureListener(OnFailureListener {
+                    Log.e(TAG, it.localizedMessage)
+                })
 
         }
 
@@ -396,13 +560,13 @@ class LoginActivity : AppCompatActivity() {
 
         val txt: String? = etEnterEmail_required.text.toString()
 //        val regex = "@seyanah-uae.com"
-//        val regex = "@btechme.com"
-        val regex = ""
+        val regex = "@btechme.com"
+//        val regex = ""
 
-//        if (!txt!!.trim().endsWith(regex, true)) {
-//            fireToast(getString(R.string.enter_email_required))
-//            return
-//        }
+        if (!txt!!.trim().endsWith(regex, true)) {
+            fireToast(getString(R.string.enter_email_required))
+            return
+        }
 
 //        if (etEnterPhone.text.isEmpty()) {
 //            fireToast(getString(R.string.enter_phone_number_required))
@@ -487,7 +651,8 @@ class LoginActivity : AppCompatActivity() {
 
 
                         if (FirebaseAuth.getInstance().currentUser != null &&
-                            !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
+                            !FirebaseAuth.getInstance().currentUser!!.isEmailVerified
+                        ) {
 //                            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
 //                            Toast.makeText(
 //                                applicationContext,

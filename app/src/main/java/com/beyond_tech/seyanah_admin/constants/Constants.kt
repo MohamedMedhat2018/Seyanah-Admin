@@ -14,6 +14,7 @@ class Constants {
         var ADMINS: String = "Admins"
         //        var REG_USERNAMES: String = "userName"
         var REG_USERNAME: String = "username"
+        var REG_EMAIL: String = "email"
 
 
         val SHOWN_NOTI = "shown"

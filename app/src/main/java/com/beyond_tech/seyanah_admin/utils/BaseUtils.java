@@ -27,6 +27,16 @@ public class BaseUtils {
 //                .setMessage("This is the success message")
 //                .sneakSuccess();
 //
+
+//        ScaleAnimation anim = new ScaleAnimation(0.0f, 1.0f, 1.0f, 1.0f, Animation.RELATIVE_TO_SELF,1.0f, Animation.RELATIVE_TO_SELF, 0.5f);
+//        anim.setDuration(700);
+//        view.startAnimation(anim);
+
+
+
+
+
+
         ItemCard ndtvCard = createItemCard(resources, R.string.ndtv_titletext, R.string.ndtv_image_url,
                 R.string.ndtv_subtext, R.string.ndtv_summarytext);
 

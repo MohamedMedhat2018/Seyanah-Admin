@@ -118,6 +118,9 @@
     <string name="email_already_exist">The email address is already in use by another account.</string>
     <string name="done_success">Done</string>
     <string name="or">Or</string>
+    <string name="resend">Resend</string>
+    <string name="email_sent_to">The email sent to your account</string>
+    <string name="resending">Resending email verification</string>
 
 
 </resources>

@@ -120,6 +120,9 @@
     <string name="email_already_exist">البريد الالكتروني مستخدم من قبل</string>
     <string name="done_success">تم بنجاح</string>
     <string name="or">أو</string>
+    <string name="resend">إعادة إرسال</string>
+    <string name="email_sent_to">لقد تم إرسال ايميل التفعيل - قم بتفعيل الايميل</string>
+    <string name="resending">إعادة إرسال إيميل التفعيل</string>
 
 
 </resources>
