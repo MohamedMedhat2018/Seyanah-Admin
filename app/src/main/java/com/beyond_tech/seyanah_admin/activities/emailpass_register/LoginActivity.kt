@@ -496,6 +496,7 @@ class LoginActivity : AppCompatActivity() {
                     })
                 .addOnFailureListener(OnFailureListener {
                     Log.e(TAG, it.localizedMessage)
+                    progress?.dismiss()
                 })
 
         }

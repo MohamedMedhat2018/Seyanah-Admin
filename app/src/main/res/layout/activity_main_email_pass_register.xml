@@ -102,7 +102,7 @@
                                         android:layout_height="wrap_content"
                                         android:paddingEnd="4dp"
                                         android:paddingRight="4dp"
-                                        android:src="@drawable/username"
+                                        android:src="@drawable/email_address"
 
 
                                         />
