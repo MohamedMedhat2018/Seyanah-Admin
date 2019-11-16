@@ -28,6 +28,10 @@ android {
 
 dependencies {
 
+
+    implementation 'android.arch.work:work-runtime:1.0.1'
+
+
     def multidex_version = "2.0.1"
     implementation "androidx.multidex:multidex:$multidex_version"
 
@@ -51,6 +55,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:19.1.0'
 //    implementation 'com.google.firebase:firebase-messaging:20.0.0'
 //    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.1'
+    implementation 'com.google.firebase:firebase-messaging:20.0.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -122,5 +127,15 @@ dependencies {
     implementation 'com.mobsandgeeks:android-saripaar:2.0.3'
 
     implementation 'com.irozon.sneaker:sneaker:2.0.0'
+
+    implementation 'com.google.firebase:firebase-appindexing:19.0.0'
+
+
+
+    implementation 'com.jakewharton:butterknife:10.1.0'
+//    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+
+    
 
 }
