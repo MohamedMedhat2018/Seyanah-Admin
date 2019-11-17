@@ -10,7 +10,8 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.beyond_tech.seyanah_admin"
-        minSdkVersion 19
+//        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 4
         versionName "1.00004"
@@ -24,12 +25,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
 
 
     implementation 'android.arch.work:work-runtime:1.0.1'
+
+
+    implementation 'com.asksira.android:loopingviewpager:1.2.0'
 
 
     def multidex_version = "2.0.1"
@@ -130,12 +140,26 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-appindexing:19.0.0'
 
+    implementation 'org.honorato.multistatetogglebutton:multistatetogglebutton:0.2.2'
 
 
-    implementation 'com.jakewharton:butterknife:10.1.0'
+//    implementation 'com.jakewharton:butterknife:10.1.0'
 //    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+//    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
 
-    
+    // Material Dialog Library
+    implementation 'com.shreyaspatil:MaterialDialog:1.0.0'
+
+    // Material Design Library
+    implementation 'com.google.android.material:material:1.0.0'
+
+    // Lottie Animation Library
+    implementation 'com.airbnb.android:lottie:3.0.7'
+
+
+    implementation 'com.github.TutorialsAndroid:KAlertDialog:v7.0.19'
+    implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.github.siyamed:android-shape-imageview:0.9.+@aar'
 
 }

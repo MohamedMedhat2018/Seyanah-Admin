@@ -3,6 +3,12 @@ package com.beyond_tech.seyanah_admin.constants
 class Constants {
     companion object {
 
+        @JvmField
+        val USER_TYPE_FREE = "FREE"
+
+
+        val CUSTOMER_ID: String = "customerId"
+        val OFFER: String = "Offer"
         val KEYWORD: String = "keyword"
         val KEY_EMAIL_ADDRESS: String = "email"
         val KEY_PHONE_NUMBER: String = "phoneNumber"
@@ -36,7 +42,7 @@ class Constants {
         val ID_ACCOUNT = 4
 
 
-        val USER_TYPE_FREE = "FREE"
+
         val USER_TYPE_PREMIUM = "PREMIUM"
         val NETWORK_ERROR = "Network connection error"
 

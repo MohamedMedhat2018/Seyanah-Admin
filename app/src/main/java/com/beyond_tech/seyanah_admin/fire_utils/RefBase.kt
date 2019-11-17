@@ -37,5 +37,20 @@ class RefBase {
             return root().child(Constants.CP_NOTIFICATIONS)
 
         }
+
+        //for the requests
+        fun refRequest(reqId: String): DatabaseReference {
+            return root()
+                .child(Constants.REQUESTS)
+                .child(reqId)
+
+        }
+
+        fun refUser(userId: String): DatabaseReference {
+            return root()
+                .child(Constants.USERS)
+                .child(userId)
+
+        }
     }
 }

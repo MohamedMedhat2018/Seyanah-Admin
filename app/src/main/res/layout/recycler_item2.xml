@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=""
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textColor="@color/textLightGrey"
                     android:paddingStart="5dp"
                     android:textSize="12sp"
@@ -132,7 +132,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:text="2m"
-                    android:visibility="gone"
+                    android:visibility="visible"
                     android:textColor="@color/textLightGrey"
                     />
 

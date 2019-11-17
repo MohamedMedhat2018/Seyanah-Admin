@@ -27,6 +27,7 @@ public class OrderRequest implements Serializable {
 
     public OrderRequest() {
 
+
     }
 
     public String getRate() {

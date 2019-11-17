@@ -15,11 +15,8 @@ import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkManager;
 
 import com.beyond_tech.seyanah_admin.R;
-import com.beyond_tech.seyanah_admin.activities.details.customer.CustomerOrderDetails;
-import com.beyond_tech.seyanah_admin.activities.details.customer.CustomerPostDetails;
-import com.beyond_tech.seyanah_admin.activities.details.freelancer.FreelancerPostDetails;
+import com.beyond_tech.seyanah_admin.activities.main.HomeActivity;
 import com.beyond_tech.seyanah_admin.config.AppConfig;
-import com.beyond_tech.seyanah_admin.constants.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -115,34 +112,34 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //            body = data.get("body");
 //            title = data.get("title");
 //            orderId = data.get("serviceId");
-            orderId = data.get(Constants.TYPE);
-            detailsType = data.get(Constants.NOTIFI_DETAILS_TYPE);
+//            orderId = data.get(Constants.TYPE);
+//            detailsType = data.get(Constants.NOTIFI_DETAILS_TYPE);
         }
         Intent intent = null;
-        switch (detailsType) {
-            case Constants.FREELANCER_POST_DETAILS:
-                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-                intent = new Intent(AppConfig.getInstance(), FreelancerPostDetails.class);
+//        switch (detailsType) {
+//            case Constants.FREELANCER_POST_DETAILS:
+//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
+//                intent = new Intent(AppConfig.getInstance(), FreelancerPostDetails.class);
+//
+//
+//                break;
+//            case Constants.CUSTOMER_POST_DETAILS:
+//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
+//                intent = new Intent(AppConfig.getInstance(), CustomerPostDetails.class);
+//
+//                break;
+//            case Constants.CUSTOMER_ORDER_DETAILS:
+//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
+//                intent = new Intent(AppConfig.getInstance(), CustomerOrderDetails.class);
+//
+//                break;
+//            default:
+//                break;
+//        }
 
 
-                break;
-            case Constants.CUSTOMER_POST_DETAILS:
-                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-                intent = new Intent(AppConfig.getInstance(), CustomerPostDetails.class);
-
-                break;
-            case Constants.CUSTOMER_ORDER_DETAILS:
-                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-                intent = new Intent(AppConfig.getInstance(), CustomerOrderDetails.class);
-
-                break;
-            default:
-                break;
-        }
-
-
-        intent.putExtra(Constants.ORDER_ID_NOTIFI_BAR, orderId);
-        intent.putExtra(Constants.NOTIFI_DETAILS_TYPE, detailsType);
+//        intent.putExtra(Constants.ORDER_ID_NOTIFI_BAR, orderId);
+//        intent.putExtra(Constants.NOTIFI_DETAILS_TYPE, detailsType);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 //        intent.putExtra();
@@ -208,7 +205,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      */
     public void sendNotification(String messageBody, String title) {
 
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

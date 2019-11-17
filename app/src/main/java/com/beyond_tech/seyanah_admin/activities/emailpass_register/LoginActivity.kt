@@ -307,10 +307,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun accessLogiViewPagerSub1() {
-
-
         btn_login_sub1.setOnClickListener {
-
 
             if (etEnterEmailAddress_sub1.text.isEmpty()) {
                 fireToast(getString(R.string.enter_email_required))
@@ -384,7 +381,6 @@ class LoginActivity : AppCompatActivity() {
 //                                    .orderByChild(Constants.REG_USERNAME)
                                     .equalTo(etEnterEmailAddress_sub1.text.toString().trim())
                                     .addValueEventListener(object : ValueEventListener {
-
                                         override fun onCancelled(p0: DatabaseError) {
 
 
@@ -510,7 +506,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
                     fireToast(message = getString(R.string.verify_email_address))
-                    progress?.dismiss()
+                    //progress?.dismiss()
                     registerUserSub1(progress!!)
 
                 } else {
@@ -521,6 +517,7 @@ class LoginActivity : AppCompatActivity() {
             })
             .addOnFailureListener(OnFailureListener {
                 Log.e(TAG, it.localizedMessage)
+                progress?.dismiss()
 //                Toast.makeText(
 //                    applicationContext,
 //                    "The email address is already in use by another account.",

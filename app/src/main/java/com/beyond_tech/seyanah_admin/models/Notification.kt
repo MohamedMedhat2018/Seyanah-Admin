@@ -8,24 +8,31 @@ class Notification() {
 //    lateinit var title: String
 //    lateinit var body: String
 
-
-     var firebaseUserId = ""
-     var orderId = ""
-     var notiType = ""
-     var title = ""
-     var message = ""
+    var customerId: String? = null
+    var freelancerId: String? = null
+    //    private var requestId: String? = null
+//    var firebaseUserId = ""
+    var requestId = ""
+    var notiType = ""
+    var title = ""
+    var message = ""
     var shown: Boolean = true
 
+    init {
+
+    }
 
     constructor(
-        firebaseUserId: String?,
+        customerId: String?,
+        freelancerId: String?,
         orderId: String,
         title: String,
         message: String,
         shown: Boolean
     ) : this() {
-        this.firebaseUserId = firebaseUserId!!
-        this.orderId = orderId
+        this.customerId = customerId!!
+        this.freelancerId = freelancerId!!
+        this.requestId = orderId
         this.title = title
         this.message = message
         this.shown = shown

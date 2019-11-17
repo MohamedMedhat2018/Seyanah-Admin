@@ -123,6 +123,8 @@
     <string name="resend">إعادة إرسال</string>
     <string name="email_sent_to">لقد تم إرسال ايميل التفعيل - قم بتفعيل الايميل</string>
     <string name="resending">إعادة إرسال إيميل التفعيل</string>
+    <string name="default_notification_channel_id">MyChannelId</string>
+    <string name="ok">Okay</string>
 
 
 </resources>

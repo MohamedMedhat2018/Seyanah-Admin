@@ -9,20 +9,23 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.beyond_tech.seyanah_admin.R
 import com.beyond_tech.seyanah_admin.adapters.rv.RecyclerNotificationAdapter
 import com.beyond_tech.seyanah_admin.constants.Constants
 import com.beyond_tech.seyanah_admin.fire_utils.RefBase
+import com.beyond_tech.seyanah_admin.interfaces.OnNotificationClicked
 import com.beyond_tech.seyanah_admin.models.Category
 import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.OrderRequest
+import com.beyond_tech.seyanah_admin.models.User
+import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -30,12 +33,103 @@ import com.willowtreeapps.spruce.Spruce
 import com.willowtreeapps.spruce.animation.DefaultAnimations
 import com.willowtreeapps.spruce.sort.DefaultSort
 import kotlinx.android.synthetic.main.fragment_notifications.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
-class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
+    OnNotificationClicked {
 
-    var detached: Boolean = false;
+
+    override fun onNotificationClciked(notification: Notification, position: Int) {
+        Log.e(TAG, "clicked ")
+
+        when (notification.notiType) {
+            Constants.REQUESTS -> {
+                Log.e(TAG, notification.notiType)
+
+                //show alert dialog details
+                showAlertDialog(notification)
+
+
+            }
+            Constants.WORKERS -> {
+                Log.e(TAG, notification.notiType)
+
+
+            }
+            Constants.USERS -> {
+                Log.e(TAG, notification.notiType)
+
+
+            }
+            else -> {
+
+            }
+        }
+
+    }
+
+    private fun showAlertDialog(notification: Notification) {
+        val v = LayoutInflater.from(activity)
+            .inflate(R.layout.layout_preview_order_details, null)
+        val alertDialog: AlertDialog
+        val builder: AlertDialog.Builder
+        builder = AlertDialog.Builder(activity)
+            .setView(v)
+            .setPositiveButton(
+                getString(R.string.ok)
+            ) { dialog, _ -> dialog.dismiss() }
+        alertDialog = builder.create()
+
+        alertDialog.setOnShowListener {
+            var tvName = v.findViewById<TextView>(R.id.tvFullName)
+            var tvPhone = v.findViewById<TextView>(R.id.tvPhone)
+            var tvZone = v.findViewById<TextView>(R.id.tvZone)
+            var tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
+
+
+            RefBase.refUser(notification.customerId!!)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        dataSnapshot.ref.removeEventListener(this)
+                        if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                            Log.e(TAG, "onDataChange: Finished pro4 ")
+                            val user = dataSnapshot.getValue(User::class.java)
+                            tvName.text = user!!.userName
+                            tvPhone.text = user.userPhoneNumber
+
+                            RefBase.refRequest(notification.requestId)
+                                .addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        dataSnapshot.ref.removeEventListener(this)
+                                        if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                                            Log.e(TAG, "onDataChange: Finished pro4 ")
+                                            val orderRequest =
+                                                dataSnapshot.getValue(OrderRequest::class.java)
+                                            tvZone.text = orderRequest!!.location.country
+                                            tvOrderDetails.text = orderRequest.orderDescription
+                                        }
+                                    }
+
+                                    override fun onCancelled(databaseError: DatabaseError) {
+
+                                    }
+                                })
+                        }
+                    }
+
+                    override fun onCancelled(databaseError: DatabaseError) {
+
+                    }
+                })
+
+
+        }
+
+        if (!alertDialog.isShowing) {
+            alertDialog.show()
+        }
+    }
+
+    var detached: Boolean = false
     val TAG = NotificationsFragment::class.java.name
     var listOfNotification: ArrayList<Notification> = ArrayList<Notification>()
     var listOfCPNotification: ArrayList<Notification> = ArrayList<Notification>()
@@ -43,7 +137,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     var listOfCategory: ArrayList<Category> = ArrayList<Category>()
     var title = ""
     var body = ""
-    var progress : AlertDialog? = null
+    var progress: AlertDialog? = null
     var notiType = ""
     lateinit var notification: Notification
     lateinit var adapterNotification: RecyclerNotificationAdapter
@@ -73,6 +167,26 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //        accessShimmerRecycler()
 
         postDelayed()
+
+        accessMutliStateToggleButton()
+
+    }
+
+    private fun accessMutliStateToggleButton() {
+        multiStateToggleButton.setOnValueChangedListener { position ->
+            Log.e(
+                TAG,
+                "Position: $position"
+            )
+
+            // loadCPNotification(position)
+            pos = position
+            postDelayed()
+        }
+
+// Resource id, position one is selected by default
+        multiStateToggleButton.setElements(R.array.planets_array, 0)
+
     }
 
     private fun accessShimmerRecycler() {
@@ -89,7 +203,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             activity,
             listOfNotification,
             listOfOrdersRequest,
-            listOfCategory
+            listOfCategory,
+            this
         )
 
 
@@ -120,13 +235,12 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     private fun setupRecyclerView(recycler_notifi: RecyclerView?) {
-
         adapterNotification = RecyclerNotificationAdapter(
             activity,
             listOfNotification,
             listOfOrdersRequest,
-            listOfCategory
-
+            listOfCategory,
+            this
         )
 
 
@@ -181,7 +295,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private fun loadNotification() {
 
-         progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
+        progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
 //        progress?.show()
 
 
@@ -217,14 +331,14 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                 .map { childIndexAt: IndexedValue<DataSnapshot> ->
 
 
-                                    notification =
-                                        Notification(
-                                            indexedValue.value.key.toString(),
-                                            "",
-                                            "",
-                                            "",
-                                            false
-                                        )
+                                    //                                    notification =
+//                                        Notification(
+//                                            indexedValue.value.key.toString(),
+//                                            "",
+//                                            "",
+//                                            "",
+//                                            false
+//                                        )
 
 
                                     //Log.e(TAG, "index " + value.value.toString())
@@ -241,8 +355,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                                         }
                                     childIndexAt.value.child(Constants.ORDERID)
                                         .let {
-                                            notification.orderId = it.value.toString()
-                                            Log.e(TAG, "test888 " + notification.orderId)
+                                            notification.requestId = it.value.toString()
+                                            Log.e(TAG, "test888 " + notification.requestId)
                                         }
 
                                     childIndexAt.value.child(Constants.SHOWN_NOTI)
@@ -289,7 +403,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                             activity,
                             listOfNotification,
                             listOfOrdersRequest,
-                            listOfCategory
+                            listOfCategory,
+                            this@NotificationsFragment
                         )
                         recycler_notifi.layoutManager = linerLayoutManager
 
@@ -302,13 +417,13 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //                    }
                     }
                 }
-                loadCPNotification()
+//                loadCPNotification(position)
+                loadCPNotification(0)
             }
 
             override fun onCancelled(dataSnapshotError: DatabaseError) {
                 Log.e(TAG, "error" + dataSnapshotError.message)
                 progress?.dismiss()
-
             }
         })
     }
@@ -317,81 +432,119 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onDetach()
 
         detached = true
-        if (progress != null){
+        if (progress != null) {
             progress?.dismiss()
         }
     }
 
-
-    private fun loadCPNotification() {
+    private fun loadCPNotification(position: Int) {
 
 
 //        val progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
 //        progress?.show()
 
+        var keyword = ""
+        when (position) {
+            0 -> {
+                keyword = Constants.USERS
 
-        RefBase.cpNotification().addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                dataSnapshot.ref.removeEventListener(this)
-                if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
 
-                    Log.e(TAG, "tYPE TYPE$dataSnapshot")
+            }
+            1 -> {
+                keyword = Constants.FREELANCERS
 
-                    dataSnapshot.children.iterator().forEach {
-                        Log.e(TAG, "AFTER LOOP$it")
 
-                        val map: HashMap<String, Object> =
-                            it.value as HashMap<String, Object>
-                        Log.e(TAG, "tYPE TYPEx$map")
+            }
+            2 -> {
+                keyword = Constants.REQUESTS
 
-                        var notification: Notification = Notification()
 
-                        var keyword = map.get(Constants.KEYWORD).toString()
+            }
+//            3 -> {
+//                keyword = Constants.OFFER
+//
+//
+//            }
+        }
+
+        RefBase.cpNotification()
+            .orderByChild(Constants.KEYWORD)
+            .equalTo(keyword)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataSnapshot.ref.removeEventListener(this)
+                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+
+                        Log.e(TAG, "tYPE TYPE$dataSnapshot")
+
+                        dataSnapshot.children.iterator().forEach {
+                            Log.e(TAG, "AFTER LOOP$it")
+
+                            val map: HashMap<String, Object> =
+                                it.value as HashMap<String, Object>
+                            Log.e(TAG, "tYPE TYPEx$map")
+
+                            var keyword = map.get(Constants.KEYWORD).toString()
+
 //                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
-                        Log.e(TAG, "tYPE TYPExx$keyword")
-                        if (keyword == Constants.REQUESTS) {
+                            Log.e(TAG, "tYPE TYPExx$keyword")
 
-                            Log.e(TAG, "Requestx" + keyword)
+                            when (keyword) {
+                                Constants.REQUESTS -> {
+                                    Log.e(TAG, "Requestx" + keyword)
+                                    title = "New Order"
+                                    body = "New order have been requested, Check out more details"
+                                    notification.customerId =
+                                        map.get(Constants.CUSTOMER_ID).toString()
+                                    notification.requestId = map.get(Constants.ORDER_ID).toString()
+                                }
 
-//                        val vvvv = "Customer has been send the request successfully "
+                                //                        val vvvv = "Customer has been send the request successfully "
+                                Constants.USERS -> {
+                                    Log.e(TAG, "tEEEEEEEEEEEt")
+                                    title = "New User"
+                                    body = "A new user has been register successfully "
 
-                        } else if (keyword == Constants.USERS) {
-                            Log.e(TAG, "tEEEEEEEEEEEt")
-                            title = "New User"
-                            body = "A new user has been register successfully "
+
+                                }
+                                Constants.FREELANCERS -> {
+                                    notification.freelancerId =
+                                        map.get(Constants.FREE_LANCER_ID).toString()
+                                    title = "New Freelancer"
+                                    body = "A new Freelancer has been register successfully "
+
+
+                                }
+                            }
+
 
                             notification.title = title
                             notification.message = body
-                            notification.notiType = keyword.toString()
+                            notification.notiType = keyword
 
                             listOfCPNotification.add(notification)
 
                             listOfNotification.addAll(listOfCPNotification)
-                            adapterNotification.notifyDataSetChanged()
 
-                        } else if (keyword == Constants.FREELANCERS) {
+                            Log.e(TAG, "size_8484 =  " + listOfCPNotification.size.toString())
 
-                            title = "New Freelancer"
-                            body = "A new Freelancer has been register successfully "
+                            if (!detached) {
+                                if (listOfNotification.isNotEmpty()) {
+                                    tvNoNotificationsYet.visibility = View.GONE
+                                    recycler_notifi.visibility = View.VISIBLE
+                                } else {
+                                    tvNoNotificationsYet.visibility = View.VISIBLE
+                                    recycler_notifi.visibility = View.GONE
+                                }
 
-                            notification.title = title
-                            notification.message = body
-                            notification.notiType = keyword.toString()
-
-                            listOfCPNotification.add(notification)
-
-                            listOfNotification.addAll(listOfCPNotification)
-                            adapterNotification.notifyDataSetChanged()
-
-                        }
-//                    notification.title = title
-//                    notification.message = body
-//                    notification.notiType = keyword.toString()
-//
-//                    listOfCPNotification.add(notification)
-//
-//                    listOfNotification.addAll(listOfCPNotification)
-//                    adapterNotification.notifyDataSetChanged()
+                                recycler_notifi.adapter = RecyclerNotificationAdapter(
+                                    activity,
+                                    listOfNotification,
+                                    listOfOrdersRequest,
+                                    listOfCategory,
+                                    this@NotificationsFragment
+                                )
+                                recycler_notifi.layoutManager = linerLayoutManager
 
 //                    RecyclerNotificationAdapter
 
@@ -405,103 +558,60 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //                    for (i in listOfNotification) {
 //                        Log.e(TAG, "LISTT4 " + i.orderId)
 //                    }
-                        Log.e(
-                            TAG,
-                            "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
-                        )
+                                Log.e(
+                                    TAG,
+                                    "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
+                                )
 
-                    }
+                            }
 
-//                    val map: HashMap<String, Object> =
-//                        dataSnapshot.children.iterator().next().value as HashMap<String, Object>
-//                    Log.e(TAG, "tYPE TYPEx$map")
-//
-//                    var notification: Notification = Notification()
-//
-//                    var keyword = map.get(Constants.KEYWORD).toString()
-////                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
-//                    Log.e(TAG, "tYPE TYPExx$keyword")
-//                    if (keyword == Constants.REQUESTS) {
-//
-//                        Log.e(TAG, "Requestx" + keyword)
-//
-////                        val vvvv = "Customer has been send the request successfully "
-//
-//                    } else if (keyword == Constants.USERS) {
-//                        Log.e(TAG, "tEEEEEEEEEEEt")
-//                        title = "New User"
-//                        body = "A new user has been register successfully "
-//
-//                        notification.title = title
-//                        notification.message = body
-//                        notification.notiType = keyword.toString()
-//
-//                        listOfCPNotification.add(notification)
-//
-//                        listOfNotification.addAll(listOfCPNotification)
-//                        adapterNotification.notifyDataSetChanged()
-//
-//                    } else if (keyword == Constants.FREELANCERS) {
-//
-//                        title = "New Freelancer"
-//                        body = "A new Freelancer has been register successfully "
-//
-//                        notification.title = title
-//                        notification.message = body
-//                        notification.notiType = keyword.toString()
-//
-//                        listOfCPNotification.add(notification)
-//
-//                        listOfNotification.addAll(listOfCPNotification)
-//                        adapterNotification.notifyDataSetChanged()
-//
+//                    RecyclerNotificationAdapter
+
+
+//                    for (i in listOfNotification) {
+//                        Log.e(TAG, "LISTT3 " + i.orderId)
 //                    }
-////                    notification.title = title
-////                    notification.message = body
-////                    notification.notiType = keyword.toString()
-////
-////                    listOfCPNotification.add(notification)
-////
-////                    listOfNotification.addAll(listOfCPNotification)
-////                    adapterNotification.notifyDataSetChanged()
-//
-////                    RecyclerNotificationAdapter
-//
-//
-////                    for (i in listOfNotification) {
-////                        Log.e(TAG, "LISTT3 " + i.orderId)
-////                    }
-////                    listOfNotification.clear()
-////                    listOfOrdersRequest.clear()
-////                    listOfCategory.clear()
-////                    for (i in listOfNotification) {
-////                        Log.e(TAG, "LISTT4 " + i.orderId)
-////                    }
-//                    Log.e(
-//                        TAG,
-//                        "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
-//                    )
+//                    listOfNotification.clear()
+//                    listOfOrdersRequest.clear()
+//                    listOfCategory.clear()
+//                    for (i in listOfNotification) {
+//                        Log.e(TAG, "LISTT4 " + i.orderId)
+//                    }
+                            Log.e(
+                                TAG,
+                                "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
+                            )
 
-                }
-                if (!detached) {
-                    if (swipeRefreshLayout != null) {
-                        swipeRefreshLayout.isRefreshing = false
+                        }
+
+                    } else {
+                        if (listOfNotification.isNotEmpty()) {
+                            tvNoNotificationsYet.visibility = View.GONE
+                            recycler_notifi.visibility = View.VISIBLE
+                        } else {
+                            tvNoNotificationsYet.visibility = View.VISIBLE
+                            recycler_notifi.visibility = View.GONE
+                        }
                     }
+                    if (!detached) {
+                        if (swipeRefreshLayout != null) {
+                            swipeRefreshLayout.isRefreshing = false
+                        }
+                    }
+
                 }
 
-            }
+                override fun onCancelled(p0: DatabaseError) {
 
-            override fun onCancelled(p0: DatabaseError) {
+                }
 
-            }
-
-        })
+            })
     }
 
     private fun loadOrderRequestAndCategory() {
 
         for (i in listOfNotification) {
-            Log.e(TAG, "LISTT " + i.orderId)
+            Log.e(TAG, "LISTT " + i.requestId)
         }
 
 
@@ -510,9 +620,9 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //        Log.e(TAG, "V1" + notification?.orderId)
 
         listOfNotification.withIndex().map { (index, notification) ->
-            Log.e("111111", notification.orderId)
+            Log.e("111111", notification.requestId)
 //            RefBase.requests(notification.orderId)
-            RefBase.requests(notification.orderId)
+            RefBase.requests(notification.requestId)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(dataSnapshot: DataSnapshot) {
                         dataSnapshot.ref.removeEventListener(this)
@@ -626,6 +736,9 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         postDelayed()
     }
 
+
+    var pos = 0
+
     private fun postDelayed() {
         swipeRefreshLayout.isRefreshing = true
         listOfCPNotification.clear()
@@ -636,8 +749,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 //            loadCPNotification()
 //        }, 1500)
 
-        loadNotification()
-//            loadCPNotification()
+//        loadNotification()
+        loadCPNotification(pos)
 
     }
 }
