@@ -2,6 +2,7 @@ package com.beyond_tech.seyanah_admin.fragments
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
@@ -26,6 +27,7 @@ import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.OrderRequest
 import com.beyond_tech.seyanah_admin.models.User
 import com.beyond_tech.seyanahadminapp.helper.Helper
+import com.developer.kalert.KAlertDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -38,97 +40,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     OnNotificationClicked {
 
 
-    override fun onNotificationClciked(notification: Notification, position: Int) {
-        Log.e(TAG, "clicked ")
-
-        when (notification.notiType) {
-            Constants.REQUESTS -> {
-                Log.e(TAG, notification.notiType)
-
-                //show alert dialog details
-                showAlertDialog(notification)
-
-
-            }
-            Constants.WORKERS -> {
-                Log.e(TAG, notification.notiType)
-
-
-            }
-            Constants.USERS -> {
-                Log.e(TAG, notification.notiType)
-
-
-            }
-            else -> {
-
-            }
-        }
-
-    }
-
-    private fun showAlertDialog(notification: Notification) {
-        val v = LayoutInflater.from(activity)
-            .inflate(R.layout.layout_preview_order_details, null)
-        val alertDialog: AlertDialog
-        val builder: AlertDialog.Builder
-        builder = AlertDialog.Builder(activity)
-            .setView(v)
-            .setPositiveButton(
-                getString(R.string.ok)
-            ) { dialog, _ -> dialog.dismiss() }
-        alertDialog = builder.create()
-
-        alertDialog.setOnShowListener {
-            var tvName = v.findViewById<TextView>(R.id.tvFullName)
-            var tvPhone = v.findViewById<TextView>(R.id.tvPhone)
-            var tvZone = v.findViewById<TextView>(R.id.tvZone)
-            var tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
-
-
-            RefBase.refUser(notification.customerId!!)
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        dataSnapshot.ref.removeEventListener(this)
-                        if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
-                            Log.e(TAG, "onDataChange: Finished pro4 ")
-                            val user = dataSnapshot.getValue(User::class.java)
-                            tvName.text = user!!.userName
-                            tvPhone.text = user.userPhoneNumber
-
-                            RefBase.refRequest(notification.requestId)
-                                .addValueEventListener(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        dataSnapshot.ref.removeEventListener(this)
-                                        if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
-                                            Log.e(TAG, "onDataChange: Finished pro4 ")
-                                            val orderRequest =
-                                                dataSnapshot.getValue(OrderRequest::class.java)
-                                            tvZone.text = orderRequest!!.location.country
-                                            tvOrderDetails.text = orderRequest.orderDescription
-                                        }
-                                    }
-
-                                    override fun onCancelled(databaseError: DatabaseError) {
-
-                                    }
-                                })
-                        }
-                    }
-
-                    override fun onCancelled(databaseError: DatabaseError) {
-
-                    }
-                })
-
-
-        }
-
-        if (!alertDialog.isShowing) {
-            alertDialog.show()
-        }
-    }
-
     var detached: Boolean = false
     val TAG = NotificationsFragment::class.java.name
     var listOfNotification: ArrayList<Notification> = ArrayList<Notification>()
@@ -139,11 +50,12 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     var body = ""
     var progress: AlertDialog? = null
     var notiType = ""
-    lateinit var notification: Notification
-    lateinit var adapterNotification: RecyclerNotificationAdapter
+    var notification: Notification = Notification()
+    var adapterNotification: RecyclerNotificationAdapter? = null
     private var spruceAnimator: Animator? = null
     var linerLayoutManager: LinearLayoutManager? = null
     private val mHandler = Handler()
+    var pos = 0
 
 
     override fun onCreateView(
@@ -259,7 +171,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         recycler_notifi.setHasFixedSize(true)
         recycler_notifi.itemAnimator = DefaultItemAnimator()
         recycler_notifi.adapter = adapterNotification//set empty by default
-        adapterNotification.notifyDataSetChanged()
+        adapterNotification!!.notifyDataSetChanged()
 
     }
 
@@ -439,6 +351,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     private fun loadCPNotification(position: Int) {
 
+        listOfCPNotification.clear()
+
 
 //        val progress = Helper(activity).createProgressDialog(getString(R.string.please_wait))
 //        progress?.show()
@@ -447,16 +361,16 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         when (position) {
             0 -> {
                 keyword = Constants.USERS
-
-
+                Log.e(TAG, Constants.USERS)
             }
             1 -> {
-                keyword = Constants.FREELANCERS
-
+                keyword = Constants.WORKERS
+                Log.e(TAG, Constants.WORKERS)
 
             }
             2 -> {
                 keyword = Constants.REQUESTS
+                Log.e(TAG, Constants.REQUESTS)
 
 
             }
@@ -507,7 +421,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
 
                                 }
-                                Constants.FREELANCERS -> {
+
+                                Constants.WORKERS -> {
                                     notification.freelancerId =
                                         map.get(Constants.FREE_LANCER_ID).toString()
                                     title = "New Freelancer"
@@ -522,9 +437,9 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                             notification.message = body
                             notification.notiType = keyword
 
-                            listOfCPNotification.add(notification)
-
-                            listOfNotification.addAll(listOfCPNotification)
+//                            listOfCPNotification.add(notification)
+                            listOfNotification.add(notification)
+//                            listOfNotification.addAll(listOfCPNotification)
 
                             Log.e(TAG, "size_8484 =  " + listOfCPNotification.size.toString())
 
@@ -703,7 +618,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //                                                Log.e(TAG, "CAT" + listOfCategory.size)
 
                                                 if (index == listOfNotification.size - 1) {
-                                                    adapterNotification.notifyDataSetChanged()
+                                                    adapterNotification!!.notifyDataSetChanged()
                                                     Log.e(TAG, "Final ")
                                                 }
 
@@ -736,9 +651,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         postDelayed()
     }
 
-
-    var pos = 0
-
     private fun postDelayed() {
         swipeRefreshLayout.isRefreshing = true
         listOfCPNotification.clear()
@@ -753,4 +665,129 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         loadCPNotification(pos)
 
     }
+
+    override fun onNotificationClciked(notification: Notification, position: Int) {
+        Log.e(TAG, "clicked ")
+
+        when (notification.notiType) {
+            Constants.REQUESTS -> {
+                Log.e(TAG, notification.notiType)
+
+                //show alert dialog details
+                showAlertDialog(notification)
+
+
+            }
+            Constants.WORKERS -> {
+                Log.e(TAG, notification.notiType)
+
+
+            }
+            Constants.USERS -> {
+                Log.e(TAG, notification.notiType)
+
+
+            }
+            else -> {
+
+            }
+        }
+
+    }
+
+    @SuppressLint("InflateParams")
+    private fun showAlertDialog(notification: Notification) {
+        val v = LayoutInflater.from(activity)
+            .inflate(R.layout.layout_preview_order_details, null)
+//        val alertDialog: AlertDialog
+//        val builder: AlertDialog.Builder
+//        builder = AlertDialog.Builder(activity)
+//            .setView(v)
+//            .setPositiveButton(
+//                getString(R.string.ok)
+//            ) { dialog, _ -> dialog.dismiss() }
+//        alertDialog = builder.create()
+//        alertDialog.setOnShowListener {
+//            fetchRequestDetails(v, notification)
+//        }
+//        if (!alertDialog.isShowing) {
+//            alertDialog.show()
+//        }
+
+
+//        val alertDialog = KAlertDialog(activity, KAlertDialog.NORMAL_TYPE)
+        val alertDialog = KAlertDialog(activity, KAlertDialog.SUCCESS_TYPE)
+            .setCustomView(v)
+            .setTitleText(getString(R.string.app_name_root))
+//            .setContentText("Won't be able to recover this file!")
+//            .setCancelText("No,cancel plx!")
+            .setConfirmText(getString(R.string.dialog_ok))
+            .setConfirmClickListener {
+                it.dismissWithAnimation()
+            }
+//            .setOnShowListener {
+//                fetchRequestDetails(v, notification)
+//            }
+//            .showCancelButton(true)
+//            .setCancelClickListener {
+//
+//            }
+
+        alertDialog.setOnShowListener {
+            fetchRequestDetails(v, notification)
+        }
+        alertDialog.setCancelable(true)
+        alertDialog.setCanceledOnTouchOutside(true)
+        alertDialog.show()
+
+
+    }
+
+    private fun fetchRequestDetails(
+        v: View,
+        notification: Notification
+    ) {
+        var tvName = v.findViewById<TextView>(R.id.tvFullName)
+        var tvPhone = v.findViewById<TextView>(R.id.tvPhone)
+        var tvZone = v.findViewById<TextView>(R.id.tvZone)
+        var tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
+
+
+        RefBase.refUser(notification.customerId!!)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataSnapshot.ref.removeEventListener(this)
+                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                        Log.e(TAG, "onDataChange: Finished pro4 ")
+                        val user = dataSnapshot.getValue(User::class.java)
+                        tvName.text = user!!.userName
+                        tvPhone.text = user.userPhoneNumber
+
+                        RefBase.refRequest(notification.requestId)
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    dataSnapshot.ref.removeEventListener(this)
+                                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                                        Log.e(TAG, "onDataChange: Finished pro4 ")
+                                        val orderRequest =
+                                            dataSnapshot.getValue(OrderRequest::class.java)
+                                        tvZone.text = orderRequest!!.location.country
+                                        tvOrderDetails.text = orderRequest.orderDescription
+                                    }
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+
+                                }
+                            })
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            })
+    }
+
+
 }

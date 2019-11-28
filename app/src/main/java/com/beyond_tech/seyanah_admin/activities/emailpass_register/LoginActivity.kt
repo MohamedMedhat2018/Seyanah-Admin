@@ -82,7 +82,15 @@ class LoginActivity : AppCompatActivity() {
 
     private fun sendVerificationEmail(firebaseUser: FirebaseUser) {
 
-        progress = Helper(this).createProgressDialog(getString(R.string.resending))
+        var message: String? = null
+
+        if (registering) {
+            message = getString(R.string.registering)
+        } else {
+            message = getString(R.string.resending)
+        }
+
+        progress = Helper(this).createProgressDialog(message)
         progress!!.show()
 
         firebaseUser.sendEmailVerification()
@@ -96,8 +104,19 @@ class LoginActivity : AppCompatActivity() {
                         getString(R.string.email_sent_to),
                         Toast.LENGTH_LONG
                     ).show()
+
+
                     btn_resend_ver_email.visibility = View.GONE
+
                     progress!!.dismiss()
+
+
+                    if (registering) {
+                        registerUserSub1()
+                    } else {
+                    }
+
+
                 } else {
                     progress!!.dismiss()
                     // email not sent, so display message and restart the activity or do whatever you wish to do
@@ -499,15 +518,17 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
+    var registering: Boolean = false
 
     private fun registerNewUser(email: String, password: String) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
+                    registering = true
                     sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
                     fireToast(message = getString(R.string.verify_email_address))
                     //progress?.dismiss()
-                    registerUserSub1(progress!!)
+//                    registerUserSub1(progress!!)
 
                 } else {
                     fireToast(message = getString(R.string.email_already_exist))
@@ -561,10 +582,12 @@ class LoginActivity : AppCompatActivity() {
         val regex = "@btechme.com"
 //        val regex = ""
 
-        if (!txt!!.trim().endsWith(regex, true)) {
-            fireToast(getString(R.string.enter_email_required))
-            return
-        }
+        /*
+        * Email domain restriction*/
+//        if (!txt!!.trim().endsWith(regex, true)) {
+//            fireToast(getString(R.string.enter_email_required))
+//            return
+//        }
 
 //        if (etEnterPhone.text.isEmpty()) {
 //            fireToast(getString(R.string.enter_phone_number_required))
@@ -586,8 +609,8 @@ class LoginActivity : AppCompatActivity() {
             return
         }
 
-        progress = Helper(this).createProgressDialog(getString(R.string.registering))
-        progress?.show()
+//               progress = Helper(this).createProgressDialog(getString(R.string.registering))
+//        progress?.show()
 
 
         registerNewUser(
@@ -597,7 +620,13 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun registerUserSub1(dialog: AlertDialog) {
+    private fun registerUserSub1() {
+
+        var dialog: AlertDialog? = null
+        dialog = Helper(this).createProgressDialog(getString(R.string.registering))
+        dialog?.show()
+
+
         FirebaseDatabase.getInstance().let {
             val userAdmin = UserAdmin()
 //            userAdmin.username = etEnterUsername_sub1.text.toString()
@@ -636,7 +665,7 @@ class LoginActivity : AppCompatActivity() {
                             .sneakSuccess()
 
 
-                        dialog.dismiss()
+                        dialog?.dismiss()
 
                         viewSwitcher.showPrevious()
                         etEnterEmailAddress_sub1.text = etEnterEmail_required.text
@@ -657,9 +686,9 @@ class LoginActivity : AppCompatActivity() {
 //                                "Please verify your email address!!!",
 //                                Toast.LENGTH_LONG
 //                            ).show()
-                            dialog.dismiss()
+                            dialog?.dismiss()
                         } else {
-                            dialog.dismiss()
+                            dialog?.dismiss()
 
 
                             finish()
