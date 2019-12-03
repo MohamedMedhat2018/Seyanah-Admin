@@ -124,7 +124,16 @@
     <string name="default_notification_channel_id">MyChannelId</string>
     <string name="ok">Okay</string>
     <string name="dots">.........</string>
+    <string name="new_order">New Order</string>
 
+    <string name="users">Users</string>
+    <string name="freelancers">Freelancers</string>
+    <string name="requests">Requests</string>
+    <string name="new_user">New User</string>
+    <string name="new_user_registered">A new user has been register successfully</string>
+    <string name="new_order_requested">New order have been requested, Check out more details</string>
+    <string name="new_free">New Freelancer</string>
+    <string name="new_free_registered">A new Freelancer has been register successfully</string>
 
 </resources>
 

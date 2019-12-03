@@ -86,10 +86,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
     override fun onResume() {
         super.onResume()
-
         postDelayed()
-
-
     }
 
     private fun accessMutliStateToggleButton() {
@@ -103,9 +100,26 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             pos = position
             postDelayed()
         }
-
 // Resource id, position one is selected by default
-        multiStateToggleButton.setElements(R.array.planets_array, 0)
+        multiStateToggleButton.setElements(R.array.titles_array, 0)
+
+
+//        val titles_array =
+//            resources.getStringArray(R.array.titles_array)
+//        val buttons = Array<View?>(3) { null }
+//
+//
+////        val multiStateToggleButton =
+////            this.findViewById(R.id.mstb_multi_id) as MultiStateToggleButton
+//
+//        for (i in 0..2) {
+//            //println(i)
+//            val button =
+//                layoutInflater.inflate(R.layout.custom_button, multiStateToggleButton, false)
+//            buttons[i] = button;
+//
+//        }
+//        multiStateToggleButton.setButtons(buttons, BooleanArray(buttons.size))
 
     }
 
@@ -406,7 +420,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 it.value as HashMap<String, Object>
                             Log.e(TAG, "tYPE TYPEx$map")
 
-                            val keyword = map.get(Constants.KEYWORD).toString()
+                            val keyword = map[Constants.KEYWORD].toString()
+                            val date = map[Constants.DATE].toString()
 
 //                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
                             Log.e(TAG, "tYPE TYPExx$keyword")
@@ -414,8 +429,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                             when (keyword) {
                                 Constants.REQUESTS -> {
                                     Log.e(TAG, "Requestx" + keyword)
-                                    title = "New Order"
-                                    body = "New order have been requested, Check out more details"
+                                    title = getString(R.string.new_order)
+                                    body = getString(R.string.new_order_requested)
                                     notification.customerId =
                                         map[Constants.CUSTOMER_ID].toString()
                                     if (map[Constants.ORDER_ID] != null) {
@@ -426,8 +441,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 //                        val vvvv = "Customer has been send the request successfully "
                                 Constants.USERS -> {
                                     Log.e(TAG, "tEEEEEEEEEEEt")
-                                    title = "New User"
-                                    body = "A new user has been register successfully "
+                                    title = getString(R.string.new_user)
+                                    body = getString(R.string.new_user_registered)
 
 
                                 }
@@ -435,8 +450,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 Constants.WORKERS -> {
                                     notification.freelancerId =
                                         map.get(Constants.FREE_LANCER_ID).toString()
-                                    title = "New Freelancer"
-                                    body = "A new Freelancer has been register successfully "
+                                    title = getString(R.string.new_free)
+                                    body = getString(R.string.new_free_registered)
 
 
                                 }
@@ -446,6 +461,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                             notification.title = title
                             notification.message = body
                             notification.notiType = keyword
+                            notification.date = date
 
 //                            listOfCPNotification.add(notification)
                             listOfNotification.add(notification)

@@ -3,12 +3,13 @@ package com.beyond_tech.seyanah_admin.constants
 class Constants {
     companion object {
 
+        val DATE: String = "time"
         @JvmField
         val USER_TYPE_FREE = "FREE"
 
 
         val CUSTOMER_ID: String = "customerId"
-//        val CUSTOMER_ID: String = "id"
+        //        val CUSTOMER_ID: String = "id"
         val OFFER: String = "Offer"
         val KEYWORD: String = "keyword"
         val KEY_EMAIL_ADDRESS: String = "email"
@@ -41,7 +42,6 @@ class Constants {
         val ID_NOTIFICATION = 2
         val ID_MORE = 3
         val ID_ACCOUNT = 4
-
 
 
         val USER_TYPE_PREMIUM = "PREMIUM"

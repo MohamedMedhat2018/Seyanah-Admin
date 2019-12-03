@@ -1,8 +1,13 @@
 package com.beyond_tech.seyanah_admin.activities.main
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
+import androidx.annotation.IdRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -11,7 +16,10 @@ import com.beyond_tech.seyanah_admin.activities.login.LoginActivity
 import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
+import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_main3.*
+
 
 class HomeActivity : AppCompatActivity() {
 
@@ -24,7 +32,32 @@ class HomeActivity : AppCompatActivity() {
         com.beyond_tech.seyanahadminapp.helper.Helper(this).makeFullScreen(savedInstanceState)
 
         setContentView(R.layout.activity_main3)
+
+        showBadge(this, mBottomNavigationView, R.id.navigation_notifications, "4+")
+
     }
+
+
+    fun showBadge(
+        context: Context?,
+        bottomNavigationView: BottomNavigationView, @IdRes itemId: Int,
+        value: String?
+    ) {
+        removeBadge(bottomNavigationView, itemId)
+        val itemView: BottomNavigationItemView = bottomNavigationView.findViewById(itemId)
+        val badge: View = LayoutInflater.from(context)
+            .inflate(R.layout.custom_action_item_layout2, bottomNavigationView, false)
+        val text = badge.findViewById<TextView>(R.id.badge_text_view)
+        text.text = value
+    }
+
+    fun removeBadge(bottomNavigationView: BottomNavigationView, @IdRes itemId: Int) {
+        val itemView: BottomNavigationItemView = bottomNavigationView.findViewById(itemId)
+        if (itemView.childCount == 3) {
+            itemView.removeViewAt(2)
+        }
+    }
+
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
         super.onPostCreate(savedInstanceState)
@@ -50,7 +83,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupBottomNavView() {
-        val navView: BottomNavigationView = findViewById(R.id.nav_view)
+        val navView: BottomNavigationView = findViewById(R.id.mBottomNavigationView)
         var fragment: Fragment? = null
         var tag: String? = null
         navView.setOnNavigationItemSelectedListener { item ->

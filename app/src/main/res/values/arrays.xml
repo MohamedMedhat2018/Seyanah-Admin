@@ -1,11 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="planets_array">
-        <item>Users</item>
-        <item>Freelances</item>
-        <item>Requests</item>
+    <string-array name="titles_array">
+        <item>@string/users</item>
+        <item>@string/freelancers</item>
+        <item>@string/requests</item>
+<!--        <item>Freelances</item>-->
+<!--        <item>Requests</item>-->
+<!--        <item>Users</item>-->
+<!--        <item>Freelances</item>-->
+<!--        <item>Requests</item>-->
 <!--        <item></item>-->
     </string-array>
+
+
+
+
 
 </resources>

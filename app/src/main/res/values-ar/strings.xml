@@ -18,7 +18,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="for_who">الي </string>
 
-    <string name="app_name_root">Seyanah-Uae Admin</string>
+    <string name="app_name_root">Seyanah-Uae تحكم</string>
     <string name="sign_in">دخول</string>
     <string name="username">أدخل إسم المستخدم</string>
     <string name="password">أدخل كلمة المرور</string>
@@ -126,6 +126,16 @@
     <string name="default_notification_channel_id">MyChannelId</string>
     <string name="ok">Okay</string>
     <string name="dots">.........</string>
+    <string name="new_order">طلب خدمه جديد</string>
+
+    <string name="users">مستخدمين</string>
+    <string name="freelancers">صنايعيه</string>
+    <string name="requests">طلبات</string>
+    <string name="new_user">مستخدم جديد</string>
+    <string name="new_user_registered">مستخدم جديد تم تسجيله بنجاح</string>
+    <string name="new_order_requested">هناك طلب جديد, اضغط لعرض تفاصيل أكثر</string>
+    <string name="new_free">صنايعي جديد</string>
+    <string name="new_free_registered">صنايعي جديد تم تسجيله بنجاح</string>
 
 
 </resources>

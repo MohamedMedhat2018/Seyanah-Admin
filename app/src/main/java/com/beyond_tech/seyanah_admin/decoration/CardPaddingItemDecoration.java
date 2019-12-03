@@ -19,4 +19,7 @@ public class CardPaddingItemDecoration extends RecyclerView.ItemDecoration {
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
         outRect.set(0, 0, 0, paddingBetweenItems);
     }
+
+
+
 }

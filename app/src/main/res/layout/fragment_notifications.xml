@@ -19,7 +19,7 @@
             android:id="@+id/multiStateToggleButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:values="@array/planets_array"
+            app:values="@array/titles_array"
             mstb:mstbPrimaryColor="@color/white"
             mstb:mstbSecondaryColor="@color/orange_light" />
 
@@ -95,12 +95,12 @@
         android:id="@+id/tvNoNotificationsYet"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
         android:drawableTop="@drawable/no_notifications_yet"
         android:gravity="center"
         android:text="@string/no_notifications_yet"
         android:textSize="20sp"
         android:visibility="visible"
-        android:layout_centerInParent="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

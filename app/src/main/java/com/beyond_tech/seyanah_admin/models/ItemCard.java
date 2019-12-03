@@ -7,6 +7,12 @@ public class ItemCard {
     private String mThumbnailUrl;
     private String mSummaryText;
 
+    public ItemCard() {
+
+
+
+    }
+
     public String getTitle() {
         return mTitle;
     }

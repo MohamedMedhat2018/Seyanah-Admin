@@ -9,6 +9,7 @@ class Notification() {
 //    lateinit var body: String
 
     var customerId: String? = null
+    var date: String? = null
     var freelancerId: String? = null
     //    private var requestId: String? = null
 //    var firebaseUserId = ""
