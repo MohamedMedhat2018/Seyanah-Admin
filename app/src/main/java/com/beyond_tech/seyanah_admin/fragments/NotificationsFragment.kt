@@ -78,9 +78,17 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //        setupRecyclerView(shimmer_recycler_view)
 //        accessShimmerRecycler()
 
-        postDelayed()
+//        postDelayed()
 
         accessMutliStateToggleButton()
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        postDelayed()
+
 
     }
 
@@ -398,7 +406,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 it.value as HashMap<String, Object>
                             Log.e(TAG, "tYPE TYPEx$map")
 
-                            var keyword = map.get(Constants.KEYWORD).toString()
+                            val keyword = map.get(Constants.KEYWORD).toString()
 
 //                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
                             Log.e(TAG, "tYPE TYPExx$keyword")
@@ -441,27 +449,11 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
 //                            listOfCPNotification.add(notification)
                             listOfNotification.add(notification)
+
 //                            listOfNotification.addAll(listOfCPNotification)
 
                             Log.e(TAG, "size_8484 =  " + listOfCPNotification.size.toString())
 
-                            if (!detached) {
-                                if (listOfNotification.isNotEmpty()) {
-                                    tvNoNotificationsYet.visibility = View.GONE
-                                    recycler_notifi.visibility = View.VISIBLE
-                                } else {
-                                    tvNoNotificationsYet.visibility = View.VISIBLE
-                                    recycler_notifi.visibility = View.GONE
-                                }
-
-                                recycler_notifi.adapter = RecyclerNotificationAdapter(
-                                    activity,
-                                    listOfNotification,
-                                    listOfOrdersRequest,
-                                    listOfCategory,
-                                    this@NotificationsFragment
-                                )
-                                recycler_notifi.layoutManager = linerLayoutManager
 
 //                    RecyclerNotificationAdapter
 
@@ -475,12 +467,35 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //                    for (i in listOfNotification) {
 //                        Log.e(TAG, "LISTT4 " + i.orderId)
 //                    }
-                                Log.e(
-                                    TAG,
-                                    "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
-                                )
+                            Log.e(
+                                TAG,
+                                "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
+                            )
 
+                        }
+
+//                        listOfNotification = listOfNotification.reverse()
+//                        Collections.reverse(listOfNotification);
+                        listOfNotification.reverse()
+
+
+                        if (!detached) {
+                            if (listOfNotification.isNotEmpty()) {
+                                tvNoNotificationsYet.visibility = View.GONE
+                                recycler_notifi.visibility = View.VISIBLE
+                            } else {
+                                tvNoNotificationsYet.visibility = View.VISIBLE
+                                recycler_notifi.visibility = View.GONE
                             }
+
+                            recycler_notifi.adapter = RecyclerNotificationAdapter(
+                                activity,
+                                listOfNotification,
+                                listOfOrdersRequest,
+                                listOfCategory,
+                                this@NotificationsFragment
+                            )
+                            recycler_notifi.layoutManager = linerLayoutManager
 
 //                    RecyclerNotificationAdapter
 
@@ -754,7 +769,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         val tvZone = v.findViewById<TextView>(R.id.tvZone)
         val tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
 
-        Log.e(TAG, "customerId = " + notification.customerId)
+        Log.e(TAG, "customerId_34034 = " + notification.customerId)
 
         RefBase.refUser(notification.customerId!!)
             .addValueEventListener(object : ValueEventListener {
@@ -763,7 +778,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                     if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
                         Log.e(TAG, "onDataChange: Finished pro4 ")
                         val user = dataSnapshot.getValue(User::class.java)
-                        tvName.text = user!!.userName
+
+                        if (user!!.userName.isNotEmpty()) {
+                            tvName.text = user.userName
+                        }
                         tvPhone.text = user.userPhoneNumber
 
                         RefBase.refRequest(notification.requestId)

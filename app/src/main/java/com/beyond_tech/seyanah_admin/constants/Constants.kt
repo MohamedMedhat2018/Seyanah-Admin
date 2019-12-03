@@ -7,8 +7,8 @@ class Constants {
         val USER_TYPE_FREE = "FREE"
 
 
-//        val CUSTOMER_ID: String = "customerId"
-        val CUSTOMER_ID: String = "id"
+        val CUSTOMER_ID: String = "customerId"
+//        val CUSTOMER_ID: String = "id"
         val OFFER: String = "Offer"
         val KEYWORD: String = "keyword"
         val KEY_EMAIL_ADDRESS: String = "email"
