@@ -84,8 +84,7 @@
                     android:gravity="center"
                     android:inputType="textPersonName"
                     android:padding="5dp"
-
-                    android:text="Mohmed Mehat Hosny"
+                    android:text="@string/dots"
                     android:textColor="@color/Black"
                     android:textSize="19sp"
 
@@ -118,7 +117,7 @@
                     android:gravity="center"
                     android:inputType="phone"
                     android:padding="5dp"
-                    android:text="01168995877"
+                    android:text="@string/dots"
                     android:textColor="@color/Black"
                     android:textSize="19sp" />
             </LinearLayout>
@@ -148,13 +147,12 @@
                     android:gravity="center"
                     android:inputType="textEmailAddress"
                     android:padding="5dp"
-                    android:text="mmm@gmail.com"
+                    android:text="@string/dots"
                     android:textColor="@color/Black"
                     android:textSize="19sp" />
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -177,10 +175,13 @@
                     android:gravity="center"
                     android:inputType="text"
                     android:padding="5dp"
-                    android:text="mmm@gmail.com"
+                    android:text="@string/dots"
                     android:textColor="@color/Black"
                     android:textSize="19sp" />
             </LinearLayout>
+
+
+
         </LinearLayout>
 
     </LinearLayout>

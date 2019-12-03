@@ -409,8 +409,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                     title = "New Order"
                                     body = "New order have been requested, Check out more details"
                                     notification.customerId =
-                                        map.get(Constants.CUSTOMER_ID).toString()
-                                    notification.requestId = map.get(Constants.ORDER_ID).toString()
+                                        map[Constants.CUSTOMER_ID].toString()
+                                    if (map[Constants.ORDER_ID] != null) {
+                                        notification.requestId = map[Constants.ORDER_ID].toString()
+                                    }
                                 }
 
                                 //                        val vvvv = "Customer has been send the request successfully "
@@ -734,12 +736,12 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //            }
 
         alertDialog.setOnShowListener {
+            Log.e(TAG, "setOnShowListener")
             fetchRequestDetails(v, notification)
         }
         alertDialog.setCancelable(true)
         alertDialog.setCanceledOnTouchOutside(true)
         alertDialog.show()
-
 
     }
 
@@ -747,11 +749,12 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         v: View,
         notification: Notification
     ) {
-        var tvName = v.findViewById<TextView>(R.id.tvFullName)
-        var tvPhone = v.findViewById<TextView>(R.id.tvPhone)
-        var tvZone = v.findViewById<TextView>(R.id.tvZone)
-        var tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
+        val tvName = v.findViewById<TextView>(R.id.tvFullName)
+        val tvPhone = v.findViewById<TextView>(R.id.tvPhone)
+        val tvZone = v.findViewById<TextView>(R.id.tvZone)
+        val tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
 
+        Log.e(TAG, "customerId = " + notification.customerId)
 
         RefBase.refUser(notification.customerId!!)
             .addValueEventListener(object : ValueEventListener {
@@ -780,6 +783,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
                                 }
                             })
+//
+
                     }
                 }
 
