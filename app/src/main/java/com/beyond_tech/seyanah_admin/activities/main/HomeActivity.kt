@@ -18,7 +18,6 @@ import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_main3.*
 
 
 class HomeActivity : AppCompatActivity() {
@@ -33,7 +32,7 @@ class HomeActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_main3)
 
-        showBadge(this, mBottomNavigationView, R.id.navigation_notifications, "4+")
+//        showBadge(this, mBottomNavigationView, R.id.navigation_notifications, "4+")
 
     }
 

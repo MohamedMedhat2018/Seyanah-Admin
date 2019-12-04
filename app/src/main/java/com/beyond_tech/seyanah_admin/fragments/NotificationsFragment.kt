@@ -408,7 +408,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             .equalTo(keyword)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    dataSnapshot.ref.removeEventListener(this)
+//                    dataSnapshot.ref.removeEventListener(this)
                     if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
 
                         Log.e(TAG, "tYPE TYPE$dataSnapshot")
