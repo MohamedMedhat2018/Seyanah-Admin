@@ -102,18 +102,23 @@ class HomeActivity : AppCompatActivity() {
                     logOut()
                 }
             }
-            //loadFragment(fragment!!)
-            replaceFragmentSafely(
-                fragment!!, tag!!,
-                true,
-                R.anim.fade_in,
-                R.anim.fade_out,
+
+            if (fragment != null) {
+
+                //loadFragment(fragment!!)
+                replaceFragmentSafely(
+                    fragment!!,
+                    tag!!,
+                    true,
+                    R.anim.fade_in,
+                    R.anim.fade_out,
 //            R.anim.enter_from_left,
 //            R.anim.enter_from_right,
 //            R.anim.exit_to_left,
 //            R.anim.exit_to_right,
-                0, 0
-            )
+                    0, 0
+                )
+            }
             return@setOnNavigationItemSelectedListener true
 
         }
