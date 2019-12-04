@@ -78,15 +78,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //        setupRecyclerView(shimmer_recycler_view)
 //        accessShimmerRecycler()
 
-//        postDelayed()
+        postDelayed()
 
         accessMutliStateToggleButton()
 
-    }
-
-    override fun onResume() {
-        super.onResume()
-        postDelayed()
     }
 
     private fun accessMutliStateToggleButton() {
