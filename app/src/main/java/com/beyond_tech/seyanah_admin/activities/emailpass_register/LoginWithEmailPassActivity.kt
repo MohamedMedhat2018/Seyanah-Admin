@@ -37,8 +37,8 @@ import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_main_email_pass_register.*
 
 
-class LoginActivity : AppCompatActivity() {
-    var TAG = LoginActivity::class.java.simpleName
+class LoginWithEmailPassActivity : AppCompatActivity() {
+    var TAG = LoginWithEmailPassActivity::class.java.simpleName
     internal var gson = Gson()
     var progress: AlertDialog? = null
     val firebaseAuth = FirebaseAuth.getInstance()
@@ -327,6 +327,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun accessLogiViewPagerSub1() {
         btn_login_sub1.setOnClickListener {
+            Log.e(TAG, "setOnClickListener")
 
             if (etEnterEmailAddress_sub1.text.isEmpty()) {
                 fireToast(getString(R.string.enter_email_required))
@@ -359,7 +360,7 @@ class LoginActivity : AppCompatActivity() {
             )
                 .addOnCompleteListener(this,
                     OnCompleteListener<AuthResult> { task ->
-                        //Log.d("TAG", "signInWithEmail:onComplete:" + task.isSuccessful());
+                        Log.e("TAG", "signInWithEmail:onComplete:" + task.isSuccessful)
 
                         // If sign in fails, display a message to the user. If sign in succeeds
                         // the auth state listener will be notified and logic to handle the
@@ -370,7 +371,8 @@ class LoginActivity : AppCompatActivity() {
                             progress!!.dismiss()
                             return@OnCompleteListener
                         } else {
-                            if (FirebaseAuth.getInstance().currentUser != null && !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
+                            if (FirebaseAuth.getInstance().currentUser != null &&
+                                !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
                                 //sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
 
 

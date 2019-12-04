@@ -133,7 +133,6 @@ class Helper {
     fun logOutUser(): Boolean{
         Prefs.remove(Constants.LOGGED_BEFORE).apply {  }
         FirebaseAuth.getInstance().signOut()
-
         Prefs.remove(Constants.LOGGED_BEFORE).apply {
            return true
         }
@@ -141,7 +140,7 @@ class Helper {
     }
 
 
-    public fun changeShapeColor(mContext: Activity?, background: Drawable?, color: Int?) {
+    fun changeShapeColor(mContext: Activity?, background: Drawable?, color: Int?) {
         when (background) {
             is ShapeDrawable -> {
                 background.paint.color = ContextCompat.getColor(mContext!!, color!!)

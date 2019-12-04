@@ -45,7 +45,7 @@
         </activity>
 
 
-        <activity android:name=".activities.emailpass_register.LoginActivity">
+        <activity android:name=".activities.emailpass_register.LoginWithEmailPassActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.beyond_tech.seyanah_admin.R
-import com.beyond_tech.seyanah_admin.activities.login.LoginActivity
+import com.beyond_tech.seyanah_admin.activities.emailpass_register.LoginWithEmailPassActivity
 import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
@@ -127,7 +127,8 @@ class HomeActivity : AppCompatActivity() {
     private fun logOut() {
         com.beyond_tech.seyanahadminapp.helper.Helper(applicationContext).logOutUser()
         finish()
-        startActivity(Intent(applicationContext, LoginActivity::class.java))
+//        startActivity(Intent(applicationContext, LoginActivity::class.java))
+        startActivity(Intent(applicationContext, LoginWithEmailPassActivity::class.java))
     }
 
     override fun onBackPressed() {
