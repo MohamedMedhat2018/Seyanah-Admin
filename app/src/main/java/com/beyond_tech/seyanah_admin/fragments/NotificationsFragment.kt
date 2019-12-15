@@ -438,8 +438,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                     Log.e(TAG, "tEEEEEEEEEEEt")
                                     title = getString(R.string.new_user)
                                     body = getString(R.string.new_user_registered)
-
-
                                 }
 
                                 Constants.WORKERS -> {

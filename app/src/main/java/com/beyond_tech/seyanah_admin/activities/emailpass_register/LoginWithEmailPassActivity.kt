@@ -38,7 +38,6 @@ import com.google.gson.reflect.TypeToken
 import com.irozon.sneaker.Sneaker
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_main_email_pass_register.*
-import java.util.concurrent.Executor
 
 
 class LoginWithEmailPassActivity : AppCompatActivity() {
@@ -531,19 +530,9 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     //        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
                     FirebaseInstanceId.getInstance()
-                        .instanceId.addOnSuccessListener((this as Executor),
-                        OnSuccessListener { instanceIdResult: InstanceIdResult ->
-                            val newToken = instanceIdResult.token
-                            userAdmin.messageTokenId = newToken
-                            registering = true
-                            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
-                            fireToast(message = getString(R.string.verify_email_address))
-                            //progress?.dismiss()
-//                    registerUserSub1(progress!!)
-
-                        }
-                    )
-
+                        .instanceId.addOnSuccessListener(OnSuccessListener {
+                        afterCreateInstanceId(it)
+                    })
 
                 } else {
                     fireToast(message = getString(R.string.email_already_exist))
@@ -563,6 +552,16 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
     }
 
+
+    private fun afterCreateInstanceId(instanceIdResult: InstanceIdResult){
+        val newToken = instanceIdResult.token
+        userAdmin.messageTokenId = newToken
+        registering = true
+        sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
+        fireToast(message = getString(R.string.verify_email_address))
+        //progress?.dismiss()
+//                    registerUserSub1(progress!!)
+    }
 
     private fun fireToast(message: String) {
 //        Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
@@ -599,10 +598,10 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
         /*
         * Email domain restriction*/
-        if (!txt!!.trim().endsWith(regex, true)) {
-            fireToast(getString(R.string.enter_email_required))
-            return
-        }
+//        if (!txt!!.trim().endsWith(regex, true)) {
+//            fireToast(getString(R.string.enter_email_required))
+//            return
+//        }
 
 //        if (etEnterPhone.text.isEmpty()) {
 //            fireToast(getString(R.string.enter_phone_number_required))
