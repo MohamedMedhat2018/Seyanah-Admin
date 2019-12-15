@@ -13,6 +13,8 @@ import com.beyond_tech.seyanah_admin.interfaces.OnNotificationClicked
 import com.beyond_tech.seyanah_admin.models.Category
 import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.OrderRequest
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 
 
 class RecyclerNotificationAdapter(
@@ -23,10 +25,8 @@ class RecyclerNotificationAdapter(
     private val onNotificationClicked: OnNotificationClicked
 ) : RecyclerView.Adapter<CustomView>() {
 
-//    val onNotificationClicked : OnNotificationClicked? = null
+    //    val onNotificationClicked : OnNotificationClicked? = null
     val TAG = RecyclerNotificationAdapter::class.java.name
-
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomView {
@@ -60,6 +60,11 @@ class RecyclerNotificationAdapter(
         holder.time?.text = noti.date
         Log.e(TAG, "body from user or free " + noti.message)
 
+
+
+        YoYo.with(Techniques.FadeIn)
+            .duration(600)
+            .playOn(holder.itemView)
 
         Log.e(TAG, "check type " + noti.notiType)
 //        when (noti.notiType) {
@@ -226,8 +231,10 @@ class RecyclerNotificationAdapter(
         init {
             title =
                 itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_title)
-            body = itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_body)
-            time = itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_date)
+            body =
+                itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_body)
+            time =
+                itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_date)
             category =
                 itemView.findViewById<TextView>(com.beyond_tech.seyanah_admin.R.id.tv_notification_service_name)
             state = itemView.findViewById(com.beyond_tech.seyanah_admin.R.id.tv_notification_state)

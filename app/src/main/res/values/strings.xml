@@ -132,6 +132,7 @@
     <string name="new_order_requested">New order have been requested, Check out more details</string>
     <string name="new_free">New Freelancer</string>
     <string name="new_free_registered">A new Freelancer has been register successfully</string>
+    <string name="make_all_as_read">Make All as Read</string>
 
 </resources>
 

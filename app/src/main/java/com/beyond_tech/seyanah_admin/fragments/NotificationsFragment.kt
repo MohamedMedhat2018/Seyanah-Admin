@@ -40,6 +40,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     OnNotificationClicked {
 
 
+    var tvNoNotificationsYet: TextView? = null
     var detached: Boolean = false
     val TAG = NotificationsFragment::class.java.name
     var listOfNotification: ArrayList<Notification> = ArrayList<Notification>()
@@ -69,6 +70,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView(recycler_notifi)
+        initVars()
 //        loadNotification()
 //        loadCPNotification()
 //        initSpruce()
@@ -82,6 +84,11 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
         accessMutliStateToggleButton()
 
+
+    }
+
+    private fun initVars() {
+        tvNoNotificationsYet = view!!.findViewById(R.id.tvNoNotificationsYet)
     }
 
     private fun accessMutliStateToggleButton() {
@@ -321,10 +328,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
                     if (!detached) {
                         if (listOfNotification.isNotEmpty()) {
-                            tvNoNotificationsYet.visibility = View.GONE
+                            tvNoNotificationsYet!!.visibility = View.GONE
                             recycler_notifi.visibility = View.VISIBLE
                         } else {
-                            tvNoNotificationsYet.visibility = View.VISIBLE
+                            tvNoNotificationsYet!!.visibility = View.VISIBLE
                             recycler_notifi.visibility = View.GONE
                         }
 
@@ -403,7 +410,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             .equalTo(keyword)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(dataSnapshot: DataSnapshot) {
-//                    dataSnapshot.ref.removeEventListener(this)
+                    dataSnapshot.ref.removeEventListener(this)
                     if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
 
                         Log.e(TAG, "tYPE TYPE$dataSnapshot")
@@ -423,9 +430,9 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
                             when (keyword) {
                                 Constants.REQUESTS -> {
-                                    Log.e(TAG, "Requestx" + keyword)
-                                    title = getString(R.string.new_order)
-                                    body = getString(R.string.new_order_requested)
+                                    Log.e(TAG, "Requestx$keyword")
+                                    title = activity!!.getString(R.string.new_order)
+                                    body = activity!!.getString(R.string.new_order_requested)
                                     notification.customerId =
                                         map[Constants.CUSTOMER_ID].toString()
                                     if (map[Constants.ORDER_ID] != null) {
@@ -436,15 +443,15 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 //                        val vvvv = "Customer has been send the request successfully "
                                 Constants.USERS -> {
                                     Log.e(TAG, "tEEEEEEEEEEEt")
-                                    title = getString(R.string.new_user)
-                                    body = getString(R.string.new_user_registered)
+                                    title = activity!!.getString(R.string.new_user)
+                                    body = activity!!.getString(R.string.new_user_registered)
                                 }
 
                                 Constants.WORKERS -> {
                                     notification.freelancerId =
                                         map.get(Constants.FREE_LANCER_ID).toString()
-                                    title = getString(R.string.new_free)
-                                    body = getString(R.string.new_free_registered)
+                                    title = activity!!.getString(R.string.new_free)
+                                    body = activity!!.getString(R.string.new_free_registered)
 
 
                                 }
@@ -490,10 +497,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
                         if (!detached) {
                             if (listOfNotification.isNotEmpty()) {
-                                tvNoNotificationsYet.visibility = View.GONE
+                                tvNoNotificationsYet!!.visibility = View.GONE
                                 recycler_notifi.visibility = View.VISIBLE
                             } else {
-                                tvNoNotificationsYet.visibility = View.VISIBLE
+                                tvNoNotificationsYet!!.visibility = View.VISIBLE
                                 recycler_notifi.visibility = View.GONE
                             }
 
@@ -527,10 +534,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
                     } else {
                         if (listOfNotification.isNotEmpty()) {
-                            tvNoNotificationsYet.visibility = View.GONE
+                            tvNoNotificationsYet!!.visibility = View.GONE
                             recycler_notifi.visibility = View.VISIBLE
                         } else {
-                            tvNoNotificationsYet.visibility = View.VISIBLE
+                            tvNoNotificationsYet!!.visibility = View.VISIBLE
                             recycler_notifi.visibility = View.GONE
                         }
                     }
@@ -820,6 +827,5 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 }
             })
     }
-
 
 }

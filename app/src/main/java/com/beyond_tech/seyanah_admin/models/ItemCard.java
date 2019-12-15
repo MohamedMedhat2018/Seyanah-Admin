@@ -9,8 +9,6 @@ public class ItemCard {
 
     public ItemCard() {
 
-
-
     }
 
     public String getTitle() {

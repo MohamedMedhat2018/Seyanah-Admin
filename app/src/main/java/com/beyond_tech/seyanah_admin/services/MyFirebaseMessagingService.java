@@ -21,6 +21,7 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 import java.util.Map;
+import java.util.Random;
 
 /**
  * NOTE: There can only be one service in each app that receives FCM messages. If multiple
@@ -87,14 +88,16 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                // Handle message within 10 seconds
 //                handleNow();
 //            }
+        } else {
+            // Check if message contains a notification payload.
+            if (remoteMessage.getNotification() != null) {
+                Log.d(TAG, "Message Notification Body: " +
+                        remoteMessage.getNotification().getBody() + "...." +
+                        remoteMessage.getNotification().getTitle());
+                sendNotification(remoteMessage.getNotification().getBody(),
+                        remoteMessage.getNotification().getTitle());
+            }
 
-        }
-
-        // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
-            Log.d(TAG, "Message Notification Body: " +
-                    remoteMessage.getNotification().getBody() + "...." + remoteMessage.getNotification().getTitle());
-            sendNotification(remoteMessage.getNotification().getBody(), remoteMessage.getNotification().getTitle());
         }
 
 
@@ -107,38 +110,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     public void sendNotification(Map<String, String> data) {
         String title = null, body = null;
-        String orderId = null, detailsType = "";
         if (data != null) {
-//            body = data.get("body");
-//            title = data.get("title");
-//            orderId = data.get("serviceId");
-//            orderId = data.get(Constants.TYPE);
-//            detailsType = data.get(Constants.NOTIFI_DETAILS_TYPE);
+            body = data.get("body");
+            title = data.get("title");
+
+            Log.e(TAG, "sendNotification: " + title);
+            Log.e(TAG, "sendNotification: " + body);
+
+        } else {
+            return;
         }
-        Intent intent = null;
-//        switch (detailsType) {
-//            case Constants.FREELANCER_POST_DETAILS:
-//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-//                intent = new Intent(AppConfig.getInstance(), FreelancerPostDetails.class);
-//
-//
-//                break;
-//            case Constants.CUSTOMER_POST_DETAILS:
-//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-//                intent = new Intent(AppConfig.getInstance(), CustomerPostDetails.class);
-//
-//                break;
-//            case Constants.CUSTOMER_ORDER_DETAILS:
-//                //        intent = new Intent(getApplicationContext(), CustomerPostDetails.class);
-//                intent = new Intent(AppConfig.getInstance(), CustomerOrderDetails.class);
-//
-//                break;
-//            default:
-//                break;
-//        }
-
-
-//        intent.putExtra(Constants.ORDER_ID_NOTIFI_BAR, orderId);
+        Intent intent = new Intent();
+        intent.setClass(AppConfig.getInstance().getApplicationContext(), HomeActivity.class);
+//       intent.putExtra(Constants.ORDER_ID_NOTIFI_BAR, orderId);
 //        intent.putExtra(Constants.NOTIFI_DETAILS_TYPE, detailsType);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -175,6 +159,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setSound(defaultSoundUri)
                         .setOngoing(false)
                         .setTicker(title)
+                        .setOngoing(false)
                         .setStyle(bigText)
                         .setContentIntent(pendingIntent);
 
@@ -189,7 +174,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(new Random().nextInt()
+                /* ID of notification */, notificationBuilder.build());
 
 
     }
@@ -207,18 +193,38 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         Intent intent = new Intent(this, HomeActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
+
+
+        NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
+        bigText.bigText(messageBody);
+//        bigText.setSummaryText(getResources().getString(R.string.app_name_root));
+        bigText.setSummaryText(AppConfig.getInstance()
+                .getApplicationContext()
+                .getResources()
+                .getString(R.string.app_name_root));
 
         String channelId = getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.seyana_logo5)
+                new NotificationCompat.Builder(AppConfig.getInstance(), channelId)
+//                        .setSmallIcon(R.drawable.noti_icon)
+//                        .setSmallIcon(R.drawable.seyanah_logo)
+//                        .setSmallIcon(R.drawable.seyanaicon2)
+                        .setSmallIcon(R.drawable.iconseyana)
                         .setContentTitle(title)
                         .setContentText(messageBody)
+//                        .setLargeIcon(BitmapFactory.decodeResource(AppConfig.getInstance().getResources(), R.drawable.noti_icon))
                         .setAutoCancel(true)
+//                        .setSmallIcon(R.drawable.noti_icon)
                         .setSound(defaultSoundUri)
+                        .setOngoing(false)
+                        .setTicker(title)
+                        .setOngoing(false)
+                        .setStyle(bigText)
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -232,7 +238,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             notificationManager.createNotificationChannel(channel);
         }
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(new Random().nextInt()
+                /* ID of notification */, notificationBuilder.build());
     }
 
     /**
