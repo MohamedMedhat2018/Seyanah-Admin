@@ -59,15 +59,15 @@
             android:resource="@array/preloaded_fonts" />
 
 
-<!--        <service-->
-<!--            android:name=".services.MyFirebaseMessagingService"-->
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="com.google.firebase.MESSAGING_EVENT" />-->
-<!--            </intent-filter>-->
-<!--        </service>-->
+        <service
+            android:name=".services.MyFirebaseMessagingService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
 
-<!--        <service android:name="com.google.firebase.components.ComponentDiscoveryService" />-->
+        <service android:name="com.google.firebase.components.ComponentDiscoveryService" />
 
 
     </application>
