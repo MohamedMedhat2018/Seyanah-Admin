@@ -24,11 +24,15 @@ import com.beyond_tech.seyanah_admin.fire_utils.RefBase
 import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
+import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.pixplicity.easyprefs.library.Prefs
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -350,8 +354,23 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    internal var gson = Gson()
+    lateinit var userAdmin: UserAdmin
+
     private fun logOut() {
         com.beyond_tech.seyanahadminapp.helper.Helper(applicationContext).logOutUser()
+
+
+        userAdmin = gson.fromJson<UserAdmin>(
+            Prefs.getString(Constants.USER_ADMIN, ""),
+            object : TypeToken<UserAdmin>() {
+            }.type
+        )
+        if (userAdmin != null) {
+            RefBase.refAdmins(userAdmin.id!!)
+                .child(Constants.MESSAGE_TOKEN).setValue("")
+        }
+
         finish()
 //        startActivity(Intent(applicationContext, LoginActivity::class.java))
         startActivity(Intent(applicationContext, LoginWithEmailPassActivity::class.java))

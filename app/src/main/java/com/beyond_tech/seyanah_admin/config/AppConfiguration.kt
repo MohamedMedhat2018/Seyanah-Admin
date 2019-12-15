@@ -6,6 +6,14 @@ import com.pixplicity.easyprefs.library.Prefs
 
 class AppConfiguration : Application() {
 
+
+    private var mInstance: AppConfiguration? = null
+
+    @Synchronized
+    fun getInstance(): AppConfiguration? {
+        return mInstance
+    }
+
     override fun onCreate() {
         super.onCreate()
         Prefs.Builder()
@@ -14,6 +22,11 @@ class AppConfiguration : Application() {
             .setPrefsName(packageName)
             .setUseDefaultSharedPreference(true)
             .build()
+
+
+        mInstance = this
+
+
     }
 
 }

@@ -399,56 +399,67 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
                                 progress?.dismiss()
                                 return@OnCompleteListener
                             } else {
-                                FirebaseDatabase.getInstance()
-                                    .reference
-                                    .child(Constants.ADMINS)
-                                    .orderByChild(Constants.REG_EMAIL)
+
+                                FirebaseInstanceId.getInstance()
+                                    .instanceId.addOnSuccessListener(OnSuccessListener {
+                                    val newToken = it.token
+
+                                    FirebaseDatabase.getInstance()
+                                        .reference
+                                        .child(Constants.ADMINS)
+                                        .orderByChild(Constants.REG_EMAIL)
 //                                    .orderByChild(Constants.REG_USERNAME)
-                                    .equalTo(etEnterEmailAddress_sub1.text.toString().trim())
-                                    .addValueEventListener(object : ValueEventListener {
-                                        override fun onCancelled(p0: DatabaseError) {
-                                        }
-
-                                        override fun onDataChange(dataSnapshot: DataSnapshot) {
-
-                                            dataSnapshot.ref.removeEventListener(this)
-//                                           dataSnapshot.children.forEach { dataSnapshot ->
-//                                           }
-                                            if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
-                                                val dataSnapshot =
-                                                    dataSnapshot.children.elementAt(0)
-                                                progress?.dismiss()
-                                                val userAdmin: UserAdmin? =
-                                                    dataSnapshot.getValue(UserAdmin::class.java)
-
-                                                //Saving that user have been logged in before
-                                                Prefs.edit()
-                                                    .putString(Constants.LOGGED_BEFORE, "")
-                                                    .apply()
-
-                                                //saving the fetched user admin as the Profile Fragment
-                                                Prefs.putString(
-                                                    Constants.USER_ADMIN,
-                                                    gson.toJson(
-                                                        userAdmin,
-                                                        object : TypeToken<UserAdmin>() {
-                                                        }.type
-                                                    )
-                                                )
-
-                                                startActivity(
-                                                    Intent(
-                                                        applicationContext,
-                                                        HomeActivity::class.java
-                                                    )
-                                                )
-                                            } else {
-                                                progress?.dismiss()
-                                                fireToast(message = getString(R.string.network_error))
+                                        .equalTo(etEnterEmailAddress_sub1.text.toString().trim())
+                                        .addValueEventListener(object : ValueEventListener {
+                                            override fun onCancelled(p0: DatabaseError) {
                                             }
 
-                                        }
-                                    })
+                                            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                                                dataSnapshot.ref.removeEventListener(this)
+//                                           dataSnapshot.children.forEach { dataSnapshot ->
+//                                           }
+                                                if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                                                    val dataSnapshot =
+                                                        dataSnapshot.children.elementAt(0)
+                                                    progress?.dismiss()
+
+                                                    dataSnapshot.ref.child(Constants.MESSAGE_TOKEN)
+                                                        .setValue(newToken)
+
+                                                    val userAdmin: UserAdmin? =
+                                                        dataSnapshot.getValue(UserAdmin::class.java)
+
+                                                    //Saving that user have been logged in before
+                                                    Prefs.edit()
+                                                        .putString(Constants.LOGGED_BEFORE, "")
+                                                        .apply()
+
+                                                    //saving the fetched user admin as the Profile Fragment
+                                                    Prefs.putString(
+                                                        Constants.USER_ADMIN,
+                                                        gson.toJson(
+                                                            userAdmin,
+                                                            object : TypeToken<UserAdmin>() {
+                                                            }.type
+                                                        )
+                                                    )
+
+                                                    startActivity(
+                                                        Intent(
+                                                            applicationContext,
+                                                            HomeActivity::class.java
+                                                        )
+                                                    )
+                                                } else {
+                                                    progress?.dismiss()
+                                                    fireToast(message = getString(R.string.network_error))
+                                                }
+
+                                            }
+                                        })
+
+                                })
 
 
 //                                    .addChildEventListener(object : ChildEventListener {
@@ -553,7 +564,7 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
     }
 
 
-    private fun afterCreateInstanceId(instanceIdResult: InstanceIdResult){
+    private fun afterCreateInstanceId(instanceIdResult: InstanceIdResult) {
         val newToken = instanceIdResult.token
         userAdmin.messageTokenId = newToken
         registering = true

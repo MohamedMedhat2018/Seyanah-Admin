@@ -12,7 +12,7 @@ import com.pixplicity.easyprefs.library.Prefs;
 import java.util.Locale;
 
 
-public class AppConfig extends Application {
+ public class AppConfig extends Application {
 
 
     private Locale locale = null;
@@ -40,7 +40,7 @@ public class AppConfig extends Application {
         new Prefs.Builder()
                 .setContext(this)
                 .setMode(ContextWrapper.MODE_PRIVATE)
-                .setPrefsName(getPackageName())
+                .setPrefsName(getApplicationContext().getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
 

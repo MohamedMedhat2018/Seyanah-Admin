@@ -3,6 +3,12 @@ package com.beyond_tech.seyanah_admin.constants
 class Constants {
     companion object {
 
+        @JvmField
+        var TYPE: String = "type"
+        @JvmField
+        var ORDER_ID_: String = "type"
+
+
         val DATE: String = "time"
         @JvmField
         val USER_TYPE_FREE = "FREE"
@@ -149,7 +155,7 @@ class Constants {
 
         val RESULT_FROM_LOGIN_TO_FRAGMENT_TO_REQUEST_ORDER = 203
         val ORDER_STATE = "state"
-        val TYPE = "type"
+//        val TYPE = "type"
         val LOCATIONS = "Locations"
         val CITIES = "Cities"
         val COUNTRIES = "Countries"
@@ -192,7 +198,7 @@ class Constants {
         val FLAG_RATE = "sos"
         val ORDER_ID_NOTIFI_BAR = "ORDER_ID_NOTIFI_BAR"
         val NO_CURRENT_USER = "NO_CURRENT_USER"
-        val MESSAGE_TOKEN = "messageToken"
+        val MESSAGE_TOKEN = "messageTokenId"
         val INSTANCE_ID = "INSTANCE_ID"
         val LOGIN_PHONE = "LOGIN_PHONE"
         val LOGIN = "login"
