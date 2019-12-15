@@ -23,6 +23,7 @@ import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -30,11 +31,14 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.iid.InstanceIdResult
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.irozon.sneaker.Sneaker
 import com.pixplicity.easyprefs.library.Prefs
 import kotlinx.android.synthetic.main.activity_main_email_pass_register.*
+import java.util.concurrent.Executor
 
 
 class LoginWithEmailPassActivity : AppCompatActivity() {
@@ -372,7 +376,8 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
                             return@OnCompleteListener
                         } else {
                             if (FirebaseAuth.getInstance().currentUser != null &&
-                                !FirebaseAuth.getInstance().currentUser!!.isEmailVerified) {
+                                !FirebaseAuth.getInstance().currentUser!!.isEmailVerified
+                            ) {
                                 //sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
 
 
@@ -403,8 +408,6 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
                                     .equalTo(etEnterEmailAddress_sub1.text.toString().trim())
                                     .addValueEventListener(object : ValueEventListener {
                                         override fun onCancelled(p0: DatabaseError) {
-
-
                                         }
 
                                         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -526,11 +529,21 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener<AuthResult> { task ->
                 if (task.isSuccessful) {
-                    registering = true
-                    sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
-                    fireToast(message = getString(R.string.verify_email_address))
-                    //progress?.dismiss()
+                    //        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+                    FirebaseInstanceId.getInstance()
+                        .instanceId.addOnSuccessListener((this as Executor),
+                        OnSuccessListener { instanceIdResult: InstanceIdResult ->
+                            val newToken = instanceIdResult.token
+                            userAdmin.messageTokenId = newToken
+                            registering = true
+                            sendVerificationEmail(FirebaseAuth.getInstance().currentUser!!)
+                            fireToast(message = getString(R.string.verify_email_address))
+                            //progress?.dismiss()
 //                    registerUserSub1(progress!!)
+
+                        }
+                    )
+
 
                 } else {
                     fireToast(message = getString(R.string.email_already_exist))
@@ -622,6 +635,8 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
     }
 
+    val userAdmin = UserAdmin()
+
     private fun registerUserSub1() {
 
         var dialog: AlertDialog? = null
@@ -630,8 +645,8 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
 
         FirebaseDatabase.getInstance().let {
-            val userAdmin = UserAdmin()
-//            userAdmin.username = etEnterUsername_sub1.text.toString()
+
+            //            userAdmin.username = etEnterUsername_sub1.text.toString()
 //            userAdmin.password = etEnterPass_sub1.text.toString()
             userAdmin.username = etEnterUsername_sub2.text.toString().trim()
             userAdmin.password = etEnterPass_sub2.text.toString().trim()

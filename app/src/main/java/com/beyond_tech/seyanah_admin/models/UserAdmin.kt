@@ -8,6 +8,7 @@ class UserAdmin {
     var password: String? = null
     var phoneNumber: String? = null
     var profilePhoto: String? = ""
+    var messageTokenId: String? = ""
 
     constructor(username: String, password: String) {
         this.username = username

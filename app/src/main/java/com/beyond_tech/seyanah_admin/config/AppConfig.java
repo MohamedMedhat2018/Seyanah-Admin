@@ -25,6 +25,10 @@ public class AppConfig extends Application {
     @Override
     protected void attachBaseContext(Context base) {
 //        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+
+
+
+
     }
 
     @Override
