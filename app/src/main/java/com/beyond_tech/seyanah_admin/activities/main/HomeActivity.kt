@@ -1,5 +1,6 @@
 package com.beyond_tech.seyanah_admin.activities.main
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -24,8 +25,11 @@ import com.beyond_tech.seyanah_admin.fire_utils.RefBase
 import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
+import com.beyond_tech.seyanah_admin.models.OrderRequest
+import com.beyond_tech.seyanah_admin.models.User
 import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.beyond_tech.seyanahadminapp.helper.Helper
+import com.developer.kalert.KAlertDialog
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -54,7 +58,7 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        com.beyond_tech.seyanahadminapp.helper.Helper(this).makeFullScreen(savedInstanceState)
+//        com.beyond_tech.seyanahadminapp.helper.Helper(this).makeFullScreen(savedInstanceState)
 
         setContentView(R.layout.activity_main3)
 
@@ -482,5 +486,119 @@ class HomeActivity : AppCompatActivity() {
                 }
             })
     }
+
+    override fun onStart() {
+        super.onStart()
+        if (intent.hasExtra(Constants.TYPE)) {
+            val orderId = intent.getStringExtra(Constants.TYPE)
+            Log.e(TAG, orderId)
+            Toast.makeText(applicationContext, orderId, Toast.LENGTH_SHORT).show()
+            showAlertDialog(orderId)
+        }
+    }
+
+
+    @SuppressLint("InflateParams")
+    private fun showAlertDialog(orderId: String) {
+        val v = LayoutInflater.from(this)
+            .inflate(R.layout.layout_preview_order_details, null)
+//        val alertDialog: AlertDialog
+//        val builder: AlertDialog.Builder
+//        builder = AlertDialog.Builder(activity)
+//            .setView(v)
+//            .setPositiveButton(
+//                getString(R.string.ok)
+//            ) { dialog, _ -> dialog.dismiss() }
+//        alertDialog = builder.create()
+//        alertDialog.setOnShowListener {
+//            fetchRequestDetails(v, notification)
+//        }
+//        if (!alertDialog.isShowing) {
+//            alertDialog.show()
+//        }
+
+
+//        val alertDialog = KAlertDialog(activity, KAlertDialog.NORMAL_TYPE)
+        val alertDialog = KAlertDialog(this, KAlertDialog.SUCCESS_TYPE)
+            .setCustomView(v)
+            .setTitleText(getString(R.string.app_name_root))
+//            .setContentText("Won't be able to recover this file!")
+//            .setCancelText("No,cancel plx!")
+            .setConfirmText(getString(R.string.dialog_ok))
+            .setConfirmClickListener {
+                it.dismissWithAnimation()
+            }
+//            .setOnShowListener {
+//                fetchRequestDetails(v, notification)
+//            }
+//            .showCancelButton(true)
+//            .setCancelClickListener {
+//
+//            }
+
+        alertDialog.setOnShowListener {
+            Log.e(TAG, "setOnShowListener")
+            fetchRequestDetails(v, orderId)
+        }
+        alertDialog.setCancelable(true)
+        alertDialog.setCanceledOnTouchOutside(true)
+        alertDialog.show()
+
+    }
+
+    private fun fetchRequestDetails(
+        v: View,
+        orderId: String
+    ) {
+        val tvName = v.findViewById<TextView>(R.id.tvFullName)
+        val tvPhone = v.findViewById<TextView>(R.id.tvPhone)
+        val tvZone = v.findViewById<TextView>(R.id.tvZone)
+        val tvOrderDetails = v.findViewById<TextView>(R.id.tvOrderDetails)
+
+//        Log.e(TAG, "customerId_34034 = " + notification.customerId)
+
+
+        RefBase.refRequest(orderId)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataSnapshot.ref.removeEventListener(this)
+                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                        Log.e(TAG, "onDataChange: Finished pro4 ")
+                        val orderRequest =
+                            dataSnapshot.getValue(OrderRequest::class.java)
+                        tvZone.text = orderRequest!!.location.country
+                        tvOrderDetails.text = orderRequest.orderDescription
+
+                        RefBase.refUser(orderRequest.customerId)
+                            .addValueEventListener(object : ValueEventListener {
+                                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                    dataSnapshot.ref.removeEventListener(this)
+                                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                                        Log.e(TAG, "onDataChange: Finished pro4 ")
+                                        val user = dataSnapshot.getValue(User::class.java)
+
+                                        if (user!!.userName.isNotEmpty()) {
+                                            tvName.text = user.userName
+                                        }
+                                        tvPhone.text = user.userPhoneNumber
+
+                                    }
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+
+                                }
+                            })
+
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+
+                }
+            })
+
+    }
+
 
 }

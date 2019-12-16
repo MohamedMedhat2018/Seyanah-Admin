@@ -1,6 +1,7 @@
 package com.beyond_tech.seyanah_admin.services;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,7 +18,6 @@ import androidx.work.WorkManager;
 
 import com.beyond_tech.seyanah_admin.R;
 import com.beyond_tech.seyanah_admin.activities.main.HomeActivity;
-import com.beyond_tech.seyanah_admin.config.AppConfig;
 import com.beyond_tech.seyanah_admin.constants.Constants;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -85,7 +85,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         // Check if message contains a data payload.
 
         if (remoteMessage.getNotification() != null) {
-
             if (remoteMessage.getData().size() > 0) {
                 Log.e(TAG, "Message data payload: " + remoteMessage.getData());
                 sendNotification(remoteMessage.getNotification(), remoteMessage.getData());
@@ -103,9 +102,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 Log.e(TAG, "onMessageReceived:2 " + remoteMessage.getNotification().getBody());
                 Log.e(TAG, "onMessageReceived:2 " + remoteMessage.getNotification().getTitle());
             }
-
-        } else {
-
 
         }
 
@@ -147,7 +143,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
 //        Intent intent = new Intent(AppConfig.getInstance(), LanguageActivity.class);
-        Intent intent = new Intent(AppConfig.getInstance(), HomeActivity.class);
+        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+//        Intent intent = new Intent(this, HomeActivity.class);
 
 //        if (detailsType != null) {
 //            switch (detailsType) {
@@ -182,8 +179,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                |Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        intent.putExtra();
 //        intent.putExtra();
 //        intent.putExtra();
@@ -193,12 +192,15 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
         bigText.bigText(body);
 //        bigText.setSummaryText(getResources().getString(R.string.app_name_root));
-        bigText.setSummaryText(AppConfig.getInstance().getResources().getString(R.string.app_name_root));
+//        bigText.setSummaryText(AppConfig.getInstance().getResources().getString(R.string.app_name_root));
+        bigText.setSummaryText(getApplicationContext().getString(R.string.app_name_root));
 
 //        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
 //                PendingIntent.FLAG_ONE_SHOT);
         @SuppressLint("WrongConstant") PendingIntent pendingIntent =
-                PendingIntent.getActivity(AppConfig.getInstance(),
+                PendingIntent.getActivity(
+                        getApplicationContext(),
+                        //AppConfig.getInstance(),
                         0 /* Request code */,
                         intent,
                         PendingIntent.FLAG_ONE_SHOT
@@ -206,15 +208,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //                        Intent.FLAG_ACTIVITY_NEW_TASK
                 );
 
-        String channelId = AppConfig.getInstance().getString(R.string.default_notification_channel_id);
+//        String channelId = AppConfig.getInstance().getString(R.string.default_notification_channel_id);
+        String channelId = getApplicationContext().getString(R.string.default_notification_channel_id);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(AppConfig.getInstance(), channelId)
+//                new NotificationCompat.Builder(AppConfig.getInstance(), channelId)
+                new NotificationCompat.Builder(getApplicationContext(), channelId)
 //                        .setSmallIcon(R.drawable.noti_icon)
 //                        .setSmallIcon(R.drawable.seyanah_logo)
 //                        .setSmallIcon(R.drawable.seyanaicon2)
 //                        .setSmallIcon(R.drawable.iconseyana)
-                        .setSmallIcon(R.drawable.seyana_logo5)
+//                        .setSmallIcon(R.drawable.seyana_logo5)
+                        .setSmallIcon(R.mipmap.ic_launcher2)
+
                         .setContentTitle(notification.getTitle())
                         .setContentText(notification.getBody())
 //                        .setLargeIcon(BitmapFactory.decodeResource(AppConfig.getInstance().getResources(), R.drawable.noti_icon))
@@ -224,11 +230,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                         .setOngoing(false)
                         .setTicker(notification.getBody())
                         .setStyle(bigText)
+                        .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                         .setContentIntent(pendingIntent);
 
 
         NotificationManager notificationManager =
-                (NotificationManager) AppConfig.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+//                (NotificationManager) AppConfig.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+                (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         // Since android Oreo notification channel is needed.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(channelId,
@@ -263,12 +271,17 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+//                | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                |Intent.FLAG_ACTIVITY_CLEAR_TASK);
 
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this,
+                0 /* Request code */,
+                intent,
+                PendingIntent.FLAG_ONE_SHOT
+//                PendingIntent.FLAG_UPDATE_CURRENT
+        );
 
 
         NotificationCompat.BigTextStyle bigText = new NotificationCompat.BigTextStyle();
@@ -278,12 +291,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
                 new NotificationCompat.Builder(this, channelId)
-                        .setSmallIcon(R.drawable.seyana_logo5)
+//                        .setSmallIcon(R.drawable.seyana_logo5)
+                        .setSmallIcon(R.mipmap.ic_launcher2)
                         .setContentTitle(title)
                         .setContentText(messageBody)
                         .setAutoCancel(true)
                         .setSound(defaultSoundUri)
                         .setStyle(bigText)
+                        .setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_SOUND)
                         .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
@@ -347,6 +362,5 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
 
     }
-
 
 }

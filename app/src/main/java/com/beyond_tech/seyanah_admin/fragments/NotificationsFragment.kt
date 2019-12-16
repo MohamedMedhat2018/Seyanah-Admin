@@ -828,4 +828,5 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             })
     }
 
+
 }

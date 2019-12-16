@@ -1,18 +1,17 @@
 package com.beyond_tech.seyanah_admin.config;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.res.Configuration;
 
 import androidx.annotation.NonNull;
 
+import com.beyond_tech.seyanah_admin.internet_checker.ConnectivityReceiver;
 import com.pixplicity.easyprefs.library.Prefs;
 
 import java.util.Locale;
 
-
- public class AppConfig extends Application {
+public class AppConfig extends Application {
 
 
     private Locale locale = null;
@@ -22,29 +21,37 @@ import java.util.Locale;
         return mInstance;
     }
 
-    @Override
-    protected void attachBaseContext(Context base) {
+//    @Override
+//    protected void attachBaseContext(Context base) {
 //        super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
-
-
-
-
-    }
+//    }
 
     @Override
     public void onCreate() {
         super.onCreate();
+
 //        SugarContext.init(this);
 //        Fabric.with(this, new Crashlytics());
         // Initialize the Prefs class
         new Prefs.Builder()
                 .setContext(this)
                 .setMode(ContextWrapper.MODE_PRIVATE)
-                .setPrefsName(getApplicationContext().getPackageName())
+                .setPrefsName(getPackageName())
                 .setUseDefaultSharedPreference(true)
                 .build();
 
         mInstance = this;
+
+
+//        if (true) {
+//            FirebaseOptions options = new FirebaseOptions.Builder()
+//                    .setApplicationId("1:445806630230:android:0b00433d741945f42672f7")
+//                    .setApiKey("AIzaSyB5_36WgMjAFqhtHUFX1V-kTvNR6JsawSg")
+//                    .setDatabaseUrl("https://servizi-test-data.firebaseio.com")
+//                    .build();
+//            FirebaseApp.initializeApp(AppConfig.getInstance().getApplicationContext()
+//                    , options, "Servizi");
+//        }
 
 
         //method 2
@@ -67,9 +74,9 @@ import java.util.Locale;
 //        SugarContext.terminate();
     }
 
-//    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
-//        ConnectivityReceiver.connectivityReceiverListener = listener;
-//    }
+    public void setConnectivityListener(ConnectivityReceiver.ConnectivityReceiverListener listener) {
+        ConnectivityReceiver.connectivityReceiverListener = listener;
+    }
 
 
     //contin. method 2
