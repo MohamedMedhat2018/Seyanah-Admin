@@ -9,6 +9,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
 
     <application
@@ -25,13 +26,12 @@
             android:name="com.beyond_tech.seyanah_admin.activities.main.HomeActivity"
             android:excludeFromRecents="true"
             android:launchMode="singleTask"
-            android:taskAffinity=""
             android:screenOrientation="portrait"
-            >
-<!--        <activity-->
-<!--            android:name="com.beyond_tech.seyanah_admin.activities.main.HomeActivity"-->
-<!--            android:screenOrientation="portrait"-->
-<!--            >-->
+            android:taskAffinity="">
+            <!--        <activity-->
+            <!--            android:name="com.beyond_tech.seyanah_admin.activities.main.HomeActivity"-->
+            <!--            android:screenOrientation="portrait"-->
+            <!--            >-->
 
             <!--            <intent-filter>-->
             <!--                <action android:name="android.intent.action.MAIN" />-->

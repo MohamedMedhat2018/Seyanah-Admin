@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
+import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
@@ -108,6 +111,8 @@ class HomeActivity : AppCompatActivity() {
         )
 
         fetchTheNumberOfNotification()
+
+        checkBattery()
     }
 
     private fun setupBottomNavViewWithBadge() {
@@ -489,11 +494,34 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+
+
+
         if (intent.hasExtra(Constants.TYPE)) {
             val orderId = intent.getStringExtra(Constants.TYPE)
             Log.e(TAG, orderId)
             Toast.makeText(applicationContext, orderId, Toast.LENGTH_SHORT).show()
             showAlertDialog(orderId)
+        }
+    }
+
+
+    fun isBatteryOptimized(): Boolean {
+        val pwrm = applicationContext.getSystemService(Context.POWER_SERVICE) as PowerManager
+        val name = applicationContext.packageName
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            return !pwrm.isIgnoringBatteryOptimizations(name)
+        }
+        return false
+    }
+
+    fun checkBattery() {
+        if (isBatteryOptimized() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+            val name = resources.getString(R.string.app_name_root)
+            Toast.makeText(applicationContext, "Battery optimization -> All apps -> $name -> Don't optimize", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+            startActivity(intent)
         }
     }
 
