@@ -608,10 +608,10 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
         /*
         * Email domain restriction*/
-//        if (!txt!!.trim().endsWith(regex, true)) {
-//            fireToast(getString(R.string.enter_email_required))
-//            return
-//        }
+        if (!txt!!.trim().endsWith(regex, true)) {
+            fireToast(getString(R.string.enter_email_required))
+            return
+        }
 
 //        if (etEnterPhone.text.isEmpty()) {
 //            fireToast(getString(R.string.enter_phone_number_required))
@@ -746,4 +746,18 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
         }
         return false
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        checkNewAppVersion()
+    }
+
+    private fun checkNewAppVersion() {
+
+
+
+
+    }
+
 }

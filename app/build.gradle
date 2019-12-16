@@ -68,9 +68,12 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.firebase:firebase-storage:19.1.0'
     implementation 'com.google.firebase:firebase-auth:19.2.0'
-//    implementation 'com.google.firebase:firebase-messaging:20.0.0'
-//    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.1'
     implementation 'com.google.firebase:firebase-messaging:20.1.0'
+//
+//    implementation 'com.google.firebase:firebase-inappmessaging-display:19.0.2'
+//    implementation 'com.google.guava:guava:27.0.1-android'
+
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -159,7 +162,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.0.0'
 
     // Lottie Animation Library
-    implementation 'com.airbnb.android:lottie:3.0.7'
+//    implementation 'com.airbnb.android:lottie:3.0.7'
 
 
     implementation 'com.crowdfire.cfalertdialog:cfalertdialog:1.1.0'

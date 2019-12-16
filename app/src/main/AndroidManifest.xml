@@ -20,7 +20,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:ignore="AllowBackup,GoogleAppIndexingWarning"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:label">
         <activity
             android:name="com.beyond_tech.seyanah_admin.activities.main.HomeActivity"
