@@ -45,6 +45,8 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
     internal var gson = Gson()
     var progress: AlertDialog? = null
     val firebaseAuth = FirebaseAuth.getInstance()
+    var registering: Boolean = false
+    val userAdmin = UserAdmin()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -533,8 +535,6 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
 
     }
 
-    var registering: Boolean = false
-
     private fun registerNewUser(email: String, password: String) {
         FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(OnCompleteListener<AuthResult> { task ->
@@ -562,7 +562,6 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
             })
 
     }
-
 
     private fun afterCreateInstanceId(instanceIdResult: InstanceIdResult) {
         val newToken = instanceIdResult.token
@@ -644,8 +643,6 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
         )
 
     }
-
-    val userAdmin = UserAdmin()
 
     private fun registerUserSub1() {
 

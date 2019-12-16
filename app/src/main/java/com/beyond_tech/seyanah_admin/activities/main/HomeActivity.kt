@@ -25,8 +25,11 @@ import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
 import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.UserAdmin
+import com.beyond_tech.seyanahadminapp.helper.Helper
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationItemView
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -42,7 +45,11 @@ class HomeActivity : AppCompatActivity() {
     val TAG = HomeActivity::class.java.name
     var listOfNotification: ArrayList<Notification> = ArrayList<Notification>()
     var notificationCounter: Int = 0
-
+    internal var gson = Gson()
+    lateinit var userAdmin: UserAdmin
+    lateinit var bottomNavigation: AHBottomNavigation
+    var fragment: Fragment? = null
+    var tag: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +61,6 @@ class HomeActivity : AppCompatActivity() {
 //        showBadge(this, mBottomNavigationView, R.id.navigation_notifications, "4+")
 
     }
-
 
     fun showBadge(
         context: Context?,
@@ -99,8 +105,6 @@ class HomeActivity : AppCompatActivity() {
 
         fetchTheNumberOfNotification()
     }
-
-    lateinit var bottomNavigation: AHBottomNavigation
 
     private fun setupBottomNavViewWithBadge() {
 
@@ -309,9 +313,6 @@ class HomeActivity : AppCompatActivity() {
             })
     }
 
-    var fragment: Fragment? = null
-    var tag: String? = null
-
     private fun setupBottomNavView() {
         val navView: BottomNavigationView = findViewById(R.id.mBottomNavigationView)
 
@@ -354,26 +355,38 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    internal var gson = Gson()
-    lateinit var userAdmin: UserAdmin
-
     private fun logOut() {
-        com.beyond_tech.seyanahadminapp.helper.Helper(applicationContext).logOutUser()
+
+//        val dialogLoggingOut = Helper(applicationContext).createProgressDialog(getString(R.string.loging_out))
+        val dialogLoggingOut = Helper(this).createProgressDialog(getString(R.string.loging_out))
+        dialogLoggingOut?.show()
 
 
+//        com.beyond_tech.seyanahadminapp.helper.Helper(applicationContext).logOutUser()
+        Prefs.remove(Constants.LOGGED_BEFORE).apply { }
+        FirebaseAuth.getInstance().signOut()
         userAdmin = gson.fromJson<UserAdmin>(
             Prefs.getString(Constants.USER_ADMIN, ""),
             object : TypeToken<UserAdmin>() {
             }.type
         )
-        if (userAdmin != null) {
-            RefBase.refAdmins(userAdmin.id!!)
-                .child(Constants.MESSAGE_TOKEN).setValue("")
-        }
-
-        finish()
+        RefBase.refAdmins(userAdmin.id!!)
+            .child(Constants.MESSAGE_TOKEN).setValue("").addOnCompleteListener(
+                OnCompleteListener {
+                    if (it.isComplete) {
+                        dialogLoggingOut?.dismiss()
 //        startActivity(Intent(applicationContext, LoginActivity::class.java))
-        startActivity(Intent(applicationContext, LoginWithEmailPassActivity::class.java))
+                        startActivity(
+                            Intent(
+                                applicationContext,
+                                LoginWithEmailPassActivity::class.java
+                            )
+                        )
+                        finish()
+                    }
+                })
+
+
     }
 
     override fun onBackPressed() {

@@ -133,6 +133,7 @@
     <string name="new_free">New Freelancer</string>
     <string name="new_free_registered">A new Freelancer has been register successfully</string>
     <string name="make_all_as_read">Make All as Read</string>
+    <string name="loging_out">Loggin Out ..</string>
 
 </resources>
 
