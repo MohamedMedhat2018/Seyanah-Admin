@@ -16,6 +16,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.IdRes
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
@@ -496,7 +497,6 @@ class HomeActivity : AppCompatActivity() {
         super.onStart()
 
 
-
         if (intent.hasExtra(Constants.TYPE)) {
             val orderId = intent.getStringExtra(Constants.TYPE)
             Log.e(TAG, orderId)
@@ -515,11 +515,12 @@ class HomeActivity : AppCompatActivity() {
         return false
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     fun checkBattery() {
         if (isBatteryOptimized() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             val name = resources.getString(R.string.app_name_root)
-            Toast.makeText(applicationContext, "Battery optimization -> All apps -> $name -> Don't optimize", Toast.LENGTH_LONG).show()
-
+            Toast.makeText(applicationContext, "Battery optimization -> All apps -> $name ->" +
+                    " Don't optimize", Toast.LENGTH_LONG).show()
             val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
             startActivity(intent)
         }
