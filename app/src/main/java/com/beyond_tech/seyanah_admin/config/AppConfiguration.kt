@@ -16,6 +16,8 @@ class AppConfiguration : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+
         Prefs.Builder()
             .setContext(this)
             .setMode(ContextWrapper.MODE_PRIVATE)

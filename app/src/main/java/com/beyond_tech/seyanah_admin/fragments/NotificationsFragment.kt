@@ -14,6 +14,9 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.ItemTouchHelper
+import androidx.recyclerview.widget.ItemTouchHelper.LEFT
+import androidx.recyclerview.widget.ItemTouchHelper.RIGHT
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -28,6 +31,7 @@ import com.beyond_tech.seyanah_admin.models.OrderRequest
 import com.beyond_tech.seyanah_admin.models.User
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.developer.kalert.KAlertDialog
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -196,6 +200,248 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         recycler_notifi.itemAnimator = DefaultItemAnimator()
         recycler_notifi.adapter = adapterNotification//set empty by default
         adapterNotification!!.notifyDataSetChanged()
+
+
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, LEFT or RIGHT) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+
+//                (viewHolder as adapterNotification)
+//                adapterNotification
+
+//                val position: Int = viewHolder.adapterPosition
+//                val notiItem = listOfNotification[position]
+
+                when (notification.notiType) {
+
+                    Constants.REQUESTS -> {
+
+
+                        val position: Int = viewHolder.adapterPosition
+                        val notiItem = listOfNotification[position]
+
+
+                        Log.e(TAG, "Swipe ya man From request" + viewHolder.adapterPosition + " and " + notiItem.requestId )
+
+                        RefBase.cpNotification()
+                            .orderByChild(Constants.ORDER_ID)
+                            .equalTo(notiItem.requestId)
+                            .addChildEventListener(object : ChildEventListener {
+
+                                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+
+                                        Log.e(TAG, "Swipe to delete " + dataSnapshot.key.toString())
+
+                                        RefBase.cpNotification().child(dataSnapshot.key.toString())
+                                            .removeValue().addOnSuccessListener {
+                                                listOfNotification.removeAt(position)
+                                                adapterNotification = RecyclerNotificationAdapter(
+                                                    activity,
+                                                    listOfNotification,
+                                                    listOfOrdersRequest,
+                                                    listOfCategory,
+                                                    this@NotificationsFragment
+                                                )
+                                                recycler_notifi.adapter = adapterNotification
+                                            }
+
+                                    }
+
+                                }
+
+                                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+
+
+                                }
+
+                                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+
+
+                                }
+
+                                override fun onChildRemoved(p0: DataSnapshot) {
+
+
+                                }
+
+                                override fun onCancelled(databaseError: DatabaseError) {
+
+
+                                }
+
+
+                            })
+//                        RefBase.cpNotification()
+
+
+                        adapterNotification = RecyclerNotificationAdapter(
+                            activity,
+                            listOfNotification,
+                            listOfOrdersRequest,
+                            listOfCategory,
+                            this@NotificationsFragment
+                        )
+                        recycler_notifi.adapter = adapterNotification
+//                        adapterNotification!!.notifyDataSetChanged()
+                    }
+
+                    Constants.USERS -> {
+
+                        val position2: Int = viewHolder.adapterPosition
+                        val notiItem2 = listOfNotification[position2]
+
+                        Log.e(TAG, "Swipe ya man From USER " + notiItem2.requestId + " and " + notiItem2.customerId + " and " + notiItem2.date)
+
+                        RefBase.cpNotification()
+                            .orderByChild(Constants.time)
+                            .equalTo(notiItem2.date)
+                            .addChildEventListener(object : ChildEventListener {
+                                override fun onCancelled(p0: DatabaseError) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+
+                                        Log.e(TAG, "Swipe to delete user " + dataSnapshot.key.toString())
+
+                                        RefBase.cpNotification().child(dataSnapshot.key.toString())
+                                            .removeValue().addOnSuccessListener {
+                                                listOfNotification.removeAt(position2)
+                                                adapterNotification = RecyclerNotificationAdapter(
+                                                    activity,
+                                                    listOfNotification,
+                                                    listOfOrdersRequest,
+                                                    listOfCategory,
+                                                    this@NotificationsFragment
+                                                )
+                                                recycler_notifi.adapter = adapterNotification
+                                            }
+
+                                    }
+
+                                }
+
+                                override fun onChildRemoved(p0: DataSnapshot) {
+                                    Log.e(TAG, "remove a User ")
+
+                                }
+
+                            })
+
+
+                        adapterNotification = RecyclerNotificationAdapter(
+                            activity,
+                            listOfNotification,
+                            listOfOrdersRequest,
+                            listOfCategory,
+                            this@NotificationsFragment
+                        )
+                        recycler_notifi.adapter = adapterNotification
+//                        adapterNotification!!.notifyDataSetChanged()
+
+
+                    }
+
+                    Constants.WORKERS -> {
+                        Log.e(TAG, "Swip ya man From Worker ")
+
+
+                        val position3: Int = viewHolder.adapterPosition
+                        val notiItem3 = listOfNotification[position3]
+
+                        Log.e(TAG, "Swipe ya man From Worker " + notiItem3.requestId + " and " + notiItem3.freelancerId + " and " + notiItem3.date)
+
+                        RefBase.cpNotification()
+                            .orderByChild(Constants.time)
+                            .equalTo(notiItem3.date)
+                            .addChildEventListener(object : ChildEventListener {
+                                override fun onCancelled(p0: DatabaseError) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildMoved(p0: DataSnapshot, p1: String?) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildChanged(p0: DataSnapshot, p1: String?) {
+                                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                                }
+
+                                override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
+                                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+
+                                        Log.e(TAG, "Swipe to delete user " + dataSnapshot.key.toString())
+
+                                        RefBase.cpNotification().child(dataSnapshot.key.toString())
+                                            .removeValue().addOnSuccessListener {
+                                                listOfNotification.removeAt(position3)
+                                                adapterNotification = RecyclerNotificationAdapter(
+                                                    activity,
+                                                    listOfNotification,
+                                                    listOfOrdersRequest,
+                                                    listOfCategory,
+                                                    this@NotificationsFragment
+                                                )
+                                                recycler_notifi.adapter = adapterNotification
+                                            }
+
+//                                        zoooooz
+                                    }
+
+                                }
+
+                                override fun onChildRemoved(p0: DataSnapshot) {
+
+                                    Log.e(TAG, "remove a worker ")
+
+
+                                }
+
+                            })
+
+                        adapterNotification = RecyclerNotificationAdapter(
+                            activity,
+                            listOfNotification,
+                            listOfOrdersRequest,
+                            listOfCategory,
+                            this@NotificationsFragment
+                        )
+                        recycler_notifi.adapter = adapterNotification
+//                        adapterNotification!!.notifyDataSetChanged()
+
+                    }
+
+                }
+
+            }
+
+        }
+
+//        ItemTouchHelper heleper = new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT){
+//
+//        }
+
+        val item = ItemTouchHelper(itemTouchHelperCallback)
+        item.attachToRecyclerView(recycler_notifi)
 
     }
 
