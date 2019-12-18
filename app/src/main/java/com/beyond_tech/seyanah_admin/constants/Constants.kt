@@ -3,6 +3,7 @@ package com.beyond_tech.seyanah_admin.constants
 class Constants {
     companion object {
 
+        val time: String = "time"
         @JvmField
         var TYPE: String = "type"
         @JvmField
