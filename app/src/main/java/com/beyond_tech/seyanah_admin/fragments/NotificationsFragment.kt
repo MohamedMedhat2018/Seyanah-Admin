@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -61,9 +62,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     private val mHandler = Handler()
     var pos = 0
     var activity: Activity? = null
-//    var context: Context? = null
-private lateinit var disposable: Disposable
-
+    //    var context: Context? = null
+    private lateinit var disposable: Disposable
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,8 +72,8 @@ private lateinit var disposable: Disposable
         activity = getActivity()
 //        context = getContext()
 
-        setHasOptionsMenu(true)
-        setMenuVisibility(true)
+//        setHasOptionsMenu(true)
+//        setMenuVisibility(true)
 
 
     }
@@ -99,6 +99,10 @@ private lateinit var disposable: Disposable
 
 
     private fun changeAllCpNotificationAsRead() {
+
+        setHasOptionsMenu(false)
+        setMenuVisibility(false)
+
         RefBase.cpNotification()
             .orderByChild(Constants.ORDER_STATE)
             .equalTo(true)
@@ -115,8 +119,8 @@ private lateinit var disposable: Disposable
                             Toast.LENGTH_SHORT
                         ).show()
 
-                        setHasOptionsMenu(false)
-                        setMenuVisibility(false)
+//                        setHasOptionsMenu(false)
+//                        setMenuVisibility(false)
 
                     }
                 }
@@ -125,6 +129,53 @@ private lateinit var disposable: Disposable
 
 
                 }
+            })
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        fetchTheNumberOfNotification()
+
+    }
+
+    var notificationCounter: Int = 0
+
+    private fun fetchTheNumberOfNotification() {
+        RefBase.cpNotification()
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataSnapshot.ref.removeEventListener(this)
+                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                        notificationCounter = 0
+                        for (snap in dataSnapshot.children) {
+                            val hashMap =
+                                snap.value as java.util.HashMap<String, Any?>?
+                            if (hashMap != null) {
+                                if (hashMap[Constants.ORDER_STATE] != null) {
+                                    val shown =
+                                        hashMap[Constants.ORDER_STATE] as Boolean
+                                    if (shown) {
+                                        notificationCounter++
+                                    }
+                                }
+                            }
+                        }
+                        Log.e(TAG, notificationCounter.toString())
+
+                        if (notificationCounter != 0) {
+
+                            setHasOptionsMenu(true)
+                            setMenuVisibility(true)
+
+                        }
+
+                    } else {
+
+                    }
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {}
             })
     }
 
@@ -157,9 +208,13 @@ private lateinit var disposable: Disposable
 
         disposable = RxBus.listen(RxEvent.EventShowMakeAllAsRead::class.java)
             .subscribe {
+                setHasOptionsMenu(it.updated)
+                setMenuVisibility(it.updated)
 
-                setHasOptionsMenu(true)
-                setMenuVisibility(true)
+                Log.e(TAG, "publishing - Subscribing")
+
+
+
             }
 
     }

@@ -311,11 +311,13 @@ class HomeActivity : AppCompatActivity() {
 
                             //post event to the my lovely subscriber to show MakeAllAsReam Menu Item
                             RxBus.publish(RxEvent.EventShowMakeAllAsRead(true))
-
+                            Log.e(TAG, "publishing")
 
                         } else {
 //                            bottomNavigation.setCount(ID_NOTIFICATION, "")
                             bottomNavigation.setNotification("", 0)
+                            RxBus.publish(RxEvent.EventShowMakeAllAsRead(false))
+
                         }
 
                     } else {
