@@ -138,6 +138,7 @@
     <string name="new_free_registered">صنايعي جديد تم تسجيله بنجاح</string>
     <string name="make_all_as_read">اجعل كله مقروء</string>
     <string name="loging_out">خروج ...</string>
+    <string name="ios_error">No Request Details - IOS Error</string>
 
 
 </resources>

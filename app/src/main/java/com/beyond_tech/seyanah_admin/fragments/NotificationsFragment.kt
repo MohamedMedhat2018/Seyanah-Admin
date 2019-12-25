@@ -2,6 +2,7 @@ package com.beyond_tech.seyanah_admin.fragments
 
 import android.animation.Animator
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
@@ -33,6 +34,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import es.dmoral.toasty.Toasty
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
@@ -56,7 +58,16 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     var linerLayoutManager: LinearLayoutManager? = null
     private val mHandler = Handler()
     var pos = 0
+    var activity: Activity? = null
+//    var context: Context? = null
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        activity = getActivity()
+//        context = getContext()
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -190,7 +201,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                         val notiItem = listOfNotification[position]
 
 
-                        Log.e(TAG, "Swipe ya man From request" + viewHolder.adapterPosition + " and " + notiItem.requestId )
+                        Log.e(
+                            TAG,
+                            "Swipe ya man From request" + viewHolder.adapterPosition + " and " + notiItem.requestId
+                        )
 
                         RefBase.cpNotification()
                             .orderByChild(Constants.ORDER_ID)
@@ -260,7 +274,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                         val position2: Int = viewHolder.adapterPosition
                         val notiItem2 = listOfNotification[position2]
 
-                        Log.e(TAG, "Swipe ya man From USER " + notiItem2.requestId + " and " + notiItem2.customerId + " and " + notiItem2.date)
+                        Log.e(
+                            TAG,
+                            "Swipe ya man From USER " + notiItem2.requestId + " and " + notiItem2.customerId + " and " + notiItem2.date
+                        )
 
                         RefBase.cpNotification()
                             .orderByChild(Constants.time)
@@ -281,7 +298,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                                     if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
 
-                                        Log.e(TAG, "Swipe to delete user " + dataSnapshot.key.toString())
+                                        Log.e(
+                                            TAG,
+                                            "Swipe to delete user " + dataSnapshot.key.toString()
+                                        )
 
                                         RefBase.cpNotification().child(dataSnapshot.key.toString())
                                             .removeValue().addOnSuccessListener {
@@ -328,7 +348,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                         val position3: Int = viewHolder.adapterPosition
                         val notiItem3 = listOfNotification[position3]
 
-                        Log.e(TAG, "Swipe ya man From Worker " + notiItem3.requestId + " and " + notiItem3.freelancerId + " and " + notiItem3.date)
+                        Log.e(
+                            TAG,
+                            "Swipe ya man From Worker " + notiItem3.requestId + " and " + notiItem3.freelancerId + " and " + notiItem3.date
+                        )
 
                         RefBase.cpNotification()
                             .orderByChild(Constants.time)
@@ -349,7 +372,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 override fun onChildAdded(dataSnapshot: DataSnapshot, p1: String?) {
                                     if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
 
-                                        Log.e(TAG, "Swipe to delete user " + dataSnapshot.key.toString())
+                                        Log.e(
+                                            TAG,
+                                            "Swipe to delete user " + dataSnapshot.key.toString()
+                                        )
 
                                         RefBase.cpNotification().child(dataSnapshot.key.toString())
                                             .removeValue().addOnSuccessListener {
@@ -469,6 +495,10 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 //                    var keyword = dataSnapshot.child(Constants.KEYWORD).value.toString()
                             Log.e(TAG, "tYPE TYPExx$keyword")
 
+                            var notification: Notification = Notification()
+
+
+
                             when (keyword) {
                                 Constants.REQUESTS -> {
                                     Log.e(TAG, "Requestx$keyword")
@@ -478,6 +508,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                         map[Constants.CUSTOMER_ID].toString()
                                     if (map[Constants.ORDER_ID] != null) {
                                         notification.requestId = map[Constants.ORDER_ID].toString()
+                                    } else {
+                                        notification.requestId = ""
                                     }
                                 }
 
@@ -504,35 +536,20 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                             notification.notiType = keyword
                             notification.date = date
 
-//                            listOfCPNotification.add(notification)
                             listOfNotification.add(notification)
 
-//                            listOfNotification.addAll(listOfCPNotification)
 
                             Log.e(TAG, "size_8484 =  " + listOfCPNotification.size.toString())
 
-
-//                    RecyclerNotificationAdapter
-
-
-//                    for (i in listOfNotification) {
-//                        Log.e(TAG, "LISTT3 " + i.orderId)
-//                    }
-//                    listOfNotification.clear()
-//                    listOfOrdersRequest.clear()
-//                    listOfCategory.clear()
-//                    for (i in listOfNotification) {
-//                        Log.e(TAG, "LISTT4 " + i.orderId)
-//                    }
                             Log.e(
                                 TAG,
                                 "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
                             )
+                            Log.e(TAG, "Soso" + notification.requestId)
+
 
                         }
 
-//                        listOfNotification = listOfNotification.reverse()
-//                        Collections.reverse(listOfNotification);
                         listOfNotification.reverse()
 
 
@@ -552,20 +569,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                 listOfCategory,
                                 this@NotificationsFragment
                             )
-                            recycler_notifi.layoutManager = linerLayoutManager
 
-//                    RecyclerNotificationAdapter
-
-
-//                    for (i in listOfNotification) {
-//                        Log.e(TAG, "LISTT3 " + i.orderId)
-//                    }
-//                    listOfNotification.clear()
-//                    listOfOrdersRequest.clear()
-//                    listOfCategory.clear()
-//                    for (i in listOfNotification) {
-//                        Log.e(TAG, "LISTT4 " + i.orderId)
-//                    }
                             Log.e(
                                 TAG,
                                 "Test5550 " + dataSnapshot.childrenCount + ", " + dataSnapshot.toString() + "\n"
@@ -686,7 +690,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
         alertDialog.setOnShowListener {
             Log.e(TAG, "setOnShowListener")
-            fetchRequestDetails(v, notification)
+            fetchRequestDetails(alertDialog, v, notification)
         }
         alertDialog.setCancelable(true)
         alertDialog.setCanceledOnTouchOutside(true)
@@ -695,6 +699,7 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     }
 
     private fun fetchRequestDetails(
+        dialog: AlertDialog,
         v: View,
         notification: Notification
     ) {
@@ -728,6 +733,17 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                             dataSnapshot.getValue(OrderRequest::class.java)
                                         tvZone.text = orderRequest!!.location.country
                                         tvOrderDetails.text = orderRequest.orderDescription
+                                    } else {
+//                                        Log.e(TAG, "ShsosXXX")
+//                                        Handler().postDelayed(Runnable {
+//                                            getActivity()?.let {
+//                                                Toasty.warning(
+//                                                    it
+//                                                    , getString(R.string.ios_error)
+//                                                ).show()
+//                                                dialog.dismiss()
+//                                            }
+//                                        }, 700)
                                     }
                                 }
 
@@ -737,6 +753,17 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                             })
 //
 
+                    } else {
+                        Log.e(TAG, "ShsosXXX")
+                        Handler().postDelayed({
+                            getActivity()?.let {
+                                Toasty.warning(
+                                    it
+                                    , getString(R.string.ios_error)
+                                ).show()
+                                dialog.dismiss()
+                            }
+                        }, 700)
                     }
                 }
 

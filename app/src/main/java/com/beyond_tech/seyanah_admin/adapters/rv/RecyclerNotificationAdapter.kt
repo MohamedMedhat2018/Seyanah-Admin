@@ -25,7 +25,7 @@ class RecyclerNotificationAdapter(
     private val onNotificationClicked: OnNotificationClicked
 ) : RecyclerView.Adapter<CustomView>() {
 
-    //    val onNotificationClicked : OnNotificationClicked? = null
+
     val TAG = RecyclerNotificationAdapter::class.java.name
 
 
@@ -34,8 +34,6 @@ class RecyclerNotificationAdapter(
         val view: View =
             LayoutInflater.from(parent.context)
                 .inflate(com.beyond_tech.seyanah_admin.R.layout.recycler_item2, parent, false)
-//        val view:View = LayoutInflater.from(parent.context).inflate(R.layout.notification, parent, false)
-//        val view = LayoutInflater.from(context).inflate(R.layout.recycler_item2, parent, )
 
         return CustomView(view)
     }
