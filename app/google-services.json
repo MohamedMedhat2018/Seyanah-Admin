@@ -84,6 +84,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "445806630230-c3893tq72j9s9aqhf6kg4158dg3lciut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.beyond_tech.seyanah_admin",
+            "certificate_hash": "f405873e9d71061d01c27ed32f07d91cc5c28f55"
+          }
+        },
+        {
           "client_id": "445806630230-4ltv3dfovidculk192ntt1e1j3omlipu.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

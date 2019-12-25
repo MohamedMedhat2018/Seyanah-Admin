@@ -54,8 +54,11 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
         Helper(this).makeFullScreen(savedInstanceState)
 //        makeFullScreen(savedInstanceState)
         if (checkIfUserLoggedInBefore()) {
-            finish()
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
+//            finish()
+            val i = Intent(applicationContext, HomeActivity::class.java)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(i)
+            return
         } else {
             //logged in before
             setContentView(R.layout.activity_main_email_pass_register)
@@ -754,8 +757,6 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
     }
 
     private fun checkNewAppVersion() {
-
-
 
 
     }

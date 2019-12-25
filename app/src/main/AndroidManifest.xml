@@ -28,6 +28,8 @@
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning"
         tools:replace="android:label">
+
+
         <activity
             android:name="com.beyond_tech.seyanah_admin.activities.main.HomeActivity"
             android:excludeFromRecents="true"
