@@ -10,8 +10,6 @@ import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
@@ -25,6 +23,7 @@ import com.aurelhubert.ahbottomnavigation.AHBottomNavigationItem
 import com.beyond_tech.seyanah_admin.R
 import com.beyond_tech.seyanah_admin.activities.emailpass_register.LoginWithEmailPassActivity
 import com.beyond_tech.seyanah_admin.constants.Constants
+import com.beyond_tech.seyanah_admin.events.RxEvent
 import com.beyond_tech.seyanah_admin.fire_utils.RefBase
 import com.beyond_tech.seyanah_admin.fragments.NotificationsFragment
 import com.beyond_tech.seyanah_admin.fragments.ProfileFragment
@@ -32,6 +31,7 @@ import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.OrderRequest
 import com.beyond_tech.seyanah_admin.models.User
 import com.beyond_tech.seyanah_admin.models.UserAdmin
+import com.beyond_tech.seyanah_admin.rxbus.RxBus
 import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.developer.kalert.KAlertDialog
 import com.google.android.gms.tasks.OnCompleteListener
@@ -307,6 +307,12 @@ class HomeActivity : AppCompatActivity() {
                             } else {
                                 bottomNavigation.setNotification("9+", 0)
                             }
+
+
+                            //post event to the my lovely subscriber to show MakeAllAsReam Menu Item
+                            RxBus.publish(RxEvent.EventShowMakeAllAsRead(true))
+
+
                         } else {
 //                            bottomNavigation.setCount(ID_NOTIFICATION, "")
                             bottomNavigation.setNotification("", 0)
@@ -448,24 +454,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.makeAllAsRead -> {
-//                Toast.makeText(
-//                    applicationContext, "Make All As Read",
-//                    Toast.LENGTH_SHORT
-//                ).show()
-                changeAllCpNotificationAsRead()
-            }
-        }
-        return super.onOptionsItemSelected(item)
-    }
-
     private fun changeAllCpNotificationAsRead() {
         RefBase.cpNotification()
             .orderByChild(Constants.ORDER_STATE)
@@ -519,8 +507,10 @@ class HomeActivity : AppCompatActivity() {
     fun checkBattery() {
         if (isBatteryOptimized() && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
             val name = resources.getString(R.string.app_name_root)
-            Toast.makeText(applicationContext, "Battery optimization -> All apps -> $name ->" +
-                    " Don't optimize", Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                applicationContext, "Battery optimization -> All apps -> $name ->" +
+                        " Don't optimize", Toast.LENGTH_LONG
+            ).show()
             val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
             startActivity(intent)
         }

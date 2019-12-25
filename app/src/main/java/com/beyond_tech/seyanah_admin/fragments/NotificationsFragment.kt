@@ -7,10 +7,9 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -23,18 +22,21 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.beyond_tech.seyanah_admin.R
 import com.beyond_tech.seyanah_admin.adapters.rv.RecyclerNotificationAdapter
 import com.beyond_tech.seyanah_admin.constants.Constants
+import com.beyond_tech.seyanah_admin.events.RxEvent
 import com.beyond_tech.seyanah_admin.fire_utils.RefBase
 import com.beyond_tech.seyanah_admin.interfaces.OnNotificationClicked
 import com.beyond_tech.seyanah_admin.models.Category
 import com.beyond_tech.seyanah_admin.models.Notification
 import com.beyond_tech.seyanah_admin.models.OrderRequest
 import com.beyond_tech.seyanah_admin.models.User
+import com.beyond_tech.seyanah_admin.rxbus.RxBus
 import com.developer.kalert.KAlertDialog
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import es.dmoral.toasty.Toasty
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_notifications.*
 
 class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
@@ -60,6 +62,9 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     var pos = 0
     var activity: Activity? = null
 //    var context: Context? = null
+private lateinit var disposable: Disposable
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +72,62 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         activity = getActivity()
 //        context = getContext()
 
+        setHasOptionsMenu(true)
+        setMenuVisibility(true)
+
+
     }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        activity!!.menuInflater.inflate(R.menu.menu_main, menu)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.makeAllAsRead -> {
+//                Toast.makeText(
+//                    applicationContext, "Make All As Read",
+//                    Toast.LENGTH_SHORT
+//                ).show()
+                changeAllCpNotificationAsRead()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    private fun changeAllCpNotificationAsRead() {
+        RefBase.cpNotification()
+            .orderByChild(Constants.ORDER_STATE)
+            .equalTo(true)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    dataSnapshot.ref.removeEventListener(this)
+                    if (dataSnapshot.exists() && dataSnapshot.childrenCount > 0) {
+                        dataSnapshot.children.iterator().forEach { dataSnapshot ->
+                            dataSnapshot.ref.child(Constants.ORDER_STATE).setValue(false)
+                        }
+
+                        Toast.makeText(
+                            activity, "All Notifications Maked As Read",
+                            Toast.LENGTH_SHORT
+                        ).show()
+
+                        setHasOptionsMenu(false)
+                        setMenuVisibility(false)
+
+                    }
+                }
+
+                override fun onCancelled(p0: DatabaseError) {
+
+
+                }
+            })
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,6 +154,13 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
         accessMutliStateToggleButton()
 
+
+        disposable = RxBus.listen(RxEvent.EventShowMakeAllAsRead::class.java)
+            .subscribe {
+
+                setHasOptionsMenu(true)
+                setMenuVisibility(true)
+            }
 
     }
 

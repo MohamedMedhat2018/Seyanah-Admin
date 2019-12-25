@@ -18,7 +18,6 @@ import android.widget.Toast
 import androidx.core.text.trimmedLength
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.beyond_tech.seyanah_admin.R
 import com.beyond_tech.seyanah_admin.constants.Constants
 import com.beyond_tech.seyanah_admin.events.RxEvent
@@ -27,6 +26,7 @@ import com.beyond_tech.seyanah_admin.models.UserAdmin
 import com.beyond_tech.seyanah_admin.rxbus.RxBus
 import com.beyond_tech.seyanah_admin.sheets.BottomSheet
 import com.beyond_tech.seyanah_admin.sheets.FileUtils
+import com.beyond_tech.seyanahadminapp.helper.Helper
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetBuilder
 import com.github.rubensousa.bottomsheetbuilder.BottomSheetMenuDialog
 import com.google.android.gms.tasks.OnSuccessListener
@@ -59,7 +59,7 @@ import java.util.*
 class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     EasyPermissions.RationaleCallbacks {
 
-    var detached: Boolean = false;
+    var detached: Boolean = false
     private lateinit var disposable: Disposable
     internal lateinit var easyImage: EasyImage
     //    lateinit var bottomSheetFragment: BottomSheet
@@ -79,11 +79,9 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
     )
     private var spruceAnimator: Animator? = null
 
-
     companion object {
         const val RC_CAMERA_AND_STORAGE = 121
     }
-
 
     override fun onResume() {
         super.onResume()
@@ -98,7 +96,6 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
         return LayoutInflater.from(activity).inflate(R.layout.fragment_profile, null)
     }
 
-
     override fun onViewCreated(view: android.view.View, savedInstanceState: android.os.Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initVars()
@@ -111,7 +108,6 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
             loadProfileData()
         }
     }
-
 
     private fun initEasyImage() {
         easyImage = EasyImage.Builder(this.activity!!)
@@ -130,7 +126,6 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
             .allowMultiple(true)
             .build()
     }
-
 
     private fun loadProfileData() {
 
@@ -198,7 +193,7 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
 
     override fun onDetach() {
         super.onDetach()
-        detached = true;
+        detached = true
     }
 
     private fun initVars() {
@@ -249,7 +244,6 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
 
     }
 
-
     private fun initDialogPickPhotoSource() {
         dialog = BottomSheetBuilder(context, null)
             .setMode(BottomSheetBuilder.MODE_LIST)
@@ -276,7 +270,6 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
             .createDialog()
         //        dialog.show();
     }
-
 
     @SuppressLint("StringFormatInvalid")
     @AfterPermissionGranted(RC_CAMERA_AND_STORAGE)
@@ -582,5 +575,15 @@ class ProfileFragment : Fragment(), EasyPermissions.PermissionCallbacks,
 
 
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setHasOptionsMenu(false)
+        setMenuVisibility(false)
+
+
+    }
+
 
 }
