@@ -112,26 +112,8 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
             pos = position
             postDelayed()
         }
-// Resource id, position one is selected by default
         multiStateToggleButton.setElements(R.array.titles_array, 0)
 
-
-//        val titles_array =
-//            resources.getStringArray(R.array.titles_array)
-//        val buttons = Array<View?>(3) { null }
-//
-//
-////        val multiStateToggleButton =
-////            this.findViewById(R.id.mstb_multi_id) as MultiStateToggleButton
-//
-//        for (i in 0..2) {
-//            //println(i)
-//            val button =
-//                layoutInflater.inflate(R.layout.custom_button, multiStateToggleButton, false)
-//            buttons[i] = button;
-//
-//        }
-//        multiStateToggleButton.setButtons(buttons, BooleanArray(buttons.size))
 
     }
 
@@ -156,15 +138,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
 
         linerLayoutManager = LinearLayoutManager(activity)
-//        linerLayoutManager = object : LinearLayoutManager(context) {
-//            override fun onLayoutChildren(
-//                recycler: RecyclerView.Recycler?,
-//                state: RecyclerView.State
-//            ) {
-//                super.onLayoutChildren(recycler, state)
-//                initSpruce()
-//            }
-//        }
         (linerLayoutManager as LinearLayoutManager).orientation = LinearLayoutManager.VERTICAL
         recycler_notifi!!.layoutManager = linerLayoutManager
         recycler_notifi.setHasFixedSize(true)
@@ -185,12 +158,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-
-//                (viewHolder as adapterNotification)
-//                adapterNotification
-
-//                val position: Int = viewHolder.adapterPosition
-//                val notiItem = listOfNotification[position]
 
                 when (notification.notiType) {
 
@@ -609,13 +576,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
         swipeRefreshLayout.isRefreshing = true
         listOfCPNotification.clear()
         listOfNotification.clear()
-//        mHandler.postDelayed({
-//            swipeRefreshLayout.isRefreshing = false
-//            loadNotification()
-//            loadCPNotification()
-//        }, 1500)
-
-//        loadNotification()
         loadCPNotification(pos)
 
     }
