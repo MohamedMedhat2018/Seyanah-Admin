@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
@@ -113,7 +114,9 @@ class HomeActivity : AppCompatActivity() {
 
         fetchTheNumberOfNotification()
 
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
         checkBattery()
+//        }
     }
 
     private fun setupBottomNavViewWithBadge() {
@@ -513,8 +516,11 @@ class HomeActivity : AppCompatActivity() {
                 applicationContext, "Battery optimization -> All apps -> $name ->" +
                         " Don't optimize", Toast.LENGTH_LONG
             ).show()
-            val intent = Intent(Settings.ACTION_IGNORE_BATTERY_OPTIMIZATION_SETTINGS)
+            val intent = Intent()
+            intent.setData(Uri.parse("package:" + applicationContext.packageName));
             startActivity(intent)
+        } else {
+
         }
     }
 

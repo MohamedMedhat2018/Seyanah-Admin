@@ -54,7 +54,7 @@ class LoginWithEmailPassActivity : AppCompatActivity() {
         Helper(this).makeFullScreen(savedInstanceState)
 //        makeFullScreen(savedInstanceState)
         if (checkIfUserLoggedInBefore()) {
-//            finish()
+            finish()
             val i = Intent(applicationContext, HomeActivity::class.java)
             i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(i)

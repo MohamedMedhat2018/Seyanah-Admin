@@ -190,23 +190,23 @@ class BottomSheet : SuperBottomSheetFragment() {
             )
 
             val map = HashMap<String, Any>()
-            val s =  et_input_type.text.toString().trim()
+            val s = et_input_type.text.toString().trim()
 
             when (getEditType()) {
                 Constants.EDIT_PHONE_NUMBER -> {
                     map[Constants.KEY_PHONE_NUMBER] = s
-                            Log.e(TAG, "KEY_PHONE_NUMBER" )
+                    Log.e(TAG, "KEY_PHONE_NUMBER")
 
 
                 }
                 Constants.EDIT_EMAIL -> {
-                    map[Constants.KEY_EMAIL_ADDRESS] =  s
-                    Log.e(TAG, "KEY_EMAIL_ADDRESS" )
+                    map[Constants.KEY_EMAIL_ADDRESS] = s
+                    Log.e(TAG, "KEY_EMAIL_ADDRESS")
 
                 }
                 Constants.EDIT_PASSWORD -> {
-                    map[Constants.KEY_PASSWORD] =  s
-                    Log.e(TAG, "KEY_PASSWORD" )
+                    map[Constants.KEY_PASSWORD] = s
+                    Log.e(TAG, "KEY_PASSWORD")
 
                 }
             }
@@ -219,7 +219,7 @@ class BottomSheet : SuperBottomSheetFragment() {
                         Toast.makeText(activity, "Updated", Toast.LENGTH_SHORT).show()
 //                        Prefs.edit().remove(Constants.FIREBASE_UID).apply()
                         Prefs.putString(Constants.USER_ADMIN, Gson().toJson(userAdmin))
-                    }else{
+                    } else {
 
                     }
                 })
