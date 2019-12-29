@@ -55,7 +55,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
     var body = ""
     var progress: AlertDialog? = null
     var notiType = ""
-    var notification: Notification = Notification()
     var adapterNotification: RecyclerNotificationAdapter? = null
     private var spruceAnimator: Animator? = null
     var linerLayoutManager: LinearLayoutManager? = null
@@ -214,7 +213,6 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                 Log.e(TAG, "publishing - Subscribing")
 
 
-
             }
 
     }
@@ -280,6 +278,11 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
 //                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                Log.e(TAG, "onSwiped")
+
+                Log.e(TAG, "onSwiped" + viewHolder.adapterPosition)
+                var notification = listOfNotification[viewHolder.adapterPosition]
+                Log.e(TAG, "onSwiped" + notification.notiType)
 
                 when (notification.notiType) {
 
@@ -317,6 +320,14 @@ class NotificationsFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener,
                                                 )
                                                 recycler_notifi.adapter = adapterNotification
                                             }
+
+                                    } else {
+                                        getActivity()?.let {
+                                            Toasty.warning(
+                                                it
+                                                , getString(R.string.ios_error_cant_del_this_item)
+                                            ).show()
+                                        }
 
                                     }
 

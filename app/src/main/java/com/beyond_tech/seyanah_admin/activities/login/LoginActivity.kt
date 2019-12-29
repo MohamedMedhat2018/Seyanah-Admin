@@ -38,8 +38,9 @@ class LoginActivity : AppCompatActivity() {
 //        makeFullScreen(savedInstanceState)
 
         if (checkIfUserLoggedInBefore()) {
+            startActivity(Intent(applicationContext, HomeActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
             finish()
-            startActivity(Intent(applicationContext, HomeActivity::class.java))
         } else {
             //logged in before
             setContentView(R.layout.activity_main)

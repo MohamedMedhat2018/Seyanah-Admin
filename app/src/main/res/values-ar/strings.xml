@@ -139,6 +139,7 @@
     <string name="make_all_as_read">اجعل كله مقروء</string>
     <string name="loging_out">خروج ...</string>
     <string name="ios_error">No Request Details - IOS Error</string>
+    <string name="ios_error_cant_del_this_item">Ios Error Can\'t Delete This Item As request Id Not Found</string>
 
 
 </resources>
