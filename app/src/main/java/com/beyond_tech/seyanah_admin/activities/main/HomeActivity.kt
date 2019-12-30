@@ -493,7 +493,7 @@ class HomeActivity : AppCompatActivity() {
         if (intent.hasExtra(Constants.TYPE)) {
             val orderId = intent.getStringExtra(Constants.TYPE)
             Log.e(TAG, orderId)
-            Toast.makeText(applicationContext, orderId, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(applicationContext, orderId, Toast.LENGTH_SHORT).show()
             showAlertDialog(orderId)
         }
     }
